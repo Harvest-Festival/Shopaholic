@@ -19,8 +19,8 @@ import java.util.Collection;
 
 @SuppressWarnings("ConstantConditions")
 public class ShopScreen extends AbstractContainerScreen<ShopContainer> {
-    public static final ResourceLocation EXTRA =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop_extra");
-    private static final ResourceLocation BACKGROUND =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop");
+    public static final ResourceLocation EXTRA =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop_extra.png");
+    private static final ResourceLocation BACKGROUND =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop.png");
     private static final DecimalFormat formatter = new DecimalFormat("#,###");
     private final Collection<Listing> contents;
     public final ShopTarget target;
