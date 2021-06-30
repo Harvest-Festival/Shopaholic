@@ -35,7 +35,7 @@ public class GoldCommand {
                                                 .executes(ctx -> {
                                                     Vault vault = getVault(ctx);
                                                     if (vault != null) {
-                                                        vault.increaseGold(ctx.getSource().getLevel(), IntegerArgumentType.getInteger(ctx, "amount"));
+                                                        vault.setBalance(ctx.getSource().getLevel(), vault.getBalance() + IntegerArgumentType.getInteger(ctx, "amount"));
                                                         return 1;
                                                     } else return 0;
                                                 })))))

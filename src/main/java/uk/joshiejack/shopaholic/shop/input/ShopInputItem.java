@@ -23,6 +23,6 @@ public class ShopInputItem extends ShopInput<Ingredient> {
     @SuppressWarnings("ConstantConditions")
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {
-        return target.stack.hasTag() && target.stack.getTag().getString(key).equals(value);
+        return target.getStack().hasTag() && target.getStack().getTag().getString(key).equals(value);
     }
 }

@@ -30,7 +30,7 @@ public class OpeningHoursCondition extends Condition {
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         if (type == CheckType.SHOP_EXISTS) return true; //Always add to the entity
-        long time = target.world.getDayTime();
+        long time = target.getWorld().getDayTime();
         DayOfWeek weekday = TimeHelper.getWeekday(time);
         long timeOfDay = TimeHelper.getTimeOfDay(time);
         Pair<Integer, Integer> hours = this.hours.get(weekday);

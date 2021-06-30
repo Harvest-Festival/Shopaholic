@@ -50,5 +50,4 @@ public class Wallet {
     public long getIncome() {
         return income;
     }
-
 }

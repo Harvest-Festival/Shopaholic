@@ -16,11 +16,11 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Set;
 
-public class ShippedCountComparator extends Comparator {
+public class ShippedCountComparator implements Comparator {
     private List<ItemStack> stacks = Lists.newArrayList();
 
     @Override
-    public Comparator create(Row data, String id) {
+    public Comparator create(Row data) {
         ShippedCountComparator comparator = new ShippedCountComparator();
         comparator.stacks.add(new ItemStack(data.item()));
         return comparator;
@@ -38,7 +38,7 @@ public class ShippedCountComparator extends Comparator {
     @Override
     public int getValue(@Nonnull ShopTarget target) {
         int total = 0;
-        Set<Shipping.SoldItem> sold = getHolderSet(target.world, target.player);
+        Set<Shipping.SoldItem> sold = getHolderSet(target.getWorld(), target.getPlayer());
         for (ItemStack stack : stacks) {
             for (Shipping.SoldItem holder: sold) {
                 if (holder.matches(stack)) {

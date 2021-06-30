@@ -34,7 +34,7 @@ public class PerPlayerCondition extends Condition {
     public boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
         if (type != CheckType.SHOP_LISTING) return false;
         else {
-            CompoundNBT tag = target.player.getPersistentData().getCompound(MODID);
+            CompoundNBT tag = target.getPlayer().getPersistentData().getCompound(MODID);
             String label = department.id() + ":" + listing.getID();
             return tag.getInt(label) < max;
         }

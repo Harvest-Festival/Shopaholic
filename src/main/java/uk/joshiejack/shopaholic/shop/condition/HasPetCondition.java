@@ -26,7 +26,7 @@ public class HasPetCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
-        return target.world.getLoadedEntitiesOfClass(TameableEntity.class, target.player.getBoundingBox().inflate(128D), predicate).stream()
-                .anyMatch(e -> target.player.getUUID().equals(e.getOwnerUUID()));
+        return target.getWorld().getLoadedEntitiesOfClass(TameableEntity.class, target.getPlayer().getBoundingBox().inflate(128D), predicate).stream()
+                .anyMatch(e -> target.getPlayer().getUUID().equals(e.getOwnerUUID()));
     }
 }

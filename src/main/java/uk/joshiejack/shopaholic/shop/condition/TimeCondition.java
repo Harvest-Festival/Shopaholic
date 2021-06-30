@@ -60,7 +60,7 @@ public class TimeCondition extends Condition {
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         if (type == CheckType.SHOP_EXISTS) return true; //Always true no matter the time
         for (Pair<Integer, Integer> time: times) {
-            if (TimeHelper.isBetween(target.world, time.getLeft(), time.getRight())) return true;
+            if (TimeHelper.isBetween(target.getWorld(), time.getLeft(), time.getRight())) return true;
         }
 
         return false;

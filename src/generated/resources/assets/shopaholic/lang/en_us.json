@@ -1,0 +1,9 @@
+{
+  "gui.shopaholic.manager": "Economy Manager",
+  "gui.shopaholic.manager.from.personal": "Click to transfer from your personal wallet to the shared wallet.",
+  "gui.shopaholic.manager.from.shared": "Click to transfer from the shared wallet to your personal wallet.",
+  "gui.shopaholic.manager.x.10": "Hold down %sSHIFT %sfor 10x",
+  "gui.shopaholic.manager.x.100": "Hold down %sCTRL %sfor 100x",
+  "gui.shopaholic.manager.x.1000": "Hold down %sALT %sfor 1000x",
+  "item.shopaholic.economy_manager": "Economy Manager"
+}

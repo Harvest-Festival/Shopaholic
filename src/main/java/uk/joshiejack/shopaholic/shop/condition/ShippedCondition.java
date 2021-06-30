@@ -41,7 +41,7 @@ public class ShippedCondition extends Condition {
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         int total = 0;
-        Set<Shipping.SoldItem> sold = getHolderSet(target.world, target.player);
+        Set<Shipping.SoldItem> sold = getHolderSet(target.getWorld(), target.getPlayer());
         for (ItemStack stack : stacks) {
             for (Shipping.SoldItem holder : sold) {
                 if (holder.matches(stack)) {

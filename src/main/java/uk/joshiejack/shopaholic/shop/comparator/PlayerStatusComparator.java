@@ -6,11 +6,11 @@ import uk.joshiejack.shopaholic.api.shops.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class PlayerStatusComparator extends Comparator {
+public class PlayerStatusComparator implements Comparator {
     private String status;
 
     @Override
-    public Comparator create(Row data, String id) {
+    public Comparator create(Row data) {
         PlayerStatusComparator comparator = new PlayerStatusComparator();
         comparator.status = data.get("status");
         return comparator;
@@ -18,6 +18,6 @@ public class PlayerStatusComparator extends Comparator {
 
     @Override
     public int getValue(@Nonnull ShopTarget target) {
-        return target.player.getPersistentData().getCompound("PenguinStatuses").getInt(status);
+        return target.getPlayer().getPersistentData().getCompound("PenguinStatuses").getInt(status);
     }
 }

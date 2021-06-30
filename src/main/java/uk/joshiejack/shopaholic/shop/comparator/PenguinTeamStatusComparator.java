@@ -7,11 +7,11 @@ import uk.joshiejack.shopaholic.api.shops.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class PenguinTeamStatusComparator extends Comparator {
+public class PenguinTeamStatusComparator implements Comparator {
     private String status;
 
     @Override
-    public Comparator create(Row data, String id) {
+    public Comparator create(Row data) {
         PenguinTeamStatusComparator comparator = new PenguinTeamStatusComparator();
         comparator.status = data.get("status");
         return comparator;
@@ -19,6 +19,6 @@ public class PenguinTeamStatusComparator extends Comparator {
 
     @Override
     public int getValue(@Nonnull ShopTarget target) {
-        return PenguinTeams.getTeamForPlayer(target.player).getData().getCompound("PenguinStatuses").getInt(status);
+        return PenguinTeams.getTeamForPlayer(target.getPlayer()).getData().getCompound("PenguinStatuses").getInt(status);
     }
 }

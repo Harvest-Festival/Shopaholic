@@ -1,6 +1,6 @@
 package uk.joshiejack.shopaholic;
 
-public class EconomyConfig {
+public class ShopaholicConfig {
     public static int maxGold = Integer.MAX_VALUE;
     public static int maxGoldMultiplier = Short.MAX_VALUE;
     public static int minGold = 0;

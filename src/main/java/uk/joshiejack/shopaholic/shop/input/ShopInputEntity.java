@@ -22,11 +22,11 @@ public class ShopInputEntity extends ShopInput<EntityType<?>> {
 
     @Override
     public String getName(ShopTarget target) {
-        return target.entity.getName().getString();
+        return target.getEntity().getName().getString();
     }
 
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {
-        return target.entity.saveWithoutId(new CompoundNBT()).getString(key).equals(value);
+        return target.getEntity().saveWithoutId(new CompoundNBT()).getString(key).equals(value);
     }
 }

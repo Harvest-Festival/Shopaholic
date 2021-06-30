@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.client.gui.label;
+package uk.joshiejack.shopaholic.client.gui.button;
 
 //@SideOnly(Dist.CLIENT)
 //public class ShippingLogLabel extends BookLabel {

@@ -1,8 +1,8 @@
 package uk.joshiejack.shopaholic.shop.condition;
 
 import uk.joshiejack.penguinlib.data.database.Row;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
 import uk.joshiejack.shopaholic.api.shops.Condition;
+import uk.joshiejack.shopaholic.api.shops.Comparator;
 import uk.joshiejack.shopaholic.api.shops.ShopTarget;
 
 import javax.annotation.Nonnull;

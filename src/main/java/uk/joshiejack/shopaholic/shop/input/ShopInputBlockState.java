@@ -19,7 +19,7 @@ public class ShopInputBlockState extends ShopInput<BlockState> {
     @SuppressWarnings("unchecked")
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {
-        BlockState state = target.world.getBlockState(target.pos);
+        BlockState state = target.getWorld().getBlockState(target.getPos());
         Property<?> property = state.getBlock().getStateDefinition().getProperty(key);
         return property != null && state.getValue(property).toString().equals(value);
     }

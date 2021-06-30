@@ -8,11 +8,11 @@ import uk.joshiejack.shopaholic.api.shops.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class BlockTagOnTargetComparator extends Comparator {
+public class BlockTagOnTargetComparator implements Comparator {
     private ITag.INamedTag<Block> tag;
 
     @Override
-    public Comparator create(Row data, String id) {
+    public Comparator create(Row data) {
         BlockTagOnTargetComparator comparator = new BlockTagOnTargetComparator();
         comparator.tag = data.blockTag();
         return comparator;
@@ -20,6 +20,6 @@ public class BlockTagOnTargetComparator extends Comparator {
 
     @Override
     public int getValue(@Nonnull ShopTarget target) {
-        return tag.contains(target.world.getBlockState(target.pos).getBlock()) ? 1 : 0;
+        return tag.contains(target.getWorld().getBlockState(target.getPos()).getBlock()) ? 1 : 0;
     }
 }

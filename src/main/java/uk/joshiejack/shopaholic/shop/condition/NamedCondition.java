@@ -18,6 +18,6 @@ public class NamedCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return target.input.getName(target).equals(name);
+        return target.getInput().getName(target).equals(name);
     }
 }

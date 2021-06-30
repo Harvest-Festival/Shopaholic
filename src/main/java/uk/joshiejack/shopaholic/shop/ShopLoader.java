@@ -14,11 +14,11 @@ import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.events.DatabasePopulateEvent;
 import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
 import uk.joshiejack.shopaholic.api.shops.Condition;
+import uk.joshiejack.shopaholic.api.shops.Comparator;
+import uk.joshiejack.shopaholic.api.shops.IImmutable;
 import uk.joshiejack.shopaholic.api.shops.ListingHandler;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
-import uk.joshiejack.shopaholic.shop.comparator.AbstractImmutableComparator;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
 import uk.joshiejack.shopaholic.shop.condition.CompareCondition;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
@@ -59,25 +59,23 @@ public class ShopLoader {
         //Temporary Registry, Create all the comparators
         Map<String, Comparator> comparators = Maps.newHashMap(); //Temporary Registry
         //for all the type of comparators
-        for (String type : Comparator.types()) {
-            if (Comparator.get(type) instanceof AbstractImmutableComparator) {
-                comparators.put(type, Comparator.get(type));
-            } else {
-                event.table("comparator_" + type).rows().forEach(comparator -> {
-                    String comparator_id = comparator.id();
+        ShopRegistries.COMPARATORS.forEach((type, comparator) -> {
+            if (comparator instanceof IImmutable)
+                comparators.put(type, comparator);
+            else {
+                event.table("comparator_" + type).rows().forEach(row -> {
+                    String comparator_id = row.id();
                     if (comparators.containsKey(comparator_id)) {
-                        comparators.get(comparator_id).merge(comparator);
+                        comparators.get(comparator_id).merge(row);
                     } else {
-                        Comparator theComparator = Comparator.get(type);
-                        if (theComparator != null) { //Pass the database as well as the row data for this
-                            comparators.put(comparator_id, theComparator.create(comparator, comparator_id));
+                        Comparator theComparator = ShopRegistries.COMPARATORS.get(type);
+                        if (theComparator != null) {
+                            comparators.put(comparator_id, theComparator.create(row));
                         }
                     }
                 });
             }
-        }
-
-        //Put all the immutable comparators in to the database
+        });
 
         //Create all the conditions
         Map<String, Condition> conditions = Maps.newHashMap(); //Temporary Registry

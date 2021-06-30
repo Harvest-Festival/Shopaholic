@@ -12,7 +12,7 @@ public class HasNBTTagCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return type != CheckType.SHOP_LISTING && target.input.hasTag(target, key, value);
+        return type != CheckType.SHOP_LISTING && target.getInput().hasTag(target, key, value);
     }
 
     @Override

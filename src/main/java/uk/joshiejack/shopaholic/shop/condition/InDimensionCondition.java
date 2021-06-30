@@ -19,6 +19,6 @@ public class InDimensionCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return target.world.dimension().location().equals(dimension);
+        return target.getWorld().dimension().location().equals(dimension);
     }
 }

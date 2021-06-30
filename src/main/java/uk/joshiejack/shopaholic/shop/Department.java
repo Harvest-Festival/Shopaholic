@@ -120,15 +120,15 @@ public class Department {
         //Sync supermarket inventories too
         Shop market = Shop.get(this);
         if (market != null) {
-            market.getDepartments().forEach(shop -> PenguinNetwork.sendToClient(new SyncStockLevelsPacket(shop, shop.getStockLevels()), (ServerPlayerEntity) target.player));
+            market.getDepartments().forEach(shop -> PenguinNetwork.sendToClient(new SyncStockLevelsPacket(shop, shop.getStockLevels()), (ServerPlayerEntity) target.getPlayer()));
         } else
-            PenguinNetwork.sendToClient(new SyncStockLevelsPacket(this, stock), (ServerPlayerEntity) target.player); //Sync the stock levels to the player
+            PenguinNetwork.sendToClient(new SyncStockLevelsPacket(this, stock), (ServerPlayerEntity) target.getPlayer()); //Sync the stock levels to the player
         /* Seed the random shopness */
-        int seed = 13 * (1 + TimeHelper.getElapsedDays(target.world.getDayTime()));
-        target.player.getPersistentData().putInt("ShopaholicSeed", seed);
-        PenguinNetwork.sendToClient(new SetPlayerSeedPacket(seed), (ServerPlayerEntity) target.player);
+        int seed = 13 * (1 + TimeHelper.getElapsedDays(target.getWorld().getDayTime()));
+        target.getPlayer().getPersistentData().putInt("ShopaholicSeed", seed);
+        PenguinNetwork.sendToClient(new SetPlayerSeedPacket(seed), (ServerPlayerEntity) target.getPlayer());
         /* Open the shop */ //Open after the stock level has been received
-        PenguinNetwork.sendToClient(new OpenShopPacket(this, target), (ServerPlayerEntity) target.player);
+        PenguinNetwork.sendToClient(new OpenShopPacket(this, target), (ServerPlayerEntity) target.getPlayer());
         //TODO:target.player.containerMenu = new ShopContainer(); //Set the container
     }
 }

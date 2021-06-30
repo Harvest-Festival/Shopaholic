@@ -6,11 +6,11 @@ import uk.joshiejack.shopaholic.api.shops.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class NumberComparator extends Comparator {
+public class NumberComparator implements Comparator {
     private int value;
 
     @Override
-    public Comparator create(Row data, String id) {
+    public Comparator create(Row data) {
         NumberComparator comparator = new NumberComparator();
         comparator.value = data.get("number");
         return comparator;

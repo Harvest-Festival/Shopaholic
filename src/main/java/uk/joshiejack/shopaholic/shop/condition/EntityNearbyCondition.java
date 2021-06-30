@@ -28,6 +28,6 @@ public class EntityNearbyCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
-        return target.world.getNearbyEntities(LivingEntity.class, predicate, target.player, target.player.getBoundingBox().inflate(range)).size() > 0;
+        return target.getWorld().getNearbyEntities(LivingEntity.class, predicate, target.getPlayer(), target.getPlayer().getBoundingBox().inflate(range)).size() > 0;
     }
 }

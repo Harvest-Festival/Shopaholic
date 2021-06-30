@@ -26,7 +26,7 @@ public class ShopUtils {
 
     public static void open(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        ShopHelper.open(ENTITY_TO_SHOP.get((ShopInputEntity) target.input), target, InputMethod.SCRIPT);
+        ShopHelper.open(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, InputMethod.SCRIPT);
     }
 
     public static void open(PlayerJS<?> player, EntityJS entityJS, String id) {
@@ -43,17 +43,17 @@ public class ShopUtils {
 
     public static boolean has(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.input), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
+        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
     }
 
     public static boolean isOpen(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.input), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
+        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
     }
 
     public static DepartmentJS get(PlayerJS<?> player, @Nonnull EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return new DepartmentJS(Objects.requireNonNull(ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.input), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
+        return new DepartmentJS(Objects.requireNonNull(ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
     }
 
     public static DepartmentJS get(String name) {

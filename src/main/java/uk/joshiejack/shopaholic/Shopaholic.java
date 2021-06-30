@@ -1,19 +1,24 @@
 package uk.joshiejack.shopaholic;
 
+import net.minecraft.data.DataGenerator;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,15 +26,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
 import uk.joshiejack.penguinlib.item.base.BookItem;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
+import uk.joshiejack.shopaholic.api.ShopaholicAPI;
 import uk.joshiejack.shopaholic.api.shops.Condition;
 import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.data.ShopaholicBlockStates;
+import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
+import uk.joshiejack.shopaholic.data.ShopaholicItemModels;
+import uk.joshiejack.shopaholic.data.ShopaholicLanguage;
+import uk.joshiejack.shopaholic.gold.Bank;
 import uk.joshiejack.shopaholic.inventory.EconomyManagerContainer;
 import uk.joshiejack.shopaholic.inventory.ShopContainer;
 import uk.joshiejack.shopaholic.loot.CapValue;
 import uk.joshiejack.shopaholic.loot.RatioValue;
 import uk.joshiejack.shopaholic.loot.SetValue;
+import uk.joshiejack.shopaholic.shipping.Market;
 import uk.joshiejack.shopaholic.shop.CostFormula;
+import uk.joshiejack.shopaholic.shop.ShopaholicAPIImpl;
 import uk.joshiejack.shopaholic.shop.comparator.*;
 import uk.joshiejack.shopaholic.shop.condition.*;
 import uk.joshiejack.shopaholic.shop.handler.*;
@@ -49,19 +61,20 @@ public class Shopaholic {
         ShopaholicContainers.CONTAINERS.register(eventBus);
         ShopaholicItems.ITEMS.register(eventBus);
         ShopaholicSounds.SOUNDS.register(eventBus);
+        ShopaholicAPI.instance = new ShopaholicAPIImpl();
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {
         //Register Comparators
-        Comparator.register("item_in_inventory", new ItemInInventoryComparator());
-        Comparator.register("light_level", new LightLevelComparator());
-        Comparator.register("number", new NumberComparator());
-        Comparator.register("player_status", new PlayerStatusComparator());
-        Comparator.register("redstone_level", new RedstoneSignalComparator());
-        Comparator.register("shipped", new ShippedCountComparator());
-        Comparator.register("item_tag_in_inventory", new ItemTagInInventoryComparator());
-        Comparator.register("penguin_team_status", new PenguinTeamStatusComparator());
-        Comparator.register("block_tag_on_target", new BlockTagOnTargetComparator());
+        ShopaholicAPI.instance.registerComparator("item_in_inventory", new ItemInInventoryComparator());
+        ShopaholicAPI.instance.registerComparator("light_level", new LightLevelComparator());
+        ShopaholicAPI.instance.registerComparator("number", new NumberComparator());
+        ShopaholicAPI.instance.registerComparator("player_status", new PlayerStatusComparator());
+        ShopaholicAPI.instance.registerComparator("redstone_level", new RedstoneSignalComparator());
+        ShopaholicAPI.instance.registerComparator("shipped", new ShippedCountComparator());
+        ShopaholicAPI.instance.registerComparator("item_tag_in_inventory", new ItemTagInInventoryComparator());
+        ShopaholicAPI.instance.registerComparator("penguin_team_status", new PenguinTeamStatusComparator());
+        ShopaholicAPI.instance.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
         //Register Conditions
         Condition.register("and", new AndCondition());
         Condition.register("compare", new CompareCondition());
@@ -85,6 +98,20 @@ public class Shopaholic {
         //TODO? ListingBuilder.register("food", new FoodBuilder());
         //Cost Formulae
         CostFormula.register("default", (m, listing, level, mechanic, rand) -> listing.getGold());
+    }
+
+    @SubscribeEvent
+    public static void onDataGathering(final GatherDataEvent event) {
+        final DataGenerator generator = event.getGenerator();
+        if (event.includeServer()) {
+            generator.addProvider(new ShopaholicDatabase(generator));
+            generator.addProvider(new ShopaholicBlockStates(generator, event.getExistingFileHelper()));
+        }
+
+        if (event.includeClient()) {
+            generator.addProvider(new ShopaholicLanguage(generator));
+            generator.addProvider(new ShopaholicItemModels(generator, event.getExistingFileHelper()));
+        }
     }
 
     @SubscribeEvent
@@ -114,63 +141,15 @@ public class Shopaholic {
         }
     }
 
-//
-//
-//    @Mod.Instance(MODID)
-//    public static Shopaholic instance;
-//
-//    @SidedProxy
-//    public static ServerProxy proxy;
-//
-//    public static class ServerProxy { public void postInit() {}}
-//    @SideOnly(Dist.CLIENT)
-//    public static class ClientProxy extends ServerProxy {
-//        @Override
-//        public void postInit() {
-//            Page.REGISTRY.put("economy_manager", PageEconomyManager.INSTANCE);
-//        }
-//    }
-//
-//    @Mod.EventHandler
-//    public void preInit(FMLPreInitializationEvent event) {
-//        EconomyAPI.instance = this;
-//        logger = event.getModLog();
-//        NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
-//    }
-//
-//    @Mod.EventHandler
-//    public void init(FMLInitializationEvent event) {
-//        LootFunctionManager.registerFunction(new SetValue.Serializer());
-//        LootFunctionManager.registerFunction(new RatioValue.Serializer());
-//        LootFunctionManager.registerFunction(new CapValue.Serializer());
-//    }
-//
-//    @Mod.EventHandler
-//    public void postInit(FMLPostInitializationEvent event) {
-//        proxy.postInit();
-//    }
-//
-//    @SubscribeEvent
-//    public static void onPlayerJoinedWorld(PlayerEvent.PlayerLoggedInEvent event) {
-//        Bank.get(event.getPlayer().level).syncToPlayer(event.getPlayer());
-//        Market.get(event.getPlayer().level).getShippingForPlayer(event.getPlayer()).syncToPlayer(event.getPlayer());
-//    }
-//
-//    @Nullable
-//    @Override
-//    public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
-//        return null;
-//    }
-//
-//    @Nullable
-//    @Override
-//    public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z) {
-//        return new GuiManager();
-//    }
-//
-//    @Override
-//    public IVault getVaultForPlayer(World world, PlayerEntity player) {
-//        return Bank.get(world).getVaultForPlayer(player);
-//    }
+    @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
+    public static class Sync {
+        @SubscribeEvent
+        public static void onPlayerJoinedWorld(PlayerEvent.PlayerLoggedInEvent event) {
+            if (event.getPlayer().level instanceof ServerWorld) {
+                Bank.get((ServerWorld) event.getPlayer().level).syncToPlayer((ServerPlayerEntity) event.getPlayer());
+                Market.get((ServerWorld) event.getPlayer().level).getShippingForPlayer(event.getPlayer()).syncToPlayer((ServerPlayerEntity) event.getPlayer());
+            }
+        }
+    }
 }
 

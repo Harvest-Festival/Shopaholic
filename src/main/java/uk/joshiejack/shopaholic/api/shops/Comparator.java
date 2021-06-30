@@ -1,40 +1,30 @@
 package uk.joshiejack.shopaholic.api.shops;
 
-import com.google.common.collect.Maps;
 import uk.joshiejack.penguinlib.data.database.Row;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Set;
 
-public abstract class Comparator {
-    private static final Map<String, Comparator> REGISTRY = Maps.newHashMap();
-    public static final Map<String, Comparator> cache = Maps.newHashMap(); //Cleared out when finished
+public interface Comparator {
+    /**
+     * Used to create new instance of this comparator using data from the Penguin-Lib database system
+     * @param row   the row data for this comparator
+     * @return  an instance of this comparator with the data applied
+     *          some comparators are immutable so will just return themselves
+     */
+    default Comparator create(Row row) { return this; }
 
-    public static void register(String string, Comparator comparator) {
-        REGISTRY.put(string, comparator);
-    }
+    /**
+     * Return the value of this comparator
+     * Often things can be just true (1) or (0) false
+     * @param target    the target object
+     * @return  the value this is considered to have
+     */
+    int getValue(@Nonnull ShopTarget target);
 
-    public static Set<String> types() {
-        return REGISTRY.keySet();
-    }
-
-    @Nullable
-    public static Comparator get(String s) {
-        if (REGISTRY.containsKey(s)) {
-            return REGISTRY.get(s);
-        }
-
-        return null;
-    }
-
-    public void merge(Row data) {}
-
-    public static Comparator create(String id, String type, Row row) {
-        return Comparator.get(type).create(row, id);
-    }
-
-    public abstract Comparator create(Row row, String id);
-    public abstract int getValue(@Nonnull ShopTarget target);
+    /** Some comparators may want to let users add to them in separate rows
+     *  And so a comparator can appear twice, this is used to merge a new
+     *  piece of data in to this existing comparator. Not used often but handy!
+     * @param row   the row data
+     */
+    default void merge(Row row) {};
 }
