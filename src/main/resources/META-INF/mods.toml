@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+[[mods]]
+    modId="shopaholic"
+    version="${file.jarVersion}"
+    displayName="Shopaholic"
+    authors="joshiejack"
+    description='''Take care of your animals for more rewards.'''
+[[dependencies.shopaholic]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.shopaholic]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.shopaholic]]
+    modId="penguinlib"
+    mandatory=true
+    versionRange="[0.4.0,)"
+    ordering="NONE"
+    side="BOTH"
