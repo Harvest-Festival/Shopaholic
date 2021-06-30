@@ -1,9 +1,19 @@
 {
   "gui.shopaholic.manager": "Economy Manager",
+  "gui.shopaholic.manager.account": "%s's account",
+  "gui.shopaholic.manager.balance": "Balance",
+  "gui.shopaholic.manager.expenses": "Expenses",
   "gui.shopaholic.manager.from.personal": "Click to transfer from your personal wallet to the shared wallet.",
   "gui.shopaholic.manager.from.shared": "Click to transfer from the shared wallet to your personal wallet.",
-  "gui.shopaholic.manager.x.10": "Hold down %sSHIFT %sfor 10x",
-  "gui.shopaholic.manager.x.100": "Hold down %sCTRL %sfor 100x",
-  "gui.shopaholic.manager.x.1000": "Hold down %sALT %sfor 1000x",
+  "gui.shopaholic.manager.income": "Income",
+  "gui.shopaholic.manager.profit": "Profit",
+  "gui.shopaholic.manager.transfer": "Transfer",
+  "gui.shopaholic.manager.wallet.active": "active",
+  "gui.shopaholic.manager.wallet.currently": "This wallet is currently %s",
+  "gui.shopaholic.manager.wallet.inactive": "inactive",
+  "gui.shopaholic.manager.wallet.switch": "Click to switch to this wallet",
+  "gui.shopaholic.manager.x.10": "Hold down %s for 10x",
+  "gui.shopaholic.manager.x.100": "Hold down %s for 100x",
+  "gui.shopaholic.manager.x.1000": "Hold down %s for 1000x",
   "item.shopaholic.economy_manager": "Economy Manager"
 }

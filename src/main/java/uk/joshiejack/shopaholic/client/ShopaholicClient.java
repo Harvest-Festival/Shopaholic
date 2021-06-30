@@ -25,6 +25,11 @@ public class ShopaholicClient {
                         Book.getInstance(Shopaholic.MODID, container, inv, text, (Book bs) -> {
                             ITextComponent manager = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager");
                             bs.withTab(new Tab(manager, PageEconomyManager.ICON)).withPage(new PageEconomyManager(manager));
+                            //Setup colours
+                            bs.fontColor1 = 4210752;
+                            bs.fontColor2 = 0x3F3F3F;
+                            bs.lineColor1 = 0xFF515557;
+                            bs.lineColor2 = 0xFF7F8589;
                         })
                 ));
     }

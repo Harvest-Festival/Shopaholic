@@ -14,14 +14,28 @@ public class ShopaholicLanguage extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("gui.shopaholic.manager", "Economy Manager");
-        add("gui.shopaholic.manager.from.shared", "Click to transfer from the shared wallet to your personal wallet.");
-        add("gui.shopaholic.manager.from.personal", "Click to transfer from your personal wallet to the shared wallet.");
-        add("gui.shopaholic.manager.x.10", "Hold down %sSHIFT %sfor 10x");
-        add("gui.shopaholic.manager.x.100", "Hold down %sCTRL %sfor 100x");
-        add("gui.shopaholic.manager.x.1000", "Hold down %sALT %sfor 1000x");
+        addManager("from.shared", "Click to transfer from the shared wallet to your personal wallet.");
+        addManager("from.personal", "Click to transfer from your personal wallet to the shared wallet.");
+        addManager("x.10", "Hold down %s for 10x");
+        addManager("x.100", "Hold down %s for 100x");
+        addManager("x.1000", "Hold down %s for 1000x");
+        addManager("wallet.currently", "This wallet is currently %s");
+        addManager("wallet.active", "active");
+        addManager("wallet.inactive", "inactive");
+        addManager("wallet.switch", "Click to switch to this wallet");
+        addManager("transfer", "Transfer");
+        addManager("expenses", "Expenses");
+        addManager("income", "Income");
+        addManager("profit", "Profit");
+        addManager("balance", "Balance");
+        addManager("account", "%s's account");
 
         ForgeRegistries.ITEMS.getValues()
                 .stream().filter(i -> i.getRegistryName().getNamespace().equals(Shopaholic.MODID))
                 .forEach(item -> add(item, WordUtils.capitalizeFully(item.getRegistryName().getPath().replace("_", " "))));
+    }
+
+    private void addManager(String name, String text) {
+        add("gui.shopaholic.manager." + name, text);
     }
 }

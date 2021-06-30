@@ -24,11 +24,9 @@ import java.util.List;
 public class TransferBalanceButton extends AbstractButton {
     private static final ITextComponent FROM_SHARED = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.shared").withStyle(TextFormatting.GOLD);
     private static final ITextComponent FROM_PERSONAL = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.personal").withStyle(TextFormatting.GOLD);
-    private static final ITextComponent X10 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.10", TextFormatting.AQUA, TextFormatting.RESET);
-    private static final ITextComponent X100 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.100", TextFormatting.GREEN, TextFormatting.RESET);
-    private static final ITextComponent X1000 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.1000", TextFormatting.LIGHT_PURPLE, TextFormatting.RESET);
-
-    private final WalletType from;
+    private static final ITextComponent X10 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.10", new StringTextComponent("SHIFT").withStyle(TextFormatting.AQUA));
+    private static final ITextComponent X100 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.100", new StringTextComponent("CTRL").withStyle(TextFormatting.GREEN));
+    private static final ITextComponent X1000 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.1000", new StringTextComponent("ALT").withStyle(TextFormatting.LIGHT_PURPLE));
     private final long value;
 
     public TransferBalanceButton(WalletType from, long value, Book book, int x, int y) {
@@ -38,7 +36,7 @@ public class TransferBalanceButton extends AbstractButton {
             if (Screen.hasControlDown()) gold *= 100;
             if (Screen.hasAltDown()) gold *= 1000;
             PenguinNetwork.sendToServer(new TransferBalancePacket(from, gold));
-        }, (btn, mtx, mX, myY) -> {
+        }, (btn, mtx, mX, mY) -> {
             List<ITextComponent> tooltip = new ArrayList<>();
             if (from == WalletType.SHARED)
                 tooltip.add(FROM_SHARED);
@@ -47,9 +45,9 @@ public class TransferBalanceButton extends AbstractButton {
             tooltip.add(X10);
             tooltip.add(X100);
             tooltip.add(X1000);
-            GuiUtils.drawHoveringText(mtx, tooltip, mX, myY, book.width, book.height, 200, book.minecraft().font);
+            GuiUtils.drawHoveringText(mtx, tooltip, mX, mY, book.width, book.height, 200, book.minecraft().font);
         });
-        this.from = from;
+
         this.value = value;
     }
 
