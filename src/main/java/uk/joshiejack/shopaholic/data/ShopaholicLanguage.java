@@ -29,6 +29,9 @@ public class ShopaholicLanguage extends LanguageProvider {
         addManager("profit", "Profit");
         addManager("balance", "Balance");
         addManager("account", "%s's account");
+        addManager("name", "Account Manager");
+        addManager("shipping", "Shipping Log");
+        addManager("combined", "Combined Earnings");
 
         ForgeRegistries.ITEMS.getValues()
                 .stream().filter(i -> i.getRegistryName().getNamespace().equals(Shopaholic.MODID))

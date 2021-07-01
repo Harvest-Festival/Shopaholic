@@ -15,6 +15,7 @@ import uk.joshiejack.shopaholic.api.gold.WalletType;
 import uk.joshiejack.shopaholic.client.Shipped;
 import uk.joshiejack.shopaholic.client.gui.ShopScreen;
 import uk.joshiejack.shopaholic.client.gui.widget.EconomyStatsLabel;
+import uk.joshiejack.shopaholic.client.gui.widget.ShippingLogLabel;
 import uk.joshiejack.shopaholic.client.gui.widget.SwitchAccountButton;
 import uk.joshiejack.shopaholic.client.gui.widget.TransferBalanceButton;
 import uk.joshiejack.shopaholic.shipping.Shipping;
@@ -24,6 +25,7 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldItem> {
     public static final Icon ICON = new TextureIcon(ShopScreen.EXTRA, 240, 224);
+    public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
     private static final long[] divisions = new long[]{ 1, 5, 10, 100, 1000 };
 
     public PageEconomyManager(ITextComponent name) {
@@ -39,21 +41,26 @@ public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldIte
 
     @Override
     public void initLeft(Book book, int left, int top) {
-        book.addButton(new EconomyStatsLabel(book, left + 25, top + 5, new StringTextComponent(Strings.EMPTY)));
+        book.addButton(new EconomyStatsLabel(book, left + 25, top + 8));
         PlayerEntity player = book.minecraft().player;
         assert player != null;
         if (!player.getUUID().equals(PenguinTeams.getTeamForPlayer(player).getID())) {
             for (int i = 0; i < divisions.length; i++) {
                 int y = 57;
-                book.addButton(new TransferBalanceButton(WalletType.PERSONAL, divisions[i], book, left + 22 + 25 * i, top + y));
-                book.addButton(new TransferBalanceButton(WalletType.SHARED, divisions[i], book, left + 22 + 25 * i, top + y + 32));
+                book.addButton(new TransferBalanceButton(WalletType.PERSONAL, divisions[i], book, left + 22 + 25 * i, top + y + 3));
+                book.addButton(new TransferBalanceButton(WalletType.SHARED, divisions[i], book, left + 22 + 25 * i, top + y + 35));
             }
 
             int pWidth = book.minecraft().font.width(WalletType.PERSONAL.getName(player));
             int tWidth = book.minecraft().font.width(WalletType.SHARED.getName(player));
-            book.addButton(new SwitchAccountButton(WalletType.PERSONAL, book, left + 12 + pWidth, top + 6));
-            book.addButton(new SwitchAccountButton(WalletType.SHARED, book, left + 12 + tWidth, top + 106));
+            book.addButton(new SwitchAccountButton(WalletType.PERSONAL, book, left + 12 + pWidth, top + 9));
+            book.addButton(new SwitchAccountButton(WalletType.SHARED, book, left + 12 + tWidth, top + 109));
         }
+    }
+
+    @Override
+    public void initRight(Book book, int left, int top) {
+        book.addButton(new ShippingLogLabel(book, left + 15, top + 8));
     }
 
 //

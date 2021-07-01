@@ -17,6 +17,7 @@ import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.gold.WalletType;
 import uk.joshiejack.shopaholic.client.Wallet;
 import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 
 import javax.annotation.Nonnull;
 import java.text.NumberFormat;
@@ -29,20 +30,20 @@ public class EconomyStatsLabel extends Widget {
     private static final ITextComponent INCOME = new TranslationTextComponent("gui.shopaholic.manager.income");
     private static final ITextComponent PROFIT = new TranslationTextComponent("gui.shopaholic.manager.profit");
     private static final ITextComponent BALANCE = new TranslationTextComponent("gui.shopaholic.manager.balance");
+    private static final ITextComponent NAME = new TranslationTextComponent("gui.shopaholic.manager.name").withStyle(TextFormatting.UNDERLINE);
 
     private final Book book;
-    private boolean isSharedWalletActive;
-    private Wallet personal, shared;
-    private String playerName;
-    private String teamName;
+    private final Wallet personal;
+    private final Wallet shared;
+    private final String playerName;
+    private final String teamName;
 
-    public EconomyStatsLabel(Book b, int x, int y, ITextComponent name) {
-        super(x, y, 0, 0, name);
+    public EconomyStatsLabel(Book b, int x, int y) {
+        super(x, y, 0, 0, PageEconomyManager.EMPTY_STRING);
         PlayerEntity player = Minecraft.getInstance().player;
         PenguinTeam team = PenguinTeams.getTeamForPlayer(player);
         personal = Wallet.getWallet(WalletType.PERSONAL);
         shared = player.getUUID().equals(team.getID()) ? null : Wallet.getWallet(WalletType.SHARED);
-        isSharedWalletActive = Wallet.getActive() == shared;
         playerName = WalletType.PERSONAL.getName(player);
         teamName = WalletType.SHARED.getName(player);
         book = b;
@@ -56,6 +57,7 @@ public class EconomyStatsLabel extends Widget {
     public void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
         //GlStateManager.disableDepth();
+        mc.font.drawShadow(matrix, NAME, x + 57 - (mc.font.width(NAME) / 2F), y - 10, 0xFFFFFF);
         StringHelper.enableUnicode();
         //Draw your personal balance
         mc.font.drawShadow(matrix, TextFormatting.BOLD + playerName, x, y, book.fontColor1);
@@ -75,47 +77,49 @@ public class EconomyStatsLabel extends Widget {
         matrix.pushPose();
         float scale = 0.6666666666F;
         matrix.scale(scale, scale, scale);
+        int xPos = (int) ((x + 45) / scale);
         ////Personal Account
         //Expenses
         mc.font.drawShadow(matrix, EXPENSES, (x) / scale, (y + 10) / scale, 0xFFFFFFFF);
-        mc.font.drawShadow(matrix, formatGold(personal.getExpenses()), (x + 45) / scale, (y + 10) / scale, 0xFFFFFFFF);
+        mc.font.drawShadow(matrix, formatGold(personal.getExpenses()), xPos, (y + 10) / scale, 0xFFFFFFFF);
         //Income
         mc.font.drawShadow(matrix, INCOME, (x) / scale, (y + 19) / scale, 0xFFFFFFFF);
-        mc.font.drawShadow(matrix, formatGold(personal.getIncome()), (x + 45) / scale, (y + 19) / scale, 0xFFFFFFFF);
+        mc.font.drawShadow(matrix, formatGold(personal.getIncome()), xPos, (y + 19) / scale, 0xFFFFFFFF);
         //Profit
         mc.font.drawShadow(matrix, PROFIT, (x) / scale, (y + 28) / scale, 0xFFFFFFFF);
-        mc.font.drawShadow(matrix, formatGold(personal.getIncome() - personal.getExpenses()), (x + 45) / scale, (y + 28) / scale, 0xFFFFFFFF);
+        mc.font.drawShadow(matrix, formatGold(personal.getIncome() - personal.getExpenses()), xPos, (y + 28) / scale, 0xFFFFFFFF);
         //Balance
         mc.font.drawShadow(matrix, BALANCE, (x) / scale, (y + 37) / scale, 0xFFFFFFFF);
-        mc.font.drawShadow(matrix, formatGold(personal.getBalance()), (x + 45) / scale, (y + 37) / scale, 0xFFFFFFFF);
+        mc.font.drawShadow(matrix, formatGold(personal.getBalance()), xPos, (y + 37) / scale, 0xFFFFFFFF);
 
         if (shared != null) {
             ////Shared Account
             //Expenses
             mc.font.drawShadow(matrix, EXPENSES, (x) / scale, (y + 110) / scale, 0xFFFFFFFF);
-            mc.font.drawShadow(matrix, formatGold(shared.getExpenses()), (x + 45) / scale, (y + 110) / scale, 0xFFFFFFFF);
+            mc.font.drawShadow(matrix, formatGold(shared.getExpenses()), xPos, (y + 110) / scale, 0xFFFFFFFF);
             //Income
             mc.font.drawShadow(matrix, INCOME, (x) / scale, (y + 119) / scale, 0xFFFFFFFF);
-            mc.font.drawShadow(matrix, formatGold(shared.getIncome()), (x + 45) / scale, (y + 119) / scale, 0xFFFFFFFF);
+            mc.font.drawShadow(matrix, formatGold(shared.getIncome()), xPos, (y + 119) / scale, 0xFFFFFFFF);
             //Profit
             mc.font.drawShadow(matrix, PROFIT, (x) / scale, (y + 128) / scale, 0xFFFFFFFF);
-            mc.font.drawShadow(matrix, formatGold(shared.getIncome() - shared.getExpenses()), (x + 45) / scale, (y + 128) / scale, 0xFFFFFFFF);
+            mc.font.drawShadow(matrix, formatGold(shared.getIncome() - shared.getExpenses()), xPos, (y + 128) / scale, 0xFFFFFFFF);
             //Balance
             mc.font.drawShadow(matrix, BALANCE, (x) / scale, (y + 137) / scale, 0xFFFFFFFF);
-            mc.font.drawShadow(matrix, formatGold(shared.getBalance()), (x + 45) / scale, (y + 137) / scale, 0xFFFFFFFF);
+            mc.font.drawShadow(matrix, formatGold(shared.getBalance()), xPos, (y + 137) / scale, 0xFFFFFFFF);
         }
 
         RenderSystem.color4f(1F, 1F, 1F, 1F);
+        int goldX = (int) ((x + 35) / scale);
         mc.getTextureManager().bind(ShopScreen.EXTRA);
-        blit(matrix, (int) ((x + 35) / scale), (int) ((y + 9) / scale), 244, 244, 12, 12);
-        blit(matrix, (int) ((x + 35) / scale), (int) ((y + 18) / scale), 244, 244, 12, 12);
-        blit(matrix, (int) ((x + 35) / scale), (int) ((y + 27) / scale), 244, 244, 12, 12);
-        blit(matrix, (int) ((x + 35) / scale), (int) ((y + 36) / scale), 244, 244, 12, 12);
+        blit(matrix, goldX, (int) ((y + 9) / scale), 244, 244, 12, 12);
+        blit(matrix, goldX, (int) ((y + 18) / scale), 244, 244, 12, 12);
+        blit(matrix, goldX, (int) ((y + 27) / scale), 244, 244, 12, 12);
+        blit(matrix, goldX, (int) ((y + 36) / scale), 244, 244, 12, 12);
         if (shared != null) {
-            blit(matrix, (int) ((x + 35) / scale), (int) ((y + 109) / scale), 244, 244, 12, 12);
-            blit(matrix, (int) ((x + 35) / scale), (int) ((y + 118) / scale), 244, 244, 12, 12);
-            blit(matrix, (int) ((x + 35) / scale), (int) ((y + 127) / scale), 244, 244, 12, 12);
-            blit(matrix, (int) ((x + 35) / scale), (int) ((y + 136) / scale), 244, 244, 12, 12);
+            blit(matrix, goldX, (int) ((y + 109) / scale), 244, 244, 12, 12);
+            blit(matrix, goldX, (int) ((y + 118) / scale), 244, 244, 12, 12);
+            blit(matrix, goldX, (int) ((y + 127) / scale), 244, 244, 12, 12);
+            blit(matrix, goldX, (int) ((y + 136) / scale), 244, 244, 12, 12);
         }
 
         matrix.popPose();
