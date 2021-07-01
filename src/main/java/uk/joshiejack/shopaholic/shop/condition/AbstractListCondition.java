@@ -2,7 +2,7 @@ package uk.joshiejack.shopaholic.shop.condition;
 
 import com.google.common.collect.Lists;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
-import uk.joshiejack.shopaholic.api.shops.Condition;
+import uk.joshiejack.shopaholic.api.shop.Condition;
 
 import java.util.List;
 import java.util.Map;

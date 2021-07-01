@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.gold;
+package uk.joshiejack.shopaholic.bank;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -7,15 +7,13 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.INBTSerializable;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.generic.MathsHelper;
-import uk.joshiejack.shopaholic.ShopaholicConfig;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.api.gold.IVault;
+import uk.joshiejack.shopaholic.ShopaholicServerConfig;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.network.SyncGoldPacket;
 
 import java.util.UUID;
 
-public class Vault implements INBTSerializable<CompoundNBT>, IVault {
-    private static final long MAX = (long) ShopaholicConfig.maxGold * ShopaholicConfig.maxGoldMultiplier;
+public class Vault implements INBTSerializable<CompoundNBT> {
     private final Bank bank;
     private final UUID uuid;
     private long balance = 0;
@@ -48,7 +46,6 @@ public class Vault implements INBTSerializable<CompoundNBT>, IVault {
         setBalance(world, balance - amount);
     }
 
-    @Override
     public void increaseGold(World world, long amount) {
         if (amount < 0) amount = 0;
         income += amount;
@@ -57,7 +54,7 @@ public class Vault implements INBTSerializable<CompoundNBT>, IVault {
     }
 
     public void setBalance(World world, long amount) {
-        balance = MathsHelper.constrainToRangeLong(amount, ShopaholicConfig.minGold, MAX);
+        balance = MathsHelper.constrainToRangeLong(amount, ShopaholicServerConfig.minGold.get(), ShopaholicServerConfig.maxGold.get());
         bank.setDirty(); //Mark for saving
         if (world instanceof ServerWorld)
             synchronize((ServerWorld) world); //Sync the data to the players

@@ -3,8 +3,8 @@ package uk.joshiejack.shopaholic.shop.input;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
-import uk.joshiejack.shopaholic.api.shops.ShopInput;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.ShopInput;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 public class ShopInputItem extends ShopInput<Ingredient> {
     public ShopInputItem(ItemStack stack) {

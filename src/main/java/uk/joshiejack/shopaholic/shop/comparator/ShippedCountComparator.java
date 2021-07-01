@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import uk.joshiejack.penguinlib.data.database.Row;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
-import uk.joshiejack.shopaholic.client.Shipped;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Market;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 

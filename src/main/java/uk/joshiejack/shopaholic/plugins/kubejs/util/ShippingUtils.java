@@ -9,14 +9,14 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import uk.joshiejack.shopaholic.client.Shipped;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Market;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 import uk.joshiejack.shopaholic.shipping.ShippingRegistry;
 
 public class ShippingUtils {
     public static long value(ItemStackJS wrapper) {
-        return ShippingRegistry.INSTANCE.getValue(wrapper.getItemStack());
+        return ShippingRegistry.getValue(wrapper.getItemStack());
     }
 
     public static void ship(PlayerJS<?> playerWrapper, ItemStackJS stackWrapper, int count) {
@@ -29,7 +29,7 @@ public class ShippingUtils {
                 IItemHandlerModifiable inventory = ((IItemHandlerModifiable) handler);
                 for (int i = 0; i < inventory.getSlots(); i++) {
                     ItemStack inSlot = inventory.getStackInSlot(i);
-                    long value = ShippingRegistry.INSTANCE.getValue(inSlot);
+                    long value = ShippingRegistry.getValue(inSlot);
                     if (value > 0) {
                         shipping.add(inSlot);
                         inventory.setStackInSlot(i, ItemStack.EMPTY);

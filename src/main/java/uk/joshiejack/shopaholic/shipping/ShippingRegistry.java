@@ -14,13 +14,12 @@ import uk.joshiejack.shopaholic.event.ItemGetValueEvent;
 
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class ShippingRegistry {
-    public static final ShippingRegistry INSTANCE = new ShippingRegistry();
-    private final Object2LongMap<Item> itemToValue = new Object2LongOpenHashMap<>();
-    private final Object2LongMap<ResourceLocation> tagToValue = new Object2LongOpenHashMap<>();
+    private static final Object2LongMap<Item> itemToValue = new Object2LongOpenHashMap<>();
+    private static final Object2LongMap<ResourceLocation> tagToValue = new Object2LongOpenHashMap<>();
 
     @SuppressWarnings("ConstantConditions")
-    public long getValue(ItemStack stack) {
-        long value = stack.hasTag() && stack.getTag().contains("SellValue") ? stack.getTag().getLong("SellValue") : itemToValue.getLong(stack);
+    public static long getValue(ItemStack stack) {
+        long value = stack.hasTag() && stack.getTag().contains("SellValue") ? stack.getTag().getLong("SellValue") : itemToValue.getLong(stack.getItem());
         if (value == 0) {
             for (ResourceLocation tag: stack.getItem().getTags())
                 if (tagToValue.containsKey(tag)) {
@@ -36,11 +35,13 @@ public class ShippingRegistry {
 
     @SubscribeEvent
     public static void onDatabaseLoaded(DatabaseLoadedEvent event) {
+        itemToValue.clear();
+        tagToValue.clear();
         event.table("item_values").rows().stream()
                 .filter(row -> row.item() != null && !row.isEmpty("value"))
-                .forEach(row -> INSTANCE.itemToValue.put(row.item(), row.getAsLong("value")));
+                .forEach(row -> itemToValue.put(row.item(), row.getAsLong("value")));
         event.table("tag_values").rows().stream()
                 .filter(row -> row.getRL("tag") != null && !row.isEmpty("value"))
-                .forEach(row -> INSTANCE.tagToValue.put(row.getRL("tag"), row.getAsLong("value")));
+                .forEach(row -> tagToValue.put(row.getRL("tag"), row.getAsLong("value")));
     }
 }

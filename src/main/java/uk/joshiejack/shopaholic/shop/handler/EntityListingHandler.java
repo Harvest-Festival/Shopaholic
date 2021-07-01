@@ -11,7 +11,7 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.util.icon.EntityIcon;
 import uk.joshiejack.penguinlib.util.icon.Icon;
-import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 //TODO: More powerful options for the entity
 public class EntityListingHandler extends ListingHandler<EntityListingHandler.EntitySpawnData> {

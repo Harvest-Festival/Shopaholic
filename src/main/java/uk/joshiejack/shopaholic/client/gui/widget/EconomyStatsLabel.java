@@ -14,8 +14,8 @@ import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.client.Wallet;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.ShopScreen;
 import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 

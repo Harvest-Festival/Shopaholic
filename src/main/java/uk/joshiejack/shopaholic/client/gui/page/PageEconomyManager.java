@@ -11,13 +11,10 @@ import uk.joshiejack.penguinlib.client.gui.book.page.AbstractMultiPage;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.TextureIcon;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.client.Shipped;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.gui.widget.*;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.client.gui.ShopScreen;
-import uk.joshiejack.shopaholic.client.gui.widget.EconomyStatsLabel;
-import uk.joshiejack.shopaholic.client.gui.widget.ShippingLogLabel;
-import uk.joshiejack.shopaholic.client.gui.widget.SwitchAccountButton;
-import uk.joshiejack.shopaholic.client.gui.widget.TransferBalanceButton;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.List;
@@ -26,18 +23,11 @@ import java.util.List;
 public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldItem> {
     public static final Icon ICON = new TextureIcon(ShopScreen.EXTRA, 240, 224);
     public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
-    private static final long[] divisions = new long[]{ 1, 5, 10, 100, 1000 };
+    private static final long[] divisions = new long[]{1, 5, 10, 100, 1000};
 
     public PageEconomyManager(ITextComponent name) {
-        super(name, 36);
+        super(name, 30);
     }
-
-//
-//    @Override
-//    public void initGui(List<GuiButton> buttonList, List<GuiLabel> labelList) {
-//        super.initGui(buttonList, labelList);
-//        labelList.add(new ShippingLogLabel(gui, 25, 24));
-//    }
 
     @Override
     public void initLeft(Book book, int left, int top) {
@@ -61,17 +51,12 @@ public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldIte
     @Override
     public void initRight(Book book, int left, int top) {
         book.addButton(new ShippingLogLabel(book, left + 15, top + 8));
+        super.initRight(book, left, top);
     }
 
-//
-//    @Override
-//    protected BookLabel createLabel(BookScreen gui, Shipping.HolderSold entry, PageSide side, int position) {
-//        return new ShippedItemLabel(gui, 163 + (position % 6) * 21, 28 + (side == PageSide.RIGHT ? 54 : 0) + (position / 6) * 18, new CyclingStack(NonNullList.from(ItemStack.EMPTY, entry.getStack())), entry.getValue());
-//    }
-
     @Override
-    protected void initEntry(Book book, int i, int i1, int i2, Shipping.SoldItem sold) {
-
+    protected void initEntry(Book book, int x, int y, int id, Shipping.SoldItem sold) {
+        book.addButton(new ShippedItemLabel(book, x + 10 + ((id % 6) * 21), y + 10 + ((id / 6) * 21), sold.getStack(), sold.getValue()));
     }
 
     @Override

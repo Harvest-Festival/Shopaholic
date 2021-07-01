@@ -15,8 +15,10 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -27,13 +29,14 @@ import org.apache.logging.log4j.Logger;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
 import uk.joshiejack.penguinlib.item.base.BookItem;
 import uk.joshiejack.shopaholic.api.ShopaholicAPI;
-import uk.joshiejack.shopaholic.api.shops.Condition;
-import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.data.ShopaholicBlockStates;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.ShopaholicItemModels;
 import uk.joshiejack.shopaholic.data.ShopaholicLanguage;
-import uk.joshiejack.shopaholic.gold.Bank;
+import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.inventory.EconomyManagerContainer;
 import uk.joshiejack.shopaholic.inventory.ShopContainer;
 import uk.joshiejack.shopaholic.loot.CapValue;
@@ -62,6 +65,8 @@ public class Shopaholic {
         ShopaholicItems.ITEMS.register(eventBus);
         ShopaholicSounds.SOUNDS.register(eventBus);
         ShopaholicAPI.instance = new ShopaholicAPIImpl();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ShopaholicClientConfig.create());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ShopaholicServerConfig.create());
     }
 
     private void setupCommon(FMLCommonSetupEvent event) {

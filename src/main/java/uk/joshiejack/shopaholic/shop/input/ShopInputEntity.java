@@ -4,8 +4,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import uk.joshiejack.shopaholic.api.shops.ShopInput;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.ShopInput;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 public class ShopInputEntity extends ShopInput<EntityType<?>> {
     public ShopInputEntity(Entity entity) {

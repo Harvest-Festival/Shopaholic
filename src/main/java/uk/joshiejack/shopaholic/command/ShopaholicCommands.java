@@ -15,8 +15,9 @@ public class ShopaholicCommands {
                 LiteralArgumentBuilder.<CommandSource>literal(Shopaholic.MODID)
                         .requires(cs -> cs.hasPermission(2))
                         .then(GoldCommand.register())
-                        //TODO.then(ShareCommand.register())
-                        //TODO.then(TransferCommand.register())
+                        .then(ShipCommand.register())
+                //TODO.then(ShareCommand.register())
+                //TODO.then(TransferCommand.register())
         );
     }
 }

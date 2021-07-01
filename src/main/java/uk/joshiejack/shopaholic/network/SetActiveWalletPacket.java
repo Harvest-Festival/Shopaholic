@@ -4,17 +4,16 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.client.Wallet;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.bank.Wallet;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
 public class SetActiveWalletPacket extends AbstractSetPlayerNBTPacket {
     private boolean shared;
 
-    public SetActiveWalletPacket() { super(Shopaholic.MODID + "Settings");}
+    public SetActiveWalletPacket() { super("ShopaholicSettings");}
     public SetActiveWalletPacket(boolean shared) {
-        super(Shopaholic.MODID + "Settings");
+        super("ShopaholicSettings");
         this.shared = shared;
     }
 

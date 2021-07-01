@@ -30,7 +30,7 @@ public class CapValue extends LootFunction {
 
     @Nonnull
     public ItemStack run(@Nonnull ItemStack stack, @Nonnull LootContext context) {
-        long value = ShippingRegistry.INSTANCE.getValue(stack);
+        long value = ShippingRegistry.getValue(stack);
         if (value > cap && !stack.hasTag()) {
             stack.setTag(new CompoundNBT());
             stack.getTag().putLong("SellValue", cap);

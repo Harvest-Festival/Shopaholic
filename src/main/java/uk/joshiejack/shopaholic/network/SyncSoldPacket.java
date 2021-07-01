@@ -3,7 +3,7 @@ package uk.joshiejack.shopaholic.network;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.shopaholic.client.Shipped;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.Set;

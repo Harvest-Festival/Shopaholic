@@ -31,7 +31,7 @@ public class RatioValue extends LootFunction {
     @Nonnull
     @Override
     public ItemStack run(@Nonnull ItemStack stack, @Nonnull LootContext context) {
-        long value = ShippingRegistry.INSTANCE.getValue(stack);
+        long value = ShippingRegistry.getValue(stack);
         if (!stack.hasTag()) {
             stack.setTag(new CompoundNBT());
         }

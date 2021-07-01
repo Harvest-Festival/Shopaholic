@@ -12,8 +12,8 @@ import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.client.gui.book.widget.AbstractButton;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.client.Wallet;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.network.SwitchWalletPacket;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,7 @@
 package uk.joshiejack.shopaholic.shop;
 
 import uk.joshiejack.shopaholic.api.ShopaholicAPI;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
 
 public class ShopaholicAPIImpl implements ShopaholicAPI.IShopaholicAPI {
     @Override

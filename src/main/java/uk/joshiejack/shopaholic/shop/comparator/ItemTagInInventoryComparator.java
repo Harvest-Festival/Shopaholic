@@ -4,8 +4,8 @@ import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.util.helpers.PlayerHelper;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 

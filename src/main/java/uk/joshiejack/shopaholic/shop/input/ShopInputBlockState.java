@@ -4,8 +4,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.state.Property;
-import uk.joshiejack.shopaholic.api.shops.ShopInput;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.ShopInput;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 public class ShopInputBlockState extends ShopInput<BlockState> {
     public ShopInputBlockState(BlockState id) {

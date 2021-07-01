@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.client;
+package uk.joshiejack.shopaholic.client.shipping;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

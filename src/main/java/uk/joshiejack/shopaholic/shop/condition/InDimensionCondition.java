@@ -2,8 +2,8 @@ package uk.joshiejack.shopaholic.shop.condition;
 
 import net.minecraft.util.ResourceLocation;
 import uk.joshiejack.penguinlib.data.database.Row;
-import uk.joshiejack.shopaholic.api.shops.Condition;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 

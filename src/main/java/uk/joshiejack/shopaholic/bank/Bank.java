@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.gold;
+package uk.joshiejack.shopaholic.bank;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -9,7 +9,6 @@ import net.minecraft.world.storage.WorldSavedData;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.network.SetActiveWalletPacket;
 
 import javax.annotation.Nonnull;
@@ -39,16 +38,16 @@ public class Bank extends WorldSavedData {
     public Vault getVaultForPlayer(PlayerEntity player) {
         //Change this to be based on a person player toggle instead
         PenguinTeam team = PenguinTeams.getTeamForPlayer(player);
-        boolean shared = player.getPersistentData().contains(Shopaholic.MODID + "Settings") &&
-                player.getPersistentData().getCompound(Shopaholic.MODID + "Settings").getBoolean("SharedGold"); //Player's Shared gold status
+        boolean shared = player.getPersistentData().contains("ShopaholicSettings") &&
+                player.getPersistentData().getCompound("ShopaholicSettings").getBoolean("SharedWallet"); //Player's Shared gold status
         return shared ? getVaultForTeam(team.getID()).shared() : getVaultForTeam(player.getUUID()).personal();
     }
 
     public void syncToPlayer(ServerPlayerEntity player) {
         //Sync both
         PenguinTeam team = PenguinTeams.getTeamForPlayer(player);
-        boolean shared = player.getPersistentData().contains(Shopaholic.MODID + "Settings") &&
-                player.getPersistentData().getCompound(Shopaholic.MODID + "Settings").getBoolean("SharedGold"); //Player's Shared gold status
+        boolean shared = player.getPersistentData().contains("ShopaholicSettings") &&
+                player.getPersistentData().getCompound("ShopaholicSettings").getBoolean("SharedWallet"); //Player's Shared gold status
         PenguinNetwork.sendToClient(new SetActiveWalletPacket(shared), player);
         getVaultForTeam(team.getID()).shared().synchronize((ServerWorld) player.level);
         getVaultForTeam(player.getUUID()).personal().synchronize((ServerWorld) player.level);

@@ -1,6 +1,6 @@
 package uk.joshiejack.shopaholic.api;
 
-import uk.joshiejack.shopaholic.api.shops.Comparator;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
 
 public class ShopaholicAPI {
     public static IShopaholicAPI instance = null;

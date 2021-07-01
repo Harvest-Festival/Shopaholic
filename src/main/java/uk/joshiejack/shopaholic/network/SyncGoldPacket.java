@@ -5,8 +5,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.PenguinPacket;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.client.Wallet;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.bank.Wallet;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
 public class SyncGoldPacket extends PenguinPacket {

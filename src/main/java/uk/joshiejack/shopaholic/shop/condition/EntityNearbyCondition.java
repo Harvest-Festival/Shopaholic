@@ -4,8 +4,8 @@ import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import uk.joshiejack.penguinlib.data.database.Row;
-import uk.joshiejack.shopaholic.api.shops.Condition;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 

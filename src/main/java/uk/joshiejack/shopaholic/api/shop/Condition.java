@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.api.shops;
+package uk.joshiejack.shopaholic.api.shop;
 
 import com.google.common.collect.Maps;
 import net.minecraft.entity.player.PlayerEntity;

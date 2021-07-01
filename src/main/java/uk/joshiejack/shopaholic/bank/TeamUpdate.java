@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.gold;
+package uk.joshiejack.shopaholic.bank;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;

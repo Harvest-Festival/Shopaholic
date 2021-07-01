@@ -6,8 +6,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.shopaholic.gold.Bank;
-import uk.joshiejack.shopaholic.gold.Vault;
+import uk.joshiejack.shopaholic.bank.Bank;
+import uk.joshiejack.shopaholic.bank.Vault;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 

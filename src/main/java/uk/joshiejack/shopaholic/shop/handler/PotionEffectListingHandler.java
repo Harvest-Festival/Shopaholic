@@ -10,7 +10,7 @@ import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
-import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
     @Override

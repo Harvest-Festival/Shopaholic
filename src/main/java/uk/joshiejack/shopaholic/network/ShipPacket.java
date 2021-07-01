@@ -12,8 +12,9 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.packet.AbstractSyncCompoundNBTPacket;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.penguinlib.util.helpers.generic.StringHelper;
-import uk.joshiejack.shopaholic.client.Shipped;
+import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.Set;
@@ -29,7 +30,8 @@ public class ShipPacket extends AbstractSyncCompoundNBTPacket {
     public void handle(PlayerEntity player) {
         Set<Shipping.SoldItem> toSell = Sets.newHashSet();
         Shipping.readHolderCollection(tag.getList("ToSell", 10), toSell);
-        MinecraftForge.EVENT_BUS.register(new TrackingRenderer(toSell));
+        if (ShopaholicClientConfig.enableShippingTicker.get())
+            MinecraftForge.EVENT_BUS.register(new TrackingRenderer(toSell));
         //Merge in the newly sold items to the sold list
         Set<Shipping.SoldItem> merged = Sets.newHashSet();
         for (Shipping.SoldItem holder: toSell) {
@@ -59,12 +61,11 @@ public class ShipPacket extends AbstractSyncCompoundNBTPacket {
         }
 
         private void renderAt(Minecraft mc, MatrixStack matrix, Shipping.SoldItem stack, int x, int y) {
-            mc.getItemRenderer().renderGuiItem(stack.getStack(), x + 4, y - 24);
-            //TODO? SCALE UP? StackRenderHelper.drawStack(stack.getStack(), x + 4, y - 24, 1.25F);
+            mc.getItemRenderer().renderGuiItem(stack.getStack(), x, y - 18);
             mc.getTextureManager().bind(ShopScreen.EXTRA);
-            mc.gui.blit(matrix, x + 30, y - 16, 244, 244, 12, 12);
+            mc.gui.blit(matrix, x + 21, y - 16, 244, 244, 12, 12);
             String text = StringHelper.convertNumberToString(stack.getValue());
-            mc.font.drawShadow(matrix, text, x + 44, y - 13, 0xFFFFFFFF);
+            mc.font.drawShadow(matrix, text, x + 35, y - 13, 0xFFFFFFFF);
         }
 
         private boolean hasFinishedOrUpdateTickerUp() {

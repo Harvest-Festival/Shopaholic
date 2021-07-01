@@ -7,15 +7,14 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.shopaholic.Shopaholic;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_SERVER)
 public class SwitchWalletPacket extends AbstractSetPlayerNBTPacket {
     private boolean shared;
 
-    public SwitchWalletPacket() { super(Shopaholic.MODID + "Settings");}
+    public SwitchWalletPacket() { super("ShopaholicSettings");}
     public SwitchWalletPacket(boolean shared) {
-        super(Shopaholic.MODID + "Settings");
+        super("ShopaholicSettings");
         this.shared = shared;
     }
 

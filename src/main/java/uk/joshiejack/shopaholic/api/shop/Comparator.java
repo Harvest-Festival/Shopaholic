@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.api.shops;
+package uk.joshiejack.shopaholic.api.shop;
 
 import uk.joshiejack.penguinlib.data.database.Row;
 

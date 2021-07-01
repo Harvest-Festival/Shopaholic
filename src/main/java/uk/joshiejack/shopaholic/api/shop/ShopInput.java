@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.api.shops;
+package uk.joshiejack.shopaholic.api.shop;
 
 import net.minecraft.network.PacketBuffer;
 

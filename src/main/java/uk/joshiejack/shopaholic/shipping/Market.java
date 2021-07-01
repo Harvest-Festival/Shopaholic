@@ -7,7 +7,6 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.Shopaholic;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -39,8 +38,8 @@ public class Market extends WorldSavedData {
 
     public Shipping getShippingForPlayer(PlayerEntity player) {
         PenguinTeam team = PenguinTeams.getTeamForPlayer(player);
-        boolean shared = player.getPersistentData().contains(Shopaholic.MODID + "Settings") &&
-                player.getPersistentData().getCompound(Shopaholic.MODID + "Settings").getBoolean("SharedGold"); //Player's Shared gold status
+        boolean shared = player.getPersistentData().contains("ShopaholicSettings") &&
+                player.getPersistentData().getCompound("ShopaholicSettings").getBoolean("SharedWallet"); //Player's Shared gold status
         return shared ? getShippingForTeam(team.getID()).shared() : getShippingForTeam(player.getUUID());
     }
 

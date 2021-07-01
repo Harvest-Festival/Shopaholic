@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemListIcon;
-import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 import java.util.List;
 import java.util.Objects;

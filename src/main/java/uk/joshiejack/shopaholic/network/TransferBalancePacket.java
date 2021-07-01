@@ -8,9 +8,9 @@ import uk.joshiejack.penguinlib.network.PenguinPacket;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.api.gold.WalletType;
-import uk.joshiejack.shopaholic.gold.Bank;
-import uk.joshiejack.shopaholic.gold.Vault;
+import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.bank.Bank;
+import uk.joshiejack.shopaholic.bank.Vault;
 
 import java.util.UUID;
 

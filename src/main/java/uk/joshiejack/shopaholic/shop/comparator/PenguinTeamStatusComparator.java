@@ -2,8 +2,8 @@ package uk.joshiejack.shopaholic.shop.comparator;
 
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 

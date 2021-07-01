@@ -14,7 +14,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
-import uk.joshiejack.shopaholic.api.shops.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 import java.util.List;
 

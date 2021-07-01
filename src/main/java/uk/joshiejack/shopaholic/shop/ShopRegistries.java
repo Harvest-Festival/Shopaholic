@@ -1,7 +1,7 @@
 package uk.joshiejack.shopaholic.shop;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import uk.joshiejack.shopaholic.api.shops.Comparator;
+import uk.joshiejack.shopaholic.api.shop.Comparator;
 
 import java.util.Map;
 

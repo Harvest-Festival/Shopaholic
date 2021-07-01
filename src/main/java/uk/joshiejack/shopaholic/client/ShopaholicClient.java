@@ -1,17 +1,21 @@
 package uk.joshiejack.shopaholic.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import uk.joshiejack.penguinlib.client.gui.HUDRenderer;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.client.gui.book.tab.Tab;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
+import uk.joshiejack.penguinlib.util.helpers.TimeHelper;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 
@@ -32,5 +36,14 @@ public class ShopaholicClient {
                             bs.lineColor2 = 0xFF7F8589;
                         })
                 ));
+
+        if (ShopaholicClientConfig.enableClockHUD.get()) {
+            HUDRenderer.RENDERERS.put(World.OVERWORLD, new HUDRenderer.HUDRenderData() {
+                @Override
+                public ITextComponent getHeader(Minecraft mc) {
+                    return  new TranslationTextComponent("Day %s", 1 + TimeHelper.getElapsedDays(mc.level.getDayTime()));
+                }
+            });
+        }
     }
 }

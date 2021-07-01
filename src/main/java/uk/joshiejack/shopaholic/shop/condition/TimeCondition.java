@@ -4,8 +4,8 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.util.helpers.TimeHelper;
-import uk.joshiejack.shopaholic.api.shops.Condition;
-import uk.joshiejack.shopaholic.api.shops.ShopTarget;
+import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 import java.util.List;

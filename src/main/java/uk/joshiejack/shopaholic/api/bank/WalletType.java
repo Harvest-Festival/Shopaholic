@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.api.gold;
+package uk.joshiejack.shopaholic.api.bank;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.TranslationTextComponent;

@@ -15,8 +15,8 @@ import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.event.ItemShippedEvent;
-import uk.joshiejack.shopaholic.gold.Bank;
-import uk.joshiejack.shopaholic.gold.Vault;
+import uk.joshiejack.shopaholic.bank.Bank;
+import uk.joshiejack.shopaholic.bank.Vault;
 import uk.joshiejack.shopaholic.network.ShipPacket;
 import uk.joshiejack.shopaholic.network.SyncLastSoldPacket;
 import uk.joshiejack.shopaholic.network.SyncSoldPacket;
@@ -70,7 +70,7 @@ public class Shipping implements INBTSerializable<CompoundNBT> {
     }
 
     public void add(ItemStack stack) {
-        long value = ShippingRegistry.INSTANCE.getValue(stack);
+        long value = ShippingRegistry.getValue(stack);
         //Add the tax
         if (value > 0) {
             for (SoldItem sold : toSell) {
