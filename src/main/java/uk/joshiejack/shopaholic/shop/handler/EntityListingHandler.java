@@ -64,8 +64,8 @@ public class EntityListingHandler extends ListingHandler<EntityListingHandler.En
     }
 
     public static class EntitySpawnData {
-        private final EntityType<?> type;
-        private final int scale;
+        public final EntityType<?> type;
+        public final int scale;
 
         public EntitySpawnData(EntityType<?> type, int scale) {
             this.type = type;

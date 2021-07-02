@@ -36,7 +36,7 @@ public class BundleListingHandler extends ListingHandler<List<Pair<ListingHandle
     public List<Pair<ListingHandler, Object>> getObjectFromDatabase(DatabaseLoadedEvent event, String data) {
         List<Pair<ListingHandler, Object>> list = Lists.newArrayList();
         event.table("bundles").where("id="+data).forEach(row -> {
-            ListingHandler<?> handler = ListingHandler.HANDLERS.get(row.get("handler").toString());
+            ListingHandler<?> handler = ListingHandler.HANDLERS.get(row.get("type").toString());
             Object entry = handler.getObjectFromDatabase(event, row.get("data"));
             list.add(Pair.of(handler, entry));
         });

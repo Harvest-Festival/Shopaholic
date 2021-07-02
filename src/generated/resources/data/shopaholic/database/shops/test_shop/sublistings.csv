@@ -1,0 +1,5 @@
+Department ID,Listing ID,ID,Type,Data,Gold,Weight
+test_department,apple,default,item,minecraft:apple,200,1
+test_department,bucket,default,item,minecraft:bucket,100,1
+test_department,poison,default,potion,poison_effect,0,1
+test_department,food,default,bundle,food_bundle,9000,1

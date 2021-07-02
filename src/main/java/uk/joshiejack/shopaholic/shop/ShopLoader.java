@@ -39,18 +39,18 @@ public class ShopLoader {
         //Very simple listings AND Generic one for any types
         ListingHandler.HANDLERS.forEach((type, handler) -> {
             event.table("very_simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("type"), type, sdl.get(type), "unlimited"));
-            event.table("simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), type, sdl.get(type), sdl.get("stock_mechanic")));
+            event.table("simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), type, sdl.get(type), sdl.get("stock mechanic")));
         });
 
         event.table("very_simple_department_listings").rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("data"), sdl.get("type"), sdl.get("data"), "unlimited"));
-        event.table("simple_department_listings").rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), sdl.get("type"), sdl.get("data"), sdl.get("stock_mechanic")));
+        event.table("simple_department_listings").rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), sdl.get("type"), sdl.get("data"), sdl.get("stock mechanic")));
     }
 
     private static void registerSimpleListing(DatabasePopulateEvent database, Row sdl, String id, String type, String data, String stock_mechanic) {
-        String department_id = sdl.get("department_id");
+        String departmentID = sdl.get("department id");
         long gold = sdl.getAsLong("gold");
-        database.createTable("department_listings", "department_id", "id", "stock_mechanic", "cost_formula").insert(department_id, id, stock_mechanic, "default");
-        database.createTable("sublistings", "department_id", "listing_id", "id", "type", "data", "gold", "weight").insert(department_id, id, "default", type, data, gold, 1);
+        database.createTable("department_listings", "Department ID", "ID", "Stock Mechanic", "Cost Formula").insert(departmentID, id, stock_mechanic, "default");
+        database.createTable("sublistings", "Department ID", "Listing ID", "ID", "Type", "Data", "Gold", "Weight").insert(departmentID, id, "default", type, data, gold, 1);
     }
 
     @SuppressWarnings("unchecked")
@@ -64,13 +64,13 @@ public class ShopLoader {
                 comparators.put(type, comparator);
             else {
                 event.table("comparator_" + type).rows().forEach(row -> {
-                    String comparator_id = row.id();
-                    if (comparators.containsKey(comparator_id)) {
-                        comparators.get(comparator_id).merge(row);
+                    String comparatorID = row.id();
+                    if (comparators.containsKey(comparatorID)) {
+                        comparators.get(comparatorID).merge(row);
                     } else {
                         Comparator theComparator = ShopRegistries.COMPARATORS.get(type);
                         if (theComparator != null) {
-                            comparators.put(comparator_id, theComparator.create(row));
+                            comparators.put(comparatorID, theComparator.create(row));
                         }
                     }
                 });
@@ -81,15 +81,15 @@ public class ShopLoader {
         Map<String, Condition> conditions = Maps.newHashMap(); //Temporary Registry
         for (String type : Condition.types()) {
             event.table("condition_" + type).rows().forEach(condition -> {
-                String condition_id = condition.id();
-                if (conditions.containsKey(condition_id)) {
-                    conditions.get(condition_id).merge(condition);
+                String conditionID = condition.id();
+                if (conditions.containsKey(conditionID)) {
+                    conditions.get(conditionID).merge(condition);
                 } else {
                     Condition theCondition = Condition.get(type);
                     if (theCondition != null) {
                         if (theCondition instanceof CompareCondition)
-                            conditions.put(condition_id, ((CompareCondition) theCondition).create(condition, comparators));
-                        else conditions.put(condition_id, theCondition.create(condition, condition_id));
+                            conditions.put(conditionID, ((CompareCondition) theCondition).create(condition, comparators));
+                        else conditions.put(conditionID, theCondition.create(condition, conditionID));
                     }
                 }
             });
@@ -120,51 +120,51 @@ public class ShopLoader {
         //cost_scripts.put(cost_formula.id(), Scripting.get(cost_formula.getScript())));
 
         event.table("shops").rows().forEach(shop -> {
-            String shop_id = shop.id();
+            String shopID = shop.id();
             String name = shop.name();
-            String vendor_id = shop.get("vendor_id");
-            InputMethod opening_method = InputMethod.valueOf(shop.get("opening_method").toString().toUpperCase(Locale.ENGLISH));
-            Shop theShop = new Shop(shop_id, name);
-            event.table("departments").where("shop_id=" + shop_id).forEach(department -> {
-                String department_id = department.id();
-                Department theDepartment = new Department(theShop, department_id, opening_method); //Add the department to the shop in creation
+            String vendorID = shop.get("vendor id");
+            InputMethod opening_method = InputMethod.valueOf(shop.get("opening method").toString().toUpperCase(Locale.ENGLISH));
+            Shop theShop = new Shop(shopID, name);
+            event.table("departments").where("shop id=" + shopID).forEach(department -> {
+                String departmentID = department.id();
+                Department theDepartment = new Department(theShop, departmentID, opening_method); //Add the department to the shop in creation
                 if (!department.isEmpty("icon")) theDepartment.setIcon(department.icon());
                 if (!department.isEmpty("name")) theDepartment.setName(department.name());
-                Row vendor = event.table("vendors").fetch_where("id=" + vendor_id); //Register the vendor
+                Row vendor = event.table("vendors").fetch_where("id=" + vendorID); //Register the vendor
                 InputToShop.register(vendor.get("type"), vendor.get("data"), theDepartment); //to the input
 
                 //Add the conditions for this shop
-                event.table("shop_conditions").where("shop_id=" + shop_id)
-                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition_id").toString())));
-                event.table("department_conditions").where("shop_id=" + shop_id + "&department_id=" + department_id)
-                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition_id").toString())));
+                event.table("shop_conditions").where("shop id=" + shopID)
+                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition id").toString())));
+                event.table("department_conditions").where("shop id=" + shopID + "&department id=" + departmentID)
+                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition id").toString())));
 
-                event.table("department_listings").where("department_id=" + department_id).forEach(listing -> {
-                    String listing_id = listing.id();
-                    String data_id = listing_id.contains("$") ? listing_id.split("\\$")[0] : listing_id;
+                event.table("department_listings").where("department id=" + departmentID).forEach(listing -> {
+                    String listingID = listing.id();
+                    String dataID = listingID.contains("$") ? listingID.split("\\$")[0] : listingID;
                     List<Sublisting> sublistings = Lists.newArrayList();//handler.getObjectsFromDatabase(database.get(), department_id, data_id);
-                    event.table("sublistings").where("department_id=" + department_id + "&listing_id=" + data_id).forEach(sublisting -> {
-                        String original_sub_id = sublisting.id();
-                        String original_sub_type = sublisting.get("type");
-                        boolean builder = original_sub_type.endsWith("_builder");
-                        String sub_type = original_sub_type.replace("_builder", ""); //Remove the builder
+                    event.table("sublistings").where("department id=" + departmentID + "&listing id=" + dataID).forEach(sublisting -> {
+                        String originalSubID = sublisting.id();
+                        String originalSubType = sublisting.get("type");
+                        boolean builder = originalSubType.endsWith("_builder");
+                        String sub_type = originalSubType.replace("_builder", ""); //Remove the builder
                         List<String> data_entries = builder ? ListingBuilder.BUILDERS.get(sublisting.get("data").toString()).items() : Lists.newArrayList(sublisting.get("data").toString());
                         for (int i = 0; i < data_entries.size(); i++) {
-                            String sub_id = builder ? original_sub_id + "$" + i : original_sub_id;
+                            String subID = builder ? originalSubID + "$" + i : originalSubID;
                             ListingHandler<?> handler = ListingHandler.HANDLERS.get(sub_type);
                             if (handler == null)
-                                Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the listing handler type: " + sub_type + " for " + department_id + ": " + listing_id + " :" + sub_id);
+                                Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the listing handler type: " + sub_type + " for " + departmentID + ": " + listingID + " :" + subID);
                             else {
-                                Sublisting<?> theSublisting = new Sublisting(sub_id, handler, handler.getObjectFromDatabase(event, data_entries.get(i)));
+                                Sublisting<?> theSublisting = new Sublisting(subID, handler, handler.getObjectFromDatabase(event, data_entries.get(i)));
                                 theSublisting.setGold(sublisting.getAsLong("gold"));
                                 theSublisting.setWeight(sublisting.getAsDouble("weight"));
-                                String material_id = sub_id.contains("$") ? sub_id.split("\\$")[0] : sub_id;
-                                event.table("sublisting_materials").where("department_id=" + department_id + "&listing_id=" + data_id + "&sub_id=" + material_id).forEach(material -> {
+                                String materialID = subID.contains("$") ? subID.split("\\$")[0] : subID;
+                                event.table("sublisting_materials").where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID).forEach(material -> {
                                     theSublisting.addMaterial(new MaterialCost(material.get("item"), material.get("amount")));
                                 });
 
                                 //Load in display overrides
-                                Row display = event.table("sublisting_display_data").fetch_where("department_id=" + department_id + "&listing_id=" + data_id + "&sub_id=" + material_id);
+                                Row display = event.table("sublisting_display_data").fetch_where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID);
                                 if (!display.isEmpty("icon")) {
                                     NonNullList<ItemStack> icons = Arrays.stream(display.get("icon").toString().split(","))
                                             .map(s -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(s))))
@@ -181,32 +181,32 @@ public class ShopLoader {
                     });
 
                     if (sublistings.size() > 0 && sublistings.stream().allMatch(sublisting -> sublisting.getHandler().isValid(sublisting.getObject()))) {
-                        StockMechanic stockMechanic = stock_mechanics.get(listing.get("stock_mechanic").toString());
-                        CostFormula costScript = CostFormula.COST_FORMULAE.get(listing.get("cost_formula").toString());
+                        StockMechanic stockMechanic = stock_mechanics.get(listing.get("stock mechanic").toString());
+                        CostFormula costScript = CostFormula.COST_FORMULAE.get(listing.get("cost formula").toString());
                         if (stockMechanic == null)
-                            Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the stock mechanic: " + listing.get("stock_mechanic") + " for " + department_id + ":" + listing_id);
+                            Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the stock mechanic: " + listing.get("stock mechanic") + " for " + departmentID + ":" + listingID);
                         else if (costScript == null)
-                            Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the cost script: " + listing.get("cost_formula") + " for " + department_id + ":" + listing_id);
+                            Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the cost script: " + listing.get("cost formula") + " for " + departmentID + ":" + listingID);
                         else {
-                            Listing theListing = new Listing(theDepartment, listing_id, sublistings, costScript, stockMechanic);
-                            event.table("listing_conditions").where("department_id=" + department_id + "&listing_id=" + data_id)
+                            Listing theListing = new Listing(theDepartment, listingID, sublistings, costScript, stockMechanic);
+                            event.table("listing_conditions").where("department id=" + departmentID + "&listing id=" + dataID)
                                     .forEach(condition -> {
-                                        Condition cd = conditions.get(condition.get("condition_id").toString());
+                                        Condition cd = conditions.get(condition.get("condition id").toString());
                                         if (cd == null)
                                             Shopaholic.LOGGER.error("Incorrect condition added as a listing condition with the id: "
-                                                    + condition.get("condition_id") + " with the listing_id " + listing_id + " in the department " + theDepartment.id());
+                                                    + condition.get("condition id") + " with the listing id " + listingID + " in the department " + theDepartment.id());
                                         else
-                                            theListing.addCondition(conditions.get(condition.get("condition_id").toString()));
+                                            theListing.addCondition(conditions.get(condition.get("condition id").toString()));
                                     });
                             sublistings.forEach(s -> s.setListing(theListing));
-                            Shopaholic.LOGGER.log(Level.INFO, "Successfully added the listing: " + listing_id + " for " + department_id);
+                            Shopaholic.LOGGER.log(Level.INFO, "Successfully added the listing: " + listingID + " for " + departmentID);
                         }
                     } else if (sublistings.size() == 0) {
-                        Shopaholic.LOGGER.log(Level.ERROR, "No sublistings were added for the listing: " + department_id + ":" + listing_id);
+                        Shopaholic.LOGGER.log(Level.ERROR, "No sublistings were added for the listing: " + departmentID + ":" + listingID);
                     } else {
                         for (Sublisting sublisting : sublistings) {
                             if (!sublisting.getHandler().isValid(sublisting.getObject())) {
-                                Shopaholic.LOGGER.log(Level.ERROR, "The sublisting: " + sublisting.id() + " created an invalid object for the listing: " + department_id + ":" + listing_id);
+                                Shopaholic.LOGGER.log(Level.ERROR, "The sublisting: " + sublisting.id() + " created an invalid object for the listing: " + departmentID + ":" + listingID);
                             }
                         }
                     }

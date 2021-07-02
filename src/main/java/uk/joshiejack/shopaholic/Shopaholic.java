@@ -83,9 +83,9 @@ public class Shopaholic {
         //Register Conditions
         Condition.register("and", new AndCondition());
         Condition.register("compare", new CompareCondition());
-        Condition.register("has_nbt_tag", new HasNBTTagCondition());
         Condition.register("dimension", new InDimensionCondition());
         Condition.register("entity_nearby", new EntityNearbyCondition());
+        Condition.register("has_nbt_tag", new HasNBTTagCondition());
         Condition.register("has_pet", new HasPetCondition());
         Condition.register("hours", new OpeningHoursCondition());
         Condition.register("named", new NamedCondition());

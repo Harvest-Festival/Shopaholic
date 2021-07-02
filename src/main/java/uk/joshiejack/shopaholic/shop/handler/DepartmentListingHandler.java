@@ -13,7 +13,7 @@ import uk.joshiejack.shopaholic.shop.input.ShopInputEntity;
 public class DepartmentListingHandler extends ListingHandler<String> {
     @Override
     public String getType() {
-        return "shop";
+        return "department";
     }
 
     @Override

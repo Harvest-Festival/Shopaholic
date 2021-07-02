@@ -21,12 +21,12 @@ public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
     @SuppressWarnings("ConstantConditions")
     @Override
     public EffectInstance getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
-        Row row = database.table("potion_effects").fetch_where("id=" + data);
+        Row row = database.table("potion_listings").fetch_where("id=" + data);
         Effect effect = row.effect();
         int duration = row.get("duration");
         int amplifier = row.get("amplifier");
-        boolean ambient = row.get("is_ambient");
-        boolean particles = row.get("show_particles");
+        boolean ambient = row.get("is ambient");
+        boolean particles = row.get("show particles");
         return new EffectInstance(effect, duration, amplifier, ambient, particles);
     }
 
