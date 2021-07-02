@@ -7,41 +7,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import uk.joshiejack.penguinlib.client.gui.AbstractContainerScreen;
 import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.api.shop.ShopTarget;
-import uk.joshiejack.shopaholic.inventory.ShopContainer;
-import uk.joshiejack.shopaholic.shop.Department;
+import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 import uk.joshiejack.shopaholic.shop.Listing;
-import uk.joshiejack.shopaholic.shop.Shop;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 import java.text.DecimalFormat;
 import java.util.Collection;
 
 @SuppressWarnings("ConstantConditions")
-public class ShopScreen extends AbstractContainerScreen<ShopContainer> {
+public class DepartmentScreen extends AbstractContainerScreen<DepartmentContainer> {
     public static final ResourceLocation EXTRA =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop_extra.png");
     private static final ResourceLocation BACKGROUND =  new ResourceLocation(Shopaholic.MODID, "textures/gui/shop.png");
     private static final DecimalFormat formatter = new DecimalFormat("#,###");
     private final Collection<Listing> contents;
-    public final ShopTarget target;
-    public final Department shop;
     public final Stock stock;
-    private final Shop supermarket;
     private ItemStack purchased;
     private int purcasableCount;
     private int start;
     private int end;
 
-    public ShopScreen(Department shop, ShopTarget target, ShopContainer container, PlayerInventory inv) {
-        super(container, inv, shop.getLocalizedName(), BACKGROUND, 256, 256);
-        this.target = target;
+    public DepartmentScreen(DepartmentContainer container, PlayerInventory inv) {
+        super(container, inv, container.department.getLocalizedName(), BACKGROUND, 256, 256);
         this.purchased = ItemStack.EMPTY;
-        this.supermarket = Shop.get(shop);
-        this.shop = this.supermarket != null ? supermarket.getLast() : shop;
-        this.stock = shop.getStockLevels();
+        this.stock = container.department.getStockLevels();
         this.contents = Lists.newArrayList();
-        for (Listing listing : ImmutableList.copyOf(this.shop.getListings())) {
-            if (listing.canList(target, stock)) {
+        for (Listing listing : ImmutableList.copyOf(container.department.getListings())) {
+            if (listing.canList(container.target, stock)) {
                 contents.add(listing);
             }
         }

@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.shop.handler;
+package uk.joshiejack.shopaholic.shop.listing;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

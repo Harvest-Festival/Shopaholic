@@ -14,7 +14,7 @@ public class PotionListing extends SublistingBuilder {
 
     @Override
     public void save(ShopaholicDatabase data) {
-        data.addEntry("potion_listings", "ID,Duration,Amplifier,Is Ambient,Show Particles",
-                CSVUtils.join(this.data, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.showIcon()));
+        data.addEntry("potion_listings", "ID,Effect,Duration,Amplifier,Is Ambient,Show Particles",
+                CSVUtils.join(this.data, effect.getEffect().getRegistryName().toString(), effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.showIcon()));
     }
 }

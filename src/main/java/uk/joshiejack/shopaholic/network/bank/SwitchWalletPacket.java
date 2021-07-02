@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.bank;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -7,6 +7,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
+import uk.joshiejack.shopaholic.network.AbstractSetPlayerNBTPacket;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_SERVER)
 public class SwitchWalletPacket extends AbstractSetPlayerNBTPacket {

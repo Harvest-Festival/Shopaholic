@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.shop.handler;
+package uk.joshiejack.shopaholic.shop.listing;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;

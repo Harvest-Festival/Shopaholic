@@ -1,14 +1,17 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.PenguinPacket;
+import uk.joshiejack.penguinlib.util.PenguinLoader;
 
-public class SetPlayerSeedPacket extends PenguinPacket {
+@PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
+public class SetPlayerShopSeed extends PenguinPacket {
     private int seed;
 
-    public SetPlayerSeedPacket() { }
-    public SetPlayerSeedPacket(int value) {
+    public SetPlayerShopSeed() { }
+    public SetPlayerShopSeed(int value) {
         this.seed = value;
     }
 

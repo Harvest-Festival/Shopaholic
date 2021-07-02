@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.bank;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;

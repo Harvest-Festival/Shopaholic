@@ -13,7 +13,7 @@ import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
@@ -61,13 +61,13 @@ public class ShippingLogLabel extends Widget {
         //Draw the shipping log totals
         if (total > 0L) {
             //GlStateManager.color(1F, 1F, 1F, 1F);
-            mc.getTextureManager().bind(ShopScreen.EXTRA);
+            mc.getTextureManager().bind(DepartmentScreen.EXTRA);
             blit(matrix, x - 3 + 18, y + 110 + 4, 244, 244, 12, 12);
             String text = NumberFormat.getNumberInstance(Locale.ENGLISH).format(total);
             mc.font.drawShadow(matrix, text, x - 3 + 32, y + 110 + 6, 0xFFFFFFFF);
         }
 
-        mc.getTextureManager().bind(ShopScreen.EXTRA);
+        mc.getTextureManager().bind(DepartmentScreen.EXTRA);
         blit(matrix, x - 3 + 18, y + 138 + 4, 244, 244, 12, 12);
         String text = NumberFormat.getNumberInstance(Locale.ENGLISH).format(overall);
         mc.font.drawShadow(matrix, text, x - 3 + 32, y + 138 + 6, 0xFFFFFFFF);

@@ -1,9 +1,10 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shipping;
 
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
+import uk.joshiejack.shopaholic.network.AbstractSyncSoldItemList;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.Set;

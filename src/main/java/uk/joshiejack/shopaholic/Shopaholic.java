@@ -38,7 +38,7 @@ import uk.joshiejack.shopaholic.data.ShopaholicItemModels;
 import uk.joshiejack.shopaholic.data.ShopaholicLanguage;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.inventory.EconomyManagerContainer;
-import uk.joshiejack.shopaholic.inventory.ShopContainer;
+import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 import uk.joshiejack.shopaholic.loot.CapValue;
 import uk.joshiejack.shopaholic.loot.RatioValue;
 import uk.joshiejack.shopaholic.loot.SetValue;
@@ -47,7 +47,7 @@ import uk.joshiejack.shopaholic.shop.CostFormula;
 import uk.joshiejack.shopaholic.shop.ShopaholicAPIImpl;
 import uk.joshiejack.shopaholic.shop.comparator.*;
 import uk.joshiejack.shopaholic.shop.condition.*;
-import uk.joshiejack.shopaholic.shop.handler.*;
+import uk.joshiejack.shopaholic.shop.listing.*;
 
 import javax.annotation.Nonnull;
 
@@ -129,7 +129,7 @@ public class Shopaholic {
     public static class ShopaholicContainers {
         public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Shopaholic.MODID);
         public static final RegistryObject<ContainerType<AbstractBookContainer>> BOOK = CONTAINERS.register("economy_manager", () -> IForgeContainerType.create((id, inv, data) -> new EconomyManagerContainer(id)));
-        public static final RegistryObject<ContainerType<ShopContainer>> SHOP = CONTAINERS.register("shop", () -> IForgeContainerType.create((id, inv, data) -> new ShopContainer(id)));
+        public static final RegistryObject<ContainerType<DepartmentContainer>> SHOP = CONTAINERS.register("shop", () -> IForgeContainerType.create((id, inv, data) -> new DepartmentContainer(id, inv.player, data)));
     }
 
     public static class ShopaholicItems {

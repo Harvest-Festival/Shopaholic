@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shipping;
 
 import com.google.common.collect.Sets;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -13,7 +13,7 @@ import uk.joshiejack.penguinlib.network.packet.AbstractSyncCompoundNBTPacket;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.penguinlib.util.helpers.generic.StringHelper;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
@@ -62,7 +62,7 @@ public class ShipPacket extends AbstractSyncCompoundNBTPacket {
 
         private void renderAt(Minecraft mc, MatrixStack matrix, Shipping.SoldItem stack, int x, int y) {
             mc.getItemRenderer().renderGuiItem(stack.getStack(), x, y - 18);
-            mc.getTextureManager().bind(ShopScreen.EXTRA);
+            mc.getTextureManager().bind(DepartmentScreen.EXTRA);
             mc.gui.blit(matrix, x + 21, y - 16, 244, 244, 12, 12);
             String text = StringHelper.convertNumberToString(stack.getValue());
             mc.font.drawShadow(matrix, text, x + 35, y - 13, 0xFFFFFFFF);

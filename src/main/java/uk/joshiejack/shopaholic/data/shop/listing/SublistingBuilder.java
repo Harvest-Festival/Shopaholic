@@ -7,7 +7,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.ITag;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
-import uk.joshiejack.shopaholic.shop.handler.EntityListingHandler;
+import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import net.minecraft.world.storage.WorldSavedData;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
-import uk.joshiejack.shopaholic.network.SetActiveWalletPacket;
+import uk.joshiejack.shopaholic.network.bank.SetActiveWalletPacket;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

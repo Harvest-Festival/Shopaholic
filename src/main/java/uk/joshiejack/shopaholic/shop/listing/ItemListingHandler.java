@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.shop.handler;
+package uk.joshiejack.shopaholic.shop.listing;
 
 import com.google.common.collect.Lists;
 import net.minecraft.client.util.ITooltipFlag;

@@ -10,7 +10,7 @@ import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.DepartmentJS;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.ShopHelper;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
-import uk.joshiejack.shopaholic.shop.input.ShopInputEntity;
+import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -21,12 +21,12 @@ public class ShopUtils {
     private static ShopTarget target(PlayerJS<?> playerW, EntityJS entityW) {
         Entity entity = entityW.minecraftEntity;
         PlayerEntity player = playerW.minecraftPlayer;
-        return new ShopTarget(entity.level, entity.blockPosition(), entity, player, player.getMainHandItem(), new ShopInputEntity(entity));
+        return new ShopTarget(entity.level, entity.blockPosition(), entity, player, player.getMainHandItem(), new EntityShopInput(entity));
     }
 
     public static void open(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        ShopHelper.open(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, InputMethod.SCRIPT);
+        ShopHelper.open(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, InputMethod.SCRIPT);
     }
 
     public static void open(PlayerJS<?> player, EntityJS entityJS, String id) {
@@ -43,17 +43,17 @@ public class ShopUtils {
 
     public static boolean has(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
+        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
     }
 
     public static boolean isOpen(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
+        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
     }
 
     public static DepartmentJS get(PlayerJS<?> player, @Nonnull EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return new DepartmentJS(Objects.requireNonNull(ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((ShopInputEntity) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
+        return new DepartmentJS(Objects.requireNonNull(ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
     }
 
     public static DepartmentJS get(String name) {

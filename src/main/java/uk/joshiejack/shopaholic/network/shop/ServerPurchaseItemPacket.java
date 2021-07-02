@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -8,6 +8,7 @@ import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.bank.Vault;
+import uk.joshiejack.shopaholic.network.AbstractPurchaseItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 

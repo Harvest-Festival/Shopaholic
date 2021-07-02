@@ -17,9 +17,9 @@ import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.event.ItemShippedEvent;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.bank.Vault;
-import uk.joshiejack.shopaholic.network.ShipPacket;
-import uk.joshiejack.shopaholic.network.SyncLastSoldPacket;
-import uk.joshiejack.shopaholic.network.SyncSoldPacket;
+import uk.joshiejack.shopaholic.network.shipping.ShipPacket;
+import uk.joshiejack.shopaholic.network.shipping.SyncLastSoldPacket;
+import uk.joshiejack.shopaholic.network.shipping.SyncSoldPacket;
 
 import java.util.Collection;
 import java.util.Set;

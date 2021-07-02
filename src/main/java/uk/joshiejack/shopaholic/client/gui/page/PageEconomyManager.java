@@ -14,14 +14,14 @@ import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.client.gui.widget.*;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldItem> {
-    public static final Icon ICON = new TextureIcon(ShopScreen.EXTRA, 240, 224);
+    public static final Icon ICON = new TextureIcon(DepartmentScreen.EXTRA, 240, 224);
     public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
     private static final long[] divisions = new long[]{1, 5, 10, 100, 1000};
 

@@ -6,12 +6,12 @@ import net.minecraft.network.PacketBuffer;
 import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
-public class ShopInputItem extends ShopInput<Ingredient> {
-    public ShopInputItem(ItemStack stack) {
+public class ItemShopInput extends ShopInput<Ingredient> {
+    public ItemShopInput(ItemStack stack) {
         super(Ingredient.of(stack));
     }
 
-    public ShopInputItem(PacketBuffer buf) {
+    public ItemShopInput(PacketBuffer buf) {
         super(Ingredient.fromNetwork(buf));
     }
 

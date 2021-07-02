@@ -2,7 +2,7 @@ package uk.joshiejack.shopaholic.data.shop.listing;
 
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
-import uk.joshiejack.shopaholic.shop.handler.EntityListingHandler;
+import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
 public class EntityListing extends SublistingBuilder {
     private final EntityListingHandler.EntitySpawnData entity;

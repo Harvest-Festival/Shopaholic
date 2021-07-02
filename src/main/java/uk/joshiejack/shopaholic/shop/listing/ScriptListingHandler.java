@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.shop.handler;
+package uk.joshiejack.shopaholic.shop.listing;
 
 //@PenguinLoader("script") //TODO: KubeJS support
 //public class ScriptListingHandler extends ListingHandler<ResourceLocation> {

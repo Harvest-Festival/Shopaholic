@@ -7,16 +7,16 @@ import net.minecraft.network.PacketBuffer;
 import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
-public class ShopInputEntity extends ShopInput<EntityType<?>> {
-    public ShopInputEntity(Entity entity) {
+public class EntityShopInput extends ShopInput<EntityType<?>> {
+    public EntityShopInput(Entity entity) {
         super(entity.getType());
     }
 
-    public ShopInputEntity(EntityType<?> type) {
+    public EntityShopInput(EntityType<?> type) {
         super(type);
     }
 
-    public ShopInputEntity(PacketBuffer buf) {
+    public EntityShopInput(PacketBuffer buf) {
         super(buf.readRegistryIdSafe(EntityType.class));
     }
 
@@ -28,5 +28,10 @@ public class ShopInputEntity extends ShopInput<EntityType<?>> {
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {
         return target.getEntity().saveWithoutId(new CompoundNBT()).getString(key).equals(value);
+    }
+
+    @Override
+    public void encode(PacketBuffer buf) {
+        buf.writeRegistryId(id);
     }
 }

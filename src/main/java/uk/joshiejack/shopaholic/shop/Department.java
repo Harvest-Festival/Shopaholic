@@ -3,11 +3,13 @@ package uk.joshiejack.shopaholic.shop;
 import com.google.common.collect.Maps;
 import joptsimple.internal.Strings;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.network.NetworkHooks;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.util.helpers.TimeHelper;
@@ -16,10 +18,11 @@ import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
-import uk.joshiejack.shopaholic.network.OpenShopPacket;
-import uk.joshiejack.shopaholic.network.SetPlayerSeedPacket;
-import uk.joshiejack.shopaholic.network.SyncStockLevelsPacket;
+import uk.joshiejack.shopaholic.network.shop.SetPlayerShopSeed;
+import uk.joshiejack.shopaholic.network.shop.SyncStockLevelsPacket;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
+import uk.joshiejack.shopaholic.shop.input.BlockStateShopInput;
+import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 import javax.annotation.Nullable;
@@ -126,9 +129,19 @@ public class Department {
         /* Seed the random shopness */
         int seed = 13 * (1 + TimeHelper.getElapsedDays(target.getWorld().getDayTime()));
         target.getPlayer().getPersistentData().putInt("ShopaholicSeed", seed);
-        PenguinNetwork.sendToClient(new SetPlayerSeedPacket(seed), (ServerPlayerEntity) target.getPlayer());
+        PenguinNetwork.sendToClient(new SetPlayerShopSeed(seed), (ServerPlayerEntity) target.getPlayer());
         /* Open the shop */ //Open after the stock level has been received
-        PenguinNetwork.sendToClient(new OpenShopPacket(this, target), (ServerPlayerEntity) target.getPlayer());
-        //TODO:target.player.containerMenu = new ShopContainer(); //Set the container
+        NetworkHooks.openGui((ServerPlayerEntity) target.getPlayer(),
+                new SimpleNamedContainerProvider((id, inv, data) ->
+                        Shopaholic.ShopaholicContainers.SHOP.get().create(id, inv).withData(this, target), name), buf -> {
+                    buf.writeUtf(id);
+                    buf.writeVarLong(target.getPos().asLong());
+                    buf.writeVarInt(target.getEntity().getId());
+                    buf.writeItemStack(target.getStack(), false);
+                    if (target.getInput() instanceof BlockStateShopInput) buf.writeByte(0);
+                    else if (target.getInput() instanceof EntityShopInput) buf.writeByte(1);
+                    else buf.writeByte(2);
+                    target.getInput().encode(buf);
+                });
     }
 }

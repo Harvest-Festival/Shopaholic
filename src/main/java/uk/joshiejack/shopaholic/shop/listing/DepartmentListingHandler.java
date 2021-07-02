@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.shop.handler;
+package uk.joshiejack.shopaholic.shop.listing;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -7,7 +7,7 @@ import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.input.ShopInputEntity;
+import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 
 @SuppressWarnings("ConstantConditions")
 public class DepartmentListingHandler extends ListingHandler<String> {
@@ -35,7 +35,7 @@ public class DepartmentListingHandler extends ListingHandler<String> {
     public void purchase(PlayerEntity player, String id) {
         if (!player.level.isClientSide) {
             Department shop = Department.REGISTRY.get(id);
-            ShopTarget target = new ShopTarget(player.level, player.blockPosition(), player, player, player.getMainHandItem(), new ShopInputEntity(player));
+            ShopTarget target = new ShopTarget(player.level, player.blockPosition(), player, player, player.getMainHandItem(), new EntityShopInput(player));
             if (shop != null) {
                 shop.open(target);
             }

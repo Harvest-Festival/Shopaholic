@@ -16,7 +16,7 @@ import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 
 import javax.annotation.Nonnull;
@@ -110,7 +110,7 @@ public class EconomyStatsLabel extends Widget {
 
         RenderSystem.color4f(1F, 1F, 1F, 1F);
         int goldX = (int) ((x + 35) / scale);
-        mc.getTextureManager().bind(ShopScreen.EXTRA);
+        mc.getTextureManager().bind(DepartmentScreen.EXTRA);
         blit(matrix, goldX, (int) ((y + 9) / scale), 244, 244, 12, 12);
         blit(matrix, goldX, (int) ((y + 18) / scale), 244, 244, 12, 12);
         blit(matrix, goldX, (int) ((y + 27) / scale), 244, 244, 12, 12);

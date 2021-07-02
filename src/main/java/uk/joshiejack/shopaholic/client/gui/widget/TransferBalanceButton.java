@@ -14,8 +14,8 @@ import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
-import uk.joshiejack.shopaholic.network.TransferBalancePacket;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
+import uk.joshiejack.shopaholic.network.bank.TransferBalancePacket;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class TransferBalanceButton extends AbstractButton {
         if (Screen.hasAltDown()) gold *= 1000;
         book.minecraft().font.drawShadow(matrix, StringHelper.convertNumberToString(gold), (x + 9) / scale, (y + 3) / scale, 0xFFFFFF);
         RenderSystem.color3f(1.0F, 1.0F, 1.0F);
-        book.minecraft().getTextureManager().bind(ShopScreen.EXTRA);
+        book.minecraft().getTextureManager().bind(DepartmentScreen.EXTRA);
         blit(matrix, (int)((x + 2) / scale), (int)((y + 2) / scale), 244, 244, 12, 12);
         RenderSystem.popMatrix();
     }

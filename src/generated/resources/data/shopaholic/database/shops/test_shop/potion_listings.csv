@@ -1,2 +1,2 @@
-ID,Duration,Amplifier,Is Ambient,Show Particles
-poison_effect,1000,0,false,true
+ID,Effect,Duration,Amplifier,Is Ambient,Show Particles
+poison_effect,minecraft:poison,1000,0,false,true

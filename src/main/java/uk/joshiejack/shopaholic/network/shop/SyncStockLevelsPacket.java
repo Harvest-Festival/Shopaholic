@@ -1,10 +1,11 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
+import uk.joshiejack.shopaholic.network.AbstractPacketSyncDepartment;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 

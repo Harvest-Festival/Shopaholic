@@ -1,8 +1,9 @@
-package uk.joshiejack.shopaholic.network;
+package uk.joshiejack.shopaholic.network.shop;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
+import uk.joshiejack.shopaholic.network.AbstractPurchaseItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 import uk.joshiejack.shopaholic.shop.ShopHelper;

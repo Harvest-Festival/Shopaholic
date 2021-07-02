@@ -8,7 +8,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.generic.MapHelper;
 import uk.joshiejack.penguinlib.util.helpers.generic.MathsHelper;
-import uk.joshiejack.shopaholic.network.SetStockedItemPacket;
+import uk.joshiejack.shopaholic.network.shop.SetStockedItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 

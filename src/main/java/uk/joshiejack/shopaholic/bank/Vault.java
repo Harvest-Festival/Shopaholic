@@ -9,7 +9,7 @@ import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.generic.MathsHelper;
 import uk.joshiejack.shopaholic.ShopaholicServerConfig;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
-import uk.joshiejack.shopaholic.network.SyncGoldPacket;
+import uk.joshiejack.shopaholic.network.bank.SyncGoldPacket;
 
 import java.util.UUID;
 

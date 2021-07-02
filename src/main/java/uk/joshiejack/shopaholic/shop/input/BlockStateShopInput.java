@@ -7,12 +7,12 @@ import net.minecraft.state.Property;
 import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
-public class ShopInputBlockState extends ShopInput<BlockState> {
-    public ShopInputBlockState(BlockState id) {
+public class BlockStateShopInput extends ShopInput<BlockState> {
+    public BlockStateShopInput(BlockState id) {
         super(id);
     }
 
-    public ShopInputBlockState(PacketBuffer buf) {
+    public BlockStateShopInput(PacketBuffer buf) {
         super(fromString(buf.readUtf()));
     }
 

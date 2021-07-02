@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import uk.joshiejack.shopaholic.ShopaholicConfig;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
-import uk.joshiejack.shopaholic.client.gui.ShopScreen;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -49,7 +49,7 @@ public class RenderGold {
             float adjustedY = ((ShopaholicConfig.goldY / 100F) * maxHeight);
 
             if (ShopaholicConfig.enableGoldIcon) {
-                mc.getTextureManager().bind(ShopScreen.EXTRA);
+                mc.getTextureManager().bind(DepartmentScreen.EXTRA);
                 int coinX = (int) (ShopaholicConfig.goldLeft ? maxWidth - mc.font.width(text) - 20 + adjustedX : maxWidth - adjustedX - 14);
                 mc.gui.blit(event.getMatrixStack(), coinX, (int) (2 + adjustedY), 244, 244, 12, 12);
             }
