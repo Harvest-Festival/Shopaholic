@@ -45,7 +45,7 @@ public class Listing {
         return sublistings.isSingleEntry();
     }
 
-    public Sublisting getSublistingByID(int id) {
+    public Sublisting<?> getSublistingByID(int id) {
         return sublistings.byID(id);
     }
 
@@ -75,7 +75,7 @@ public class Listing {
         }
     }
 
-    public Sublisting getSubListing(Stock stock) {
+    public Sublisting<?> getSubListing(Stock stock) {
         return isSingleEntry() ? getSublistingByID(0) : getSublistingByID(stock.getStockedObject(this));
     }
 

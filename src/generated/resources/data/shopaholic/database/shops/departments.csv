@@ -1,2 +1,2 @@
 Shop ID,ID,Icon,Name
-test_shop,test_department,gold_ingot,Gold Store
+test_shop,test_department,{""item"":""minecraft:gold_ingot""},Gold Store

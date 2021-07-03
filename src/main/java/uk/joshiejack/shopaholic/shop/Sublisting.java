@@ -2,14 +2,11 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.util.icon.Icon;
-import uk.joshiejack.penguinlib.util.icon.ItemListIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 import java.util.List;
@@ -98,7 +95,15 @@ public class Sublisting<P> {
     }
 
     public Icon getIcon() {
+        if (icon == null) {
+            icon = handler.createIcon(object);
+        }
+
         return icon;
+    }
+
+    public int getCount() {
+        return handler.getCount(object);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -115,8 +120,8 @@ public class Sublisting<P> {
         this.displayName = new StringTextComponent(name);
     }
 
-    public void setDisplayIcon(NonNullList<ItemStack> icon) {
-        this.icon = new ItemListIcon(icon);
+    public void setIcon(Icon icon) {
+        this.icon =  icon;
     }
 
     public boolean hasMaterialRequirement(PlayerEntity player, int amount) {

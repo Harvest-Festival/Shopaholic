@@ -10,6 +10,7 @@ import net.minecraft.potion.Effects;
 import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.penguinlib.data.generators.AbstractDatabaseProvider;
+import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.data.shop.DepartmentBuilder;
 import uk.joshiejack.shopaholic.data.shop.ShopBuilder;
@@ -43,15 +44,17 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
                 .vendor(Vendor.entity("pig", EntityType.PIG))
                 .condition(ConditionBuilder.named("pig_name", "George"))
                 .openWith(InputMethod.RIGHT_CLICK)
-                .department(DepartmentBuilder.of("test_department", Items.GOLD_INGOT, "Gold Store")
-                        .listing(ListingBuilder.of("apple").addSublisting(SublistingBuilder.item(Items.APPLE).cost(200)))
+                .department(DepartmentBuilder.of("test_department", new ItemIcon(Items.GOLD_INGOT), "Gold Store")
+                        .listing(ListingBuilder.of("apple").addSublisting(SublistingBuilder.item(Items.APPLE).cost(200).icon(new ItemIcon(Items.ACACIA_PLANKS))))
                         .listing(ListingBuilder.of("bucket").addSublisting(SublistingBuilder.item(Items.BUCKET).cost(100)))
                         .listing(ListingBuilder.of("poison").addSublisting(SublistingBuilder.potion("poison_effect", new EffectInstance(Effects.POISON, 1000))))
                         .listing(ListingBuilder.of("food").addSublisting(SublistingBuilder.bundle("food_bundle")
                                                                         .addToBundle(SublistingBuilder.item(Items.CARROT))
                                                                         .addToBundle(SublistingBuilder.item(Items.POTATO))
                                                                         .addToBundle(SublistingBuilder.item(Items.BEETROOT))
-                                                                        .cost(9000)))
+                                                                        .cost(9000)
+                                                                        .name("Food Bundle")
+                                                                        .tooltip("A delicious bundle of food.\nContains\n*Apple\n*Carrot\n*Potato")))
                 )
                 .save(this);
     }

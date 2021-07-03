@@ -14,6 +14,7 @@ import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("rawtypes")
 public class BundleListingHandler extends ListingHandler<List<Pair<ListingHandler, Object>>> {
     @Override
     public String getType() {
@@ -37,7 +38,7 @@ public class BundleListingHandler extends ListingHandler<List<Pair<ListingHandle
         List<Pair<ListingHandler, Object>> list = Lists.newArrayList();
         event.table("bundles").where("id="+data).forEach(row -> {
             ListingHandler<?> handler = ListingHandler.HANDLERS.get(row.get("type").toString());
-            Object entry = handler.getObjectFromDatabase(event, row.get("data"));
+            Object entry = handler.getObjectFromDatabase(event, row.get("data").toString());
             list.add(Pair.of(handler, entry));
         });
 

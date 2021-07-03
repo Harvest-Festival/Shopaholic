@@ -1,11 +1,13 @@
 package uk.joshiejack.shopaholic.data.shop.listing;
 
+import com.google.gson.JsonObject;
 import joptsimple.internal.Strings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tags.ITag;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
@@ -72,6 +74,21 @@ public abstract class SublistingBuilder {
 
     public SublistingBuilder material(ITag.INamedTag<Item> stack, int count) {
         tagMaterials.add(Pair.of(stack, count));
+        return this;
+    }
+
+    public SublistingBuilder name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public SublistingBuilder icon(Icon icon) {
+        this.icon = icon.toJson(new JsonObject()).toString();
+        return this;
+    }
+
+    public SublistingBuilder tooltip(String tooltip) {
+        this.tooltip = tooltip;
         return this;
     }
 

@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import joptsimple.internal.Strings;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -20,9 +19,9 @@ import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.network.shop.SetPlayerShopSeed;
 import uk.joshiejack.shopaholic.network.shop.SyncStockLevelsPacket;
-import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.BlockStateShopInput;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
+import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 import javax.annotation.Nullable;
@@ -77,8 +76,8 @@ public class Department {
         return this;
     }
 
-    public Department setIcon(ItemStack icon) {
-        this.icon = new ItemIcon(icon);
+    public Department setIcon(Icon icon) {
+        this.icon = icon;
         return this;
     }
 

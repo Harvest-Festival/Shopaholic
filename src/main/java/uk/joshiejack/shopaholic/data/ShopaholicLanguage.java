@@ -13,6 +13,8 @@ public class ShopaholicLanguage extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("gui.shopaholic.shop.free", "Free");
+        add("gui.shopaholic.shop.error", "Error");
         add("gui.shopaholic.manager", "Economy Manager");
         addManager("from.shared", "Click to transfer from the shared wallet to your personal wallet.");
         addManager("from.personal", "Click to transfer from your personal wallet to the shared wallet.");

@@ -18,5 +18,7 @@
   "gui.shopaholic.manager.x.10": "Hold down %s for 10x",
   "gui.shopaholic.manager.x.100": "Hold down %s for 100x",
   "gui.shopaholic.manager.x.1000": "Hold down %s for 1000x",
+  "gui.shopaholic.shop.error": "Error",
+  "gui.shopaholic.shop.free": "Free",
   "item.shopaholic.economy_manager": "Economy Manager"
 }

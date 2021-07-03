@@ -2,20 +2,20 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import com.google.gson.JsonParser;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.logging.log4j.Level;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.events.DatabasePopulateEvent;
+import uk.joshiejack.penguinlib.util.icon.Icon;
+import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.IImmutable;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
@@ -25,11 +25,9 @@ import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.InputToShop;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class ShopLoader {
@@ -119,6 +117,7 @@ public class ShopLoader {
         //event.table("cost_formulae").rows().forEach(cost_formula ->
         //cost_scripts.put(cost_formula.id(), Scripting.get(cost_formula.getScript())));
 
+        JsonParser parser = new JsonParser();
         event.table("shops").rows().forEach(shop -> {
             String shopID = shop.id();
             String name = shop.name();
@@ -128,7 +127,12 @@ public class ShopLoader {
             event.table("departments").where("shop id=" + shopID).forEach(department -> {
                 String departmentID = department.id();
                 Department theDepartment = new Department(theShop, departmentID, opening_method); //Add the department to the shop in creation
-                if (!department.isEmpty("icon")) theDepartment.setIcon(department.icon());
+                if (!department.isEmpty("icon")) {
+                    String icon = department.get("icon").toString();
+                    if (icon.contains("\"")) {
+                        theDepartment.setIcon(Icon.fromJson(parser.parse(icon).getAsJsonObject()));
+                    } else theDepartment.setIcon(new ItemIcon(department.icon()));
+                }
                 if (!department.isEmpty("name")) theDepartment.setName(department.name());
                 Row vendor = event.table("vendors").fetch_where("id=" + vendorID); //Register the vendor
                 InputToShop.register(vendor.get("type"), vendor.get("data"), theDepartment); //to the input
@@ -166,15 +170,15 @@ public class ShopLoader {
                                 //Load in display overrides
                                 Row display = event.table("sublisting_display_data").fetch_where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID);
                                 if (!display.isEmpty("icon")) {
-                                    NonNullList<ItemStack> icons = Arrays.stream(display.get("icon").toString().split(","))
-                                            .map(s -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(s))))
-                                            .collect(Collectors.toCollection(NonNullList::create));
-                                    theSublisting.setDisplayIcon(icons);
+                                    String icon = display.get("icon").toString();
+                                    if (icon.contains("\"")) {
+                                        theSublisting.setIcon(Icon.fromJson(parser.parse(icon).getAsJsonObject()));
+                                    } else theSublisting.setIcon(new ItemIcon(display.icon()));
                                 }
 
                                 if (!display.isEmpty("name")) theSublisting.setDisplayName(display.get("name"));
                                 if (!display.isEmpty("tooltip"))
-                                    theSublisting.setTooltip(display.get("tooltip").toString().split("\n"));
+                                    theSublisting.setTooltip(StringEscapeUtils.unescapeJava(display.get("tooltip").toString()).split("\n"));
                                 sublistings.add(theSublisting);
                             }
                         }

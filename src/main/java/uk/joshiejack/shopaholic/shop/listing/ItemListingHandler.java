@@ -56,12 +56,17 @@ public class ItemListingHandler extends ListingHandler<ItemStack> {
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
-        return stack.getDisplayName();
+        return stack.getHoverName();
     }
 
     @Override
     public Icon createIcon(ItemStack stack) {
         return new ItemIcon(stack);
+    }
+
+    @Override
+    public int getCount(ItemStack stack) {
+        return stack.getCount();
     }
 
     @Override

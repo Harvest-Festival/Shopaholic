@@ -1,8 +1,9 @@
 package uk.joshiejack.shopaholic.data.shop;
 
+import com.google.gson.JsonObject;
 import joptsimple.internal.Strings;
-import net.minecraft.item.Item;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
+import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.condition.ConditionBuilder;
 import uk.joshiejack.shopaholic.data.shop.listing.ListingBuilder;
@@ -14,17 +15,17 @@ import java.util.Objects;
 public class DepartmentBuilder {
     public final String id;
     public final String name;
-    public final Item icon;
+    public final String icon;
     public List<ConditionBuilder> conditions = new ArrayList<>();
     public List<ListingBuilder> listings = new ArrayList<>();
 
-    public DepartmentBuilder(String id, String name, Item icon) {
+    public DepartmentBuilder(String id, String name, Icon icon) {
         this.id = id;
         this.name = name;
-        this.icon = icon;
+        this.icon = icon.toJson(new JsonObject()).toString();
     }
 
-    public static DepartmentBuilder of(String id, Item icon, String name) {
+    public static DepartmentBuilder of(String id, Icon icon, String name) {
         return new DepartmentBuilder(id, name, icon);
     }
 
