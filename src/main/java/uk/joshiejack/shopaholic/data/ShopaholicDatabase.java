@@ -7,6 +7,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.ItemTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.penguinlib.data.generators.AbstractDatabaseProvider;
@@ -49,12 +51,25 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
                         .listing(ListingBuilder.of("bucket").addSublisting(SublistingBuilder.item(Items.BUCKET).cost(100)))
                         .listing(ListingBuilder.of("poison").addSublisting(SublistingBuilder.potion("poison_effect", new EffectInstance(Effects.POISON, 1000))))
                         .listing(ListingBuilder.of("food").addSublisting(SublistingBuilder.bundle("food_bundle")
-                                                                        .addToBundle(SublistingBuilder.item(Items.CARROT))
-                                                                        .addToBundle(SublistingBuilder.item(Items.POTATO))
-                                                                        .addToBundle(SublistingBuilder.item(Items.BEETROOT))
-                                                                        .cost(9000)
-                                                                        .name("Food Bundle")
-                                                                        .tooltip("A delicious bundle of food.\nContains\n*Apple\n*Carrot\n*Potato")))
+                                .addToBundle(SublistingBuilder.item(Items.CARROT))
+                                .addToBundle(SublistingBuilder.item(Items.POTATO))
+                                .addToBundle(SublistingBuilder.item(Items.BEETROOT))
+                                .cost(9000)
+                                .name("Food Bundle")
+                                .tooltip("A delicious bundle of food.\nContains\n*Apple\n*Carrot\n*Potato")))
+                )
+                .department(DepartmentBuilder.of("crafting_central", new ItemIcon(Items.CRAFTING_TABLE), "Crafting Central")
+                        .listing(ListingBuilder.of("furnace")
+                                .addSublisting(SublistingBuilder.item(Items.FURNACE)
+                                        .material(Tags.Items.COBBLESTONE, 8)))
+                        .listing(ListingBuilder.of("stairs")
+                                .stockMechanic("only_1")
+                                .addSublisting(SublistingBuilder.item(Items.PISTON)
+                                        .material(Tags.Items.COBBLESTONE, 6)
+                                        .material(Tags.Items.DUSTS_REDSTONE, 1)
+                                        .material(ItemTags.PLANKS, 2)
+                                        .material(Tags.Items.INGOTS_IRON, 1)))
+                        .listing(ListingBuilder.of("piggy_bank").addSublisting(SublistingBuilder.department("test_department")))
                 )
                 .save(this);
     }

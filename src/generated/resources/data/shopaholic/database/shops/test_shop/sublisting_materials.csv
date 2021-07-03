@@ -1,0 +1,6 @@
+Department ID,Listing ID,Sub ID,Item,Amount
+crafting_central,furnace,default,tag:forge:cobblestone,8
+crafting_central,stairs,default,tag:forge:cobblestone,6
+crafting_central,stairs,default,tag:forge:dusts/redstone,1
+crafting_central,stairs,default,tag:minecraft:planks,2
+crafting_central,stairs,default,tag:forge:ingots/iron,1

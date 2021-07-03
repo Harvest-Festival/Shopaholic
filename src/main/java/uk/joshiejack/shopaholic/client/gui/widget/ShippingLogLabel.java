@@ -11,10 +11,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
-import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import javax.annotation.Nonnull;
@@ -30,7 +30,7 @@ public class ShippingLogLabel extends Widget {
     private final long overall;
 
     public ShippingLogLabel(Book gui, int x, int y) {
-        super(x, y, 0, 0, PageEconomyManager.EMPTY_STRING);
+        super(x, y, 0, 0, ShopaholicClient.EMPTY_STRING);
         long total = 0L;
         for (Shipping.SoldItem holderSold : Shipped.getShippingLog()) {
             total += holderSold.getValue();

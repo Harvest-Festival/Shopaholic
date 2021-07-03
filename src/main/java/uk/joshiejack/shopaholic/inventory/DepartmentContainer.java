@@ -25,6 +25,7 @@ public class DepartmentContainer extends Container {
     public DepartmentContainer(int windowID, PlayerEntity player, @Nullable PacketBuffer buf) {
         super(Shopaholic.ShopaholicContainers.SHOP.get(), windowID);
         if (buf != null) {
+            boolean reloadLastDepartment = buf.readBoolean();
             Department d = Department.REGISTRY.get(buf.readUtf());
             BlockPos pos = BlockPos.of(buf.readVarLong());
             int entityID = buf.readVarInt();
@@ -33,7 +34,8 @@ public class DepartmentContainer extends Container {
             ShopInput<?> input = (type == 0 ? new BlockStateShopInput(buf) : type == 1 ? new EntityShopInput(buf) : new ItemShopInput(buf));
             target = new ShopTarget(player.level, pos, player.level.getEntity(entityID), player, stack, input);
             shop = Shop.get(d);
-            department = shop != null ? shop.getLast() : d;
+            department = shop != null && reloadLastDepartment ? shop.getLast() : d;
+            shop = Shop.get(department);
         }
     }
 
@@ -42,10 +44,11 @@ public class DepartmentContainer extends Container {
         return true;
     }
 
-    public Container withData(Department department, ShopTarget target) {
+    public Container withData(Department department, ShopTarget target, boolean reloadLastDepartment) {
         this.target = target;
         this.shop = Shop.get(department);
-        this.department = shop != null ? shop.getLast() : department;
+        this.department = shop != null && reloadLastDepartment ? shop.getLast() : department;
+        this.shop = Shop.get(this.department);
         return this;
     }
 }

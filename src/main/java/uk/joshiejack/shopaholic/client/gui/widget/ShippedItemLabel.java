@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
-import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 
 import javax.annotation.Nonnull;
 import java.text.NumberFormat;
@@ -27,7 +27,7 @@ public class ShippedItemLabel extends Widget {
     private final long value;
 
     public ShippedItemLabel(Book book, int x, int y, ItemStack stack, long value) {
-        super(x, y, 16, 16, PageEconomyManager.EMPTY_STRING);
+        super(x, y, 16, 16, ShopaholicClient.EMPTY_STRING);
         this.book = book;
         this.width = 16;
         this.height = 16;

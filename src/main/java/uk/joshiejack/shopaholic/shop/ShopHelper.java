@@ -18,7 +18,7 @@ public class ShopHelper {
     public static void open(Collection<Department> shops, ShopTarget target, InputMethod method) {
         Department shop = getFirstShop(shops, target, Condition.CheckType.SHOP_IS_OPEN, method);
         if (shop != null) {
-            shop.open(target);
+            shop.open(target, true);
         }
     }
 

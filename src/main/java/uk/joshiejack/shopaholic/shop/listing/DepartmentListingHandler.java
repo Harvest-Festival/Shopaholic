@@ -37,7 +37,7 @@ public class DepartmentListingHandler extends ListingHandler<String> {
             Department shop = Department.REGISTRY.get(id);
             ShopTarget target = new ShopTarget(player.level, player.blockPosition(), player, player, player.getMainHandItem(), new EntityShopInput(player));
             if (shop != null) {
-                shop.open(target);
+                shop.open(target, false);
             }
         }
     }

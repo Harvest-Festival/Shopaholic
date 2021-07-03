@@ -15,9 +15,9 @@ import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeam;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
-import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 
 import javax.annotation.Nonnull;
 import java.text.NumberFormat;
@@ -39,7 +39,7 @@ public class EconomyStatsLabel extends Widget {
     private final String teamName;
 
     public EconomyStatsLabel(Book b, int x, int y) {
-        super(x, y, 0, 0, PageEconomyManager.EMPTY_STRING);
+        super(x, y, 0, 0, ShopaholicClient.EMPTY_STRING);
         PlayerEntity player = Minecraft.getInstance().player;
         PenguinTeam team = PenguinTeams.getTeamForPlayer(player);
         personal = Wallet.getWallet(WalletType.PERSONAL);

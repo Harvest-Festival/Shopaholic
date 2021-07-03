@@ -118,7 +118,7 @@ public class Department {
         return conditions.stream().allMatch(condition -> condition.valid(target, type));
     }
 
-    public void open(ShopTarget target) {
+    public void open(ShopTarget target, boolean reloadLastDepartment) {
         //Sync supermarket inventories too
         Shop market = Shop.get(this);
         if (market != null) {
@@ -132,7 +132,8 @@ public class Department {
         /* Open the shop */ //Open after the stock level has been received
         NetworkHooks.openGui((ServerPlayerEntity) target.getPlayer(),
                 new SimpleNamedContainerProvider((id, inv, data) ->
-                        Shopaholic.ShopaholicContainers.SHOP.get().create(id, inv).withData(this, target), name), buf -> {
+                        Shopaholic.ShopaholicContainers.SHOP.get().create(id, inv).withData(this, target, reloadLastDepartment), name), buf -> {
+                    buf.writeBoolean(reloadLastDepartment);
                     buf.writeUtf(id);
                     buf.writeVarLong(target.getPos().asLong());
                     buf.writeVarInt(target.getEntity().getId());

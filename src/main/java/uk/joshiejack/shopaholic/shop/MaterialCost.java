@@ -1,52 +1,46 @@
 package uk.joshiejack.shopaholic.shop;
 
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.util.helpers.PlayerHelper;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import uk.joshiejack.penguinlib.util.icon.Icon;
+import uk.joshiejack.penguinlib.util.icon.ItemListIcon;
 
 public class MaterialCost {
-    private static final Random rand = new Random();
-    private final Ingredient ingredient;
-    private int cost;
+    private final Lazy<Ingredient> ingredient = () -> getItem().startsWith("tag:") ? Ingredient.of(ItemTags.createOptional(new ResourceLocation(getItem().replace("tag:", ""))))
+            : Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getItem()))));
+    private final Lazy<Icon>icon = () -> new ItemListIcon(Lists.newArrayList(ingredient.get().getItems()));
+    private final String item;
+    private final int cost;
 
     public MaterialCost(String item, int cost) {
-        this.ingredient = item.startsWith("tag:") ? Ingredient.of(ItemTags.createOptional(new ResourceLocation(item.replace("tag:", ""))))
-                : Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(item))));
+        this.item = item;
         this.cost = cost;
+    }
+
+    private String getItem() {
+        return item;
     }
 
     public int getCost() {
         return cost;
     }
 
-    public ItemStack getIcon() {
-        List<ItemStack> list = Arrays.asList(ingredient.getItems());
-        ItemStack icon = list.size() == 0 ? new ItemStack(Items.BAKED_POTATO) : list.get(rand.nextInt(list.size()));
-        icon.setCount(cost);
-        return icon;
-    }
-
-    public NonNullList<ItemStack> getStacks() {
-        return Arrays.stream(ingredient.getItems())
-                .collect(Collectors.toCollection(NonNullList::create));
+    public Icon getIcon() {
+        return icon.get();
     }
 
     public boolean isMet(PlayerEntity player, int amount) {
-        return PlayerHelper.hasInInventory(player, ingredient, (cost * amount));
+        return PlayerHelper.hasInInventory(player, ingredient.get(), (cost * amount));
     }
 
     public void fulfill(PlayerEntity player) {
-        PlayerHelper.takeFromInventory(player, ingredient, cost);
+        PlayerHelper.takeFromInventory(player, ingredient.get(), cost);
     }
 }

@@ -32,7 +32,7 @@ public class ShopUtils {
     public static void open(PlayerJS<?> player, EntityJS entityJS, String id) {
         Department shop = Department.REGISTRY.get(id);
         if (shop != null) {
-            shop.open(target(player, entityJS));
+            shop.open(target(player, entityJS), true);
         }
     }
 

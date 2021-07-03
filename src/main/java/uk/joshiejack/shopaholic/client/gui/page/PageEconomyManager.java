@@ -22,7 +22,6 @@ import java.util.List;
 @OnlyIn(Dist.CLIENT)
 public class PageEconomyManager extends AbstractMultiPage.Right<Shipping.SoldItem> {
     public static final Icon ICON = new TextureIcon(DepartmentScreen.EXTRA, 240, 224);
-    public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
     private static final long[] divisions = new long[]{1, 5, 10, 100, 1000};
 
     public PageEconomyManager(ITextComponent name) {

@@ -17,9 +17,8 @@ public class GoldListingButton extends AbstractListingButton {
     }
 
     @Override
-    protected void drawForeground(@Nonnull MatrixStack matrix, boolean hovered) {
+    protected void drawForeground(@Nonnull MatrixStack matrix, boolean hovered, int color) {
         sublisting.getIcon().render(mc, matrix, x + 2, y + 1);
-        int color = !active ? 10526880 : hovered ? 16777120 : 14737632;
         drawString(matrix, mc.font, getMessage(), x + 20, y + (height - 8) / 2, color);
         //GlStateManager.color(1.0F, 1.0F, 1.0F);
         //Draw the cost

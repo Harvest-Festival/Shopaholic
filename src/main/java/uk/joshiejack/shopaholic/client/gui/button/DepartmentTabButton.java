@@ -1,35 +1,37 @@
 package uk.joshiejack.shopaholic.client.gui.button;
 
-//public class ButtonShopTab extends GuiButton {
-//    private final ShopScreen gui;
-//    private final ItemStack icon;
-//    private final Department shop;
-//
-//    public ButtonShopTab(ShopScreen gui, Department shop, int buttonId, int x, int y) {
-//        super(buttonId, x, y, "");
-//        this.gui = gui;
-//        this.shop = shop;
-//        this.icon = shop.getIcon();
-//        this.width = 21;
-//        this.height = 22;
-//    }
-//
-//    @Override
-//    public void drawButton(@Nonnull Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-//        if (visible) {
-//            hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-//            mc.getTextureManager().bindTexture(ShopScreen.EXTRA);
-//            drawTexturedModalRect(x, y, 107, 59 + (hovered ? 22: 0), 21, 22);
-//            StackRenderHelper.drawStack(icon, x + 4, y + 3, 1F);
-//            if (hovered) {
-//                gui.addTooltip(Lists.newArrayList(shop.getLocalizedName()));
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void mouseReleased(int mouseX, int mouseY) {
-//        Shop.get(shop).setLast(shop); //Update the last value to the new tab
-//        Minecraft.getMinecraft().displayGuiScreen(new ShopScreen(shop, gui.target));
-//    }
-//}
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+import uk.joshiejack.penguinlib.client.gui.widget.AbstractButton;
+import uk.joshiejack.penguinlib.network.PenguinNetwork;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
+import uk.joshiejack.shopaholic.network.shop.SwitchDepartmentPacket;
+import uk.joshiejack.shopaholic.shop.Department;
+import uk.joshiejack.shopaholic.shop.Shop;
+
+import javax.annotation.Nonnull;
+
+public class DepartmentTabButton extends AbstractButton<DepartmentScreen> {
+    private final Department department;
+
+    public DepartmentTabButton(DepartmentScreen screen, int x, int y, Department department) {
+        super(screen, x, y, 21, 21, ShopaholicClient.EMPTY_STRING,
+                (btn) -> {
+                    Shop.get(department).setLast(department);
+                    PenguinNetwork.sendToServer(new SwitchDepartmentPacket(department));
+                },
+                (btn, mtx, mX, mY) -> {
+                    GuiUtils.drawHoveringText(mtx, Lists.newArrayList(department.getLocalizedName()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font);
+                });
+        this.department = department;
+    }
+
+    @Override
+    protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
+        mc.getTextureManager().bind(DepartmentScreen.EXTRA);
+        blit(matrix, x, y, 107, 59 + (hovered ? 22 : 0), 21, 22);
+        department.getIcon().render(mc, matrix, x + 4, y + 3);
+    }
+}

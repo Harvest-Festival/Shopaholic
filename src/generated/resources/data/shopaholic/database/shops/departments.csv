@@ -1,2 +1,3 @@
 Shop ID,ID,Icon,Name
 test_shop,test_department,{""item"":""minecraft:gold_ingot""},Gold Store
+test_shop,crafting_central,{""item"":""minecraft:crafting_table""},Crafting Central

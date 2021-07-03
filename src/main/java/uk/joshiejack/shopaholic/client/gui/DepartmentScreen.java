@@ -21,7 +21,9 @@ import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
+import uk.joshiejack.shopaholic.client.gui.button.DepartmentTabButton;
 import uk.joshiejack.shopaholic.client.gui.button.GoldListingButton;
+import uk.joshiejack.shopaholic.client.gui.button.ItemListingButton;
 import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
@@ -90,8 +92,8 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         drawCoinage(matrix, leftPos, topPos + 19, Wallet.getActive().getBalance());
         drawPlayerInventory(matrix);
         if (purchased.getLeft() != ItemIcon.EMPTY) {
-            purchased.getLeft().render(minecraft, matrix, mouseX - leftPos - 8, mouseY - topPos - 8);
-            renderCountText(mouseX - leftPos - 8, mouseY - topPos - 8, purchased.getRight());
+            purchased.getLeft().renderWithCount(minecraft, matrix, mouseX - leftPos - 8, mouseY - topPos - 8, purchased.getRight());
+            //renderCountText(mouseX - leftPos - 8, mouseY - topPos - 8, purchased.getRight());
         }
     }
 
@@ -129,6 +131,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
                 minecraft.getItemRenderer().blitOffset = 50;
                 minecraft.getItemRenderer().renderGuiItem(stack, 253 + y2, 61 + x2 * 18);
                 minecraft.getItemRenderer().renderGuiItemDecorations(font, stack, 253 + y2, 61 + x2 * 18);
+                minecraft.getItemRenderer().blitOffset = 0;
             }
 
             x2++;
@@ -195,22 +198,21 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             pPosition++;
         }
 
-        if (buttons.size() == 2) //addButton(new ButtonOutOfStock(this, 3, leftPos + 28, 38 + topPos + position));
-
-            //Tabs
-            if (menu.shop != null && menu.shop.getDepartments().size() > 1) {
-                int j = 0;
-                for (Department shop : ImmutableList.copyOf(menu.shop.getDepartments()).reverse()) {
-                    if (shop.getListings().stream().anyMatch(l -> l.canList(menu.target, stock))) {
-                        //addButton(new ButtonShopTab(this, shop, buttons.size(), leftPos + 5, topPos + 38 + (j * 23)));
-                        j++;
-                    }
-                }
-
-                if (listingCount < (3 + menu.shop.getDepartments().size())) {
-                    listingCount = 3 + menu.shop.getDepartments().size();
+        //if (buttons.size() == 2) //addButton(new ButtonOutOfStock(this, 3, leftPos + 28, 38 + topPos + position));
+        //Tabs
+        if (menu.shop != null && menu.shop.getDepartments().size() > 1) {
+            int j = 0;
+            for (Department department : menu.shop.getDepartments()) {
+                if (department.getListings().stream().anyMatch(l -> l.canList(menu.target, stock))) {
+                    addButton(new DepartmentTabButton(this, leftPos + 5, topPos + 38 + (j * 23), department));
+                    j++;
                 }
             }
+
+            if (listingCount < (3 + menu.shop.getDepartments().size())) {
+                listingCount = 3 + menu.shop.getDepartments().size();
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -224,7 +226,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             if (listing.getSubListing(stock).getMaterials().size() == 1 && listing.getGoldCost(menu.target.getPlayer(), stock) == 0) {
                 if (space + 20 <= 200) {
                     MaterialCost requirement = ((List<MaterialCost>) listing.getSubListing(stock).getMaterials()).get(0);
-                    //addButton(new ButtonListingItem(requirement, this, listing, id, left, top));
+                    addButton(new ItemListingButton(this, left, top, listing, requirement));
                     return 20;
                 }
             } else if (space + 20 <= 200) {
@@ -240,7 +242,9 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         try {
             return cost == 0 ? FREE :
                     COST_CACHE.get(cost, () -> new StringTextComponent(StringHelper.convertNumberToString(cost)));
-        } catch (ExecutionException ex) { return ERROR; }
+        } catch (ExecutionException ex) {
+            return ERROR;
+        }
     }
 
     public void updatePurchased(@Nonnull Icon icon, int amount) {

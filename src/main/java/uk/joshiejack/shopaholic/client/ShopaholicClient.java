@@ -1,9 +1,11 @@
 package uk.joshiejack.shopaholic.client;
 
+import joptsimple.internal.Strings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -24,6 +26,8 @@ import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ShopaholicClient {
+    public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         ScreenManager.register(Shopaholic.ShopaholicContainers.BOOK.get(),

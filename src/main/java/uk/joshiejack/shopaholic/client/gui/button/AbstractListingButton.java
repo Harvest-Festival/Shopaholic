@@ -54,7 +54,8 @@ public abstract class AbstractListingButton extends AbstractButton<DepartmentScr
         blit(matrix, x, y, 0, state * 18, width / 2, height);
         blit(matrix, x + width / 2, y, 200 - width / 2, state * 18, width / 2, height);
         //Foreground
-        drawForeground(matrix, hovered);
+        int color = !active ? 10526880 : hovered && canPurchase(1) ? 16777120 : 14737632;
+        drawForeground(matrix, hovered, color);
         if (pressed)
             whilePressed();
     }
@@ -88,7 +89,7 @@ public abstract class AbstractListingButton extends AbstractButton<DepartmentScr
         }
     }
 
-    protected abstract void drawForeground(@Nonnull MatrixStack matrix, boolean hovered);
+    protected abstract void drawForeground(@Nonnull MatrixStack matrix, boolean hovered, int color);
 
     private boolean canPurchase(int x) {
         return wallet.getBalance() - (listing.getGoldCost(screen.getMenu().target.getPlayer(), screen.stock) * x) >= 0
