@@ -1,8 +1,8 @@
 package uk.joshiejack.shopaholic.data.shop.condition;
 
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
-import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
+import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 
 public class Compare extends ConditionBuilder {
     protected ComparatorBuilder compare1;

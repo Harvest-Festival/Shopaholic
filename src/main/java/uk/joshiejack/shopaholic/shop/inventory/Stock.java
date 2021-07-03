@@ -4,13 +4,16 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.INBTSerializable;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
-import uk.joshiejack.penguinlib.util.helpers.generic.MapHelper;
-import uk.joshiejack.penguinlib.util.helpers.generic.MathsHelper;
+import uk.joshiejack.penguinlib.util.helpers.MapHelper;
+import uk.joshiejack.penguinlib.util.helpers.MathsHelper;
 import uk.joshiejack.shopaholic.network.shop.SetStockedItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
+import uk.joshiejack.shopaholic.shop.ShopHelper;
 
 import java.util.Random;
 
@@ -22,37 +25,44 @@ public class Stock implements INBTSerializable<CompoundNBT> {
 
     public Stock(Department department) {
         this.department = department;
-        for (Listing listing: department.getListings())
+        for (Listing listing : department.getListings())
             if (!listing.isSingleEntry() && !stockItems.containsKey(listing))
                 stockItems.put(listing, listing.getRandomID(initialRandom));
     }
 
-    public void decreaseStockLevel(Listing purchasable) {
-        MapHelper.adjustValue(stockLevels, purchasable, -1);
+    public void decreaseStockLevel(Listing listing) {
+        MapHelper.adjustOrPut(stockLevels, listing, -1, listing.getStockMechanic().getMaximum() - 1);
     }
 
     public void setStockedItem(Listing listing, int stockID) {
         stockItems.put(listing, stockID);
     }
 
-    public int getStockedObject(Listing purchasable) {
-        if (!stockItems.containsKey(purchasable)) {
-            stockItems.put(purchasable, purchasable.getRandomID(initialRandom));
-            return 0;
-        } else return stockItems.getInt(purchasable);
+    @OnlyIn(Dist.CLIENT)
+    public void setStockLevel(Listing listing, int stock) {
+        stockLevels.put(listing, stock);
+        if (stock <= 0)
+            ShopHelper.refreshShop(); //Stock levels have changed
     }
 
-    public int getStockLevel(Listing purchasable){
-        return MapHelper.adjustOrPut(stockLevels, purchasable, 0, purchasable.getStockMechanic().getMaximum());
+    public int getStockedObject(Listing listing) {
+        if (!stockItems.containsKey(listing)) {
+            stockItems.put(listing, listing.getRandomID(initialRandom));
+            return 0;
+        } else return stockItems.getInt(listing);
+    }
+
+    public int getStockLevel(Listing listing) {
+        return MapHelper.adjustOrPut(stockLevels, listing, 0, listing.getStockMechanic().getMaximum());
     }
 
     public void newDay(Random random) {
-        for (Listing listing: stockLevels.keySet()) {
+        for (Listing listing : stockLevels.keySet()) {
             StockMechanic mechanic = listing.getStockMechanic();
             stockLevels.put(listing, MathsHelper.constrainToRangeInt(getStockLevel(listing) + mechanic.getIncrease(), 0, mechanic.getMaximum()));
         }
 
-        for (Listing listing: stockItems.keySet()) {
+        for (Listing listing : stockItems.keySet()) {
             int id = listing.getRandomID(random);
             stockItems.put(listing, id);
             PenguinNetwork.sendToEveryone(new SetStockedItemPacket(department, listing, id));
@@ -65,7 +75,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
         ListNBT list = new ListNBT();
         stockLevels.forEach((key, value) -> {
             CompoundNBT tag = new CompoundNBT();
-            tag.putString("Key", key.getID());
+            tag.putString("Key", key.id());
             tag.putInt("Value", value);
             list.add(tag);
         });
@@ -75,7 +85,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
         ListNBT stockList = new ListNBT();
         stockItems.forEach((key, value) -> {
             CompoundNBT tag = new CompoundNBT();
-            tag.putString("Key", key.getID());
+            tag.putString("Key", key.id());
             tag.putInt("Value", value);
             stockList.add(tag);
         });

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,6 +18,7 @@ import java.util.Locale;
 import static uk.joshiejack.shopaholic.Shopaholic.MODID;
 
 @SuppressWarnings("unused")
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
 public class RenderGold {
     @SubscribeEvent

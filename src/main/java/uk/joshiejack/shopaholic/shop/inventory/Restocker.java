@@ -15,7 +15,7 @@ public class Restocker {
     public static void onNewDay(NewDayEvent event) {
         ServerWorld world = event.getWorld();
         if (world.dimension() == World.OVERWORLD) {
-            Department.REGISTRY.values().forEach(dp -> dp.getStockLevels().newDay(world.random));
+            Department.REGISTRY.values().forEach(dp -> dp.getStockLevels(world).newDay(world.random));
             Inventory.setChanged(world);
             Market.get(event.getWorld()).newDay(world);
         }

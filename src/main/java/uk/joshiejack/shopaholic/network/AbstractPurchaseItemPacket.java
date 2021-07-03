@@ -18,7 +18,7 @@ public abstract class AbstractPurchaseItemPacket extends AbstractPacketSyncDepar
     @Override
     public void encode(PacketBuffer buf) {
         super.encode(buf);
-        buf.writeUtf(listing.getID());
+        buf.writeUtf(listing.id());
         buf.writeInt(amount);
     }
 

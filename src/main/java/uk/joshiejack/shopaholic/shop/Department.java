@@ -8,6 +8,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
@@ -17,11 +19,13 @@ import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
+import uk.joshiejack.shopaholic.client.ClientStockLevels;
 import uk.joshiejack.shopaholic.network.shop.SetPlayerShopSeed;
 import uk.joshiejack.shopaholic.network.shop.SyncStockLevelsPacket;
-import uk.joshiejack.shopaholic.shop.input.BlockStateShopInput;
+import uk.joshiejack.shopaholic.shop.input.BlockShopInput;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
+import uk.joshiejack.shopaholic.shop.inventory.Inventory;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 import javax.annotation.Nullable;
@@ -33,7 +37,6 @@ public class Department {
     public static final Map<String, Department> REGISTRY = Maps.newHashMap();
     private final Map<String, Listing> listings = Maps.newLinkedHashMap();
     private final NonNullList<Condition> conditions = NonNullList.create();
-    private final Stock stock;
     private final String id;
     private final Shop shop;
     private Icon icon;
@@ -49,12 +52,11 @@ public class Department {
         this.icon = ItemIcon.EMPTY;
         this.method = method;
         this.shop.getDepartments().add(this);
-        this.stock = new Stock(this);
         Department.REGISTRY.put(department_id, this);
     }
 
-    public Stock getStockLevels() {
-        return stock;
+    public Stock getStockLevels(World world) {
+        return world.isClientSide ? ClientStockLevels.getStock(this) : Inventory.getStock((ServerWorld) world, this);
     }
 
     @Nullable
@@ -82,7 +84,7 @@ public class Department {
     }
 
     public void addListing(Listing listing) {
-        listings.put(listing.getID(), listing);
+        listings.put(listing.id(), listing);
     }
 
     public void addCondition(Condition condition) {
@@ -122,9 +124,10 @@ public class Department {
         //Sync supermarket inventories too
         Shop market = Shop.get(this);
         if (market != null) {
-            market.getDepartments().forEach(shop -> PenguinNetwork.sendToClient(new SyncStockLevelsPacket(shop, shop.getStockLevels()), (ServerPlayerEntity) target.getPlayer()));
+            market.getDepartments().forEach(department ->
+                    PenguinNetwork.sendToClient(new SyncStockLevelsPacket(department, department.getStockLevels(target.getWorld())), (ServerPlayerEntity) target.getPlayer()));
         } else
-            PenguinNetwork.sendToClient(new SyncStockLevelsPacket(this, stock), (ServerPlayerEntity) target.getPlayer()); //Sync the stock levels to the player
+            PenguinNetwork.sendToClient(new SyncStockLevelsPacket(this, getStockLevels(target.getWorld())), (ServerPlayerEntity) target.getPlayer()); //Sync the stock levels to the player
         /* Seed the random shopness */
         int seed = 13 * (1 + TimeHelper.getElapsedDays(target.getWorld().getDayTime()));
         target.getPlayer().getPersistentData().putInt("ShopaholicSeed", seed);
@@ -138,7 +141,7 @@ public class Department {
                     buf.writeVarLong(target.getPos().asLong());
                     buf.writeVarInt(target.getEntity().getId());
                     buf.writeItemStack(target.getStack(), false);
-                    if (target.getInput() instanceof BlockStateShopInput) buf.writeByte(0);
+                    if (target.getInput() instanceof BlockShopInput) buf.writeByte(0);
                     else if (target.getInput() instanceof EntityShopInput) buf.writeByte(1);
                     else buf.writeByte(2);
                     target.getInput().encode(buf);

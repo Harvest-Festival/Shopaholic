@@ -5,15 +5,16 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.tuple.Pair;
+import uk.joshiejack.penguinlib.client.PenguinClient;
 import uk.joshiejack.penguinlib.client.gui.AbstractContainerScreen;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.util.icon.Icon;
@@ -21,23 +22,20 @@ import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
-import uk.joshiejack.shopaholic.client.gui.button.DepartmentTabButton;
-import uk.joshiejack.shopaholic.client.gui.button.GoldListingButton;
-import uk.joshiejack.shopaholic.client.gui.button.ItemListingButton;
+import uk.joshiejack.shopaholic.client.gui.widget.button.*;
 import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
-import uk.joshiejack.shopaholic.shop.MaterialCost;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 import javax.annotation.Nonnull;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @SuppressWarnings("ConstantConditions")
+@OnlyIn(Dist.CLIENT)
 public class DepartmentScreen extends AbstractContainerScreen<DepartmentContainer> {
     public static final ResourceLocation EXTRA = new ResourceLocation(Shopaholic.MODID, "textures/gui/shop_extra.png");
     private static final ResourceLocation BACKGROUND = new ResourceLocation(Shopaholic.MODID, "textures/gui/shop.png");
@@ -45,8 +43,8 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     private static final TranslationTextComponent FREE = new TranslationTextComponent("gui.shopaholic.shop.free");
     private static final TranslationTextComponent ERROR = new TranslationTextComponent("gui.shopaholic.shop.error");
     private static final Cache<Long, ITextComponent> COST_CACHE = CacheBuilder.newBuilder().build();
-    private final Collection<Listing> contents;
-    public final Stock stock;
+    private Collection<Listing> contents;
+    public Stock stock;
     private Pair<Icon, Integer> purchased;
     private int listingCount;
     private int start;
@@ -54,19 +52,20 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     public DepartmentScreen(DepartmentContainer container, PlayerInventory inv) {
         super(container, inv, container.department.getLocalizedName(), BACKGROUND, 256, 256);
-        this.purchased = Pair.of(ItemIcon.EMPTY, 0);
-        this.stock = container.department.getStockLevels();
-        this.contents = Lists.newArrayList();
-        for (Listing listing : ImmutableList.copyOf(container.department.getListings())) {
-            if (listing.canList(container.target, stock)) {
-                contents.add(listing);
-            }
-        }
     }
 
     @Override
     public void init() {
         super.init();
+        this.purchased = Pair.of(ItemIcon.EMPTY, 0);
+        this.stock = menu.department.getStockLevels(minecraft.level);
+        this.contents = Lists.newArrayList();
+        for (Listing listing : ImmutableList.copyOf(menu.department.getListings())) {
+            if (listing.canList(menu.target, stock)) {
+                contents.add(listing);
+            }
+        }
+
         setStart(0); //Reload
     }
 
@@ -88,44 +87,43 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     @Override
     protected void renderLabels(@Nonnull MatrixStack matrix, int mouseX, int mouseY) {
-        //FancyFontRenderer.render(this, x + 20, topPos + 17, getShopName(), false);
+        matrix.pushPose();
+        float scale = 1.5F;
+        matrix.scale(scale, scale, scale);
+        PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22/scale, 17/scale, 0xF1B81F);
+        matrix.popPose();
         drawCoinage(matrix, leftPos, topPos + 19, Wallet.getActive().getBalance());
         drawPlayerInventory(matrix);
         if (purchased.getLeft() != ItemIcon.EMPTY) {
+            float blit = minecraft.getItemRenderer().blitOffset;
+            minecraft.getItemRenderer().blitOffset = 100F;
+            int blit2 = minecraft.gui.getBlitOffset();
+            minecraft.gui.setBlitOffset(110);
             purchased.getLeft().renderWithCount(minecraft, matrix, mouseX - leftPos - 8, mouseY - topPos - 8, purchased.getRight());
-            //renderCountText(mouseX - leftPos - 8, mouseY - topPos - 8, purchased.getRight());
-        }
-    }
-
-    private void renderCountText(int x, int y, int count) {
-        if (count != 1) {
-            MatrixStack matrixstack = new MatrixStack();
-            String s = String.valueOf(count);
-            matrixstack.translate(0.0D, 0.0D, getBlitOffset() + 200.0F);
-            IRenderTypeBuffer.Impl irendertypebuffer$impl = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
-            minecraft.font.drawInBatch(s, (float) (x + 19 - 2 - minecraft.font.width(s)), (float) (y + 6 + 3), 16777215, true, matrixstack.last().pose(), irendertypebuffer$impl, false, 0, 15728880);
-            irendertypebuffer$impl.endBatch();
+            minecraft.getItemRenderer().blitOffset = blit;
+            minecraft.gui.setBlitOffset(blit2);
         }
     }
 
     private void drawCoinage(@Nonnull MatrixStack matrix, int x, int y, long gold) {
-        String formatted = String.valueOf(formatter.format(gold));
-        //FancyFontRenderer.render(this, x + 220, y, formatted, true);
         //GlStateManager.disableDepth();
+        String formatted = formatter.format(gold);
+        int width = PenguinClient.FANCY_FONT.get().width(formatted);
+        PenguinClient.FANCY_FONT.get().draw(matrix, formatted, 220 - width, 20, 0xFFF5CB5C);
         minecraft.getTextureManager().bind(EXTRA);
-        blit(matrix, 224, 16, 244, 244, 12, 12);
+        blit(matrix, 224, 17, 244, 244, 12, 12);
         //GlStateManager.enableDepth();
     }
 
     private void drawPlayerInventory(@Nonnull MatrixStack matrix) {
         if (!ShopaholicClientConfig.enableInventoryView.get()) return;
-        //FancyFontRenderer.render(this, leftPos + 250, topPos + 27, "BUYING", false);
+        PenguinClient.FANCY_FONT.get().draw(matrix, "BUYING", 250, 27, 0xFFF5CB5C);
         minecraft.getTextureManager().bind(EXTRA);
         blit(matrix, 240, 40, 0, 62, 100, 194);
 
         int x2 = 0, y2 = 0;
         boolean first = true;
-        //FancyFontRenderer.render(this, leftPos + 240, topPos + 44, "Inventory", false);
+        PenguinClient.FANCY_FONT.get().draw(matrix, "Inventory", 260, 44, 0xFFF5CB5C);
         for (ItemStack stack : menu.target.getPlayer().inventory.items) {
             if (!stack.isEmpty()) {
                 minecraft.getItemRenderer().blitOffset = 50;
@@ -175,7 +173,6 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         listingCount = 2;
 
         //Arrows are added, now add the items being sold
-        int id = start;
         int position = 0;
         int pPosition = 0;
         Iterator<Listing> it = contents.iterator();
@@ -191,8 +188,6 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
                     listingCount = add > 0 ? listingCount + 1 : listingCount;
                     position += add;
                 }
-
-                id++;
             }
 
             pPosition++;
@@ -213,9 +208,10 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
                 listingCount = 3 + menu.shop.getDepartments().size();
             }
         }
+
+        addButton(new DropItemButton(this));
     }
 
-    @SuppressWarnings("unchecked")
     private int addButton(Listing listing, int left, int top, int space) {
         if (listing.getSubListing(stock).isGoldOnly()) {
             if (space + 20 <= 200) {
@@ -225,12 +221,11 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         } else {
             if (listing.getSubListing(stock).getMaterials().size() == 1 && listing.getGoldCost(menu.target.getPlayer(), stock) == 0) {
                 if (space + 20 <= 200) {
-                    MaterialCost requirement = ((List<MaterialCost>) listing.getSubListing(stock).getMaterials()).get(0);
-                    addButton(new ItemListingButton(this, left, top, listing, requirement));
+                    addButton(new ItemListingButton(this, left, top, listing));
                     return 20;
                 }
             } else if (space + 20 <= 200) {
-                //addButton(new ButtonListingBuilding(this, listing, id, left, top));
+                addButton(new ComboListingButton(this, left, top, listing));
                 return 20;
             }
         }
@@ -257,9 +252,8 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     @Override
     public boolean mouseClicked(double x, double y, int mouseButton) {
         boolean ret = super.mouseClicked(x, y, mouseButton);
-        if (!ret) {
+        if (getFocused() == null)
             updatePurchased(ItemIcon.EMPTY, 0);
-        }
         //TODO?if (selectedButton == null) {
         //updatePurchased(ItemStack.EMPTY, 0);
         //}
@@ -269,5 +263,10 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     public void scroll(int amount) {
         setStart(start + amount);
+    }
+
+    @Override
+    public int getXSize() {
+        return 512;
     }
 }

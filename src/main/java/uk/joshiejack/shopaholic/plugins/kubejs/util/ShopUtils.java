@@ -9,8 +9,8 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.DepartmentJS;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.ShopHelper;
-import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
+import uk.joshiejack.shopaholic.shop.input.InputMethod;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

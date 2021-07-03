@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.client.gui.widget;
+package uk.joshiejack.shopaholic.client.gui.widget.label;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -12,9 +12,9 @@ import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.client.ShopaholicClient;
-import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import javax.annotation.Nonnull;

@@ -21,7 +21,7 @@ public class ServerPurchaseItemPacket extends AbstractPurchaseItemPacket {
 
     @Override
     public void handle(PlayerEntity player) {
-        if (listing.canPurchase(player, department.getStockLevels(), amount)) {
+        if (listing.canPurchase(player, department.getStockLevels(player.level), amount)) {
             if (purchase((ServerPlayerEntity)player)) {
                 PenguinNetwork.sendToClient(new ClientPurchaseItemPacket(department, listing, amount), (ServerPlayerEntity) player); //Send the packet back
             }
@@ -30,7 +30,7 @@ public class ServerPurchaseItemPacket extends AbstractPurchaseItemPacket {
 
     private boolean purchase(ServerPlayerEntity player) {
         Vault vault = Bank.get((ServerWorld) player.level).getVaultForPlayer(player);
-        long cost = listing.getGoldCost(player, department.getStockLevels()); //TownHelper.getClosestTownToEntity(player, false).getShops().getSellValue(shop, purchasable); //TODO: Enable adjusted value
+        long cost = listing.getGoldCost(player, department.getStockLevels(player.level)); //TownHelper.getClosestTownToEntity(player, false).getShops().getSellValue(shop, purchasable); //TODO: Enable adjusted value
         long total = cost * amount;
         if (vault.getBalance() - total >= 0) {
             if (total >= 0) vault.decreaseGold(player.level, total);

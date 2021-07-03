@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.client.gui.button;
+package uk.joshiejack.shopaholic.client.gui.widget.button;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.util.text.ITextComponent;
@@ -11,13 +11,12 @@ import javax.annotation.Nonnull;
 
 @OnlyIn(Dist.CLIENT)
 public class GoldListingButton extends AbstractListingButton {
-
     public GoldListingButton(DepartmentScreen screen, int x, int y, Listing listing) {
         super(screen, x, y, listing);
     }
 
     @Override
-    protected void drawForeground(@Nonnull MatrixStack matrix, boolean hovered, int color) {
+    protected void drawForeground(@Nonnull MatrixStack matrix, int mouseX, int mouseY, boolean hovered, int color) {
         sublisting.getIcon().render(mc, matrix, x + 2, y + 1);
         drawString(matrix, mc.font, getMessage(), x + 20, y + (height - 8) / 2, color);
         //GlStateManager.color(1.0F, 1.0F, 1.0F);
@@ -29,7 +28,7 @@ public class GoldListingButton extends AbstractListingButton {
             drawString(matrix, mc.font, cost, x + 180 - width, y + (height - 8) / 2, color);
             mc.getTextureManager().bind(DepartmentScreen.EXTRA);
             blit(matrix, x + 184, (y + (height - 8) / 2) - 2, 244, 244, 12, 12);
-        } else {
+        } else if (sublisting.getMaterials().isEmpty()) {
             int width = mc.font.width(cost);
             drawString(matrix, mc.font, cost, x + 194 - width, y + (height - 8) / 2, color);
         }

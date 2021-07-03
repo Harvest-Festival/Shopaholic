@@ -1,7 +1,7 @@
 package uk.joshiejack.shopaholic.data.shop.condition;
 
-import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
+import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 
 public abstract class ConditionBuilder {
     public final String id;

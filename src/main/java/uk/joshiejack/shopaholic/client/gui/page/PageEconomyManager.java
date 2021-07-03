@@ -1,9 +1,7 @@
 package uk.joshiejack.shopaholic.client.gui.page;
 
-import joptsimple.internal.Strings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
@@ -12,9 +10,13 @@ import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.TextureIcon;
 import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
-import uk.joshiejack.shopaholic.client.gui.widget.*;
-import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
+import uk.joshiejack.shopaholic.client.gui.widget.button.SwitchAccountButton;
+import uk.joshiejack.shopaholic.client.gui.widget.button.TransferBalanceButton;
+import uk.joshiejack.shopaholic.client.gui.widget.label.EconomyStatsLabel;
+import uk.joshiejack.shopaholic.client.gui.widget.label.ShippedItemLabel;
+import uk.joshiejack.shopaholic.client.gui.widget.label.ShippingLogLabel;
+import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Shipping;
 
 import java.util.List;

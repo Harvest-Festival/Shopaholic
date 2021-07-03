@@ -23,7 +23,7 @@ public class SetStockedItemPacket extends AbstractPacketSyncDepartment {
     @Override
     public void encode(PacketBuffer buf) {
         super.encode(buf);
-        buf.writeUtf(listing.getID());
+        buf.writeUtf(listing.id());
         buf.writeInt(stockID);
     }
 
@@ -36,6 +36,6 @@ public class SetStockedItemPacket extends AbstractPacketSyncDepartment {
 
     @Override
     public void handle(PlayerEntity player) {
-        department.getStockLevels().setStockedItem(listing, stockID);
+        department.getStockLevels(player.level).setStockedItem(listing, stockID);
     }
 }

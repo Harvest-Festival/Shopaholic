@@ -2,14 +2,17 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Level;
+import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.loot.LootRegistryWithID;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.event.ItemPurchasedEvent;
+import uk.joshiejack.shopaholic.network.shop.SyncStockLevelPacket;
 import uk.joshiejack.shopaholic.shop.inventory.Inventory;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
@@ -57,7 +60,7 @@ public class Listing {
         return stockMechanic;
     }
 
-    public String getID() {
+    public String id() {
         return listing_id;
     }
 
@@ -101,11 +104,14 @@ public class Listing {
     }
 
     public void purchase(PlayerEntity player) {
-        Stock stock = department.getStockLevels();
-        stock.decreaseStockLevel(this);
+        Stock stock = department.getStockLevels(player.level);
         getSubListing(stock).purchase(player);
-        if (!player.level.isClientSide)
+        if (!player.level.isClientSide) {
+            stock.decreaseStockLevel(this);
+            PenguinNetwork.sendToClient(new SyncStockLevelPacket(this, stock.getStockLevel(this)), (ServerPlayerEntity) player);
             Inventory.setChanged((ServerWorld) player.level);
+        }
+
         conditions.forEach(c -> c.onPurchase(player, department, this));
         MinecraftForge.EVENT_BUS.post(new ItemPurchasedEvent(player, department, this));
     }

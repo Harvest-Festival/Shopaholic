@@ -52,6 +52,11 @@ public class ShopaholicClient {
                 public ITextComponent getHeader(Minecraft mc) {
                     return  new TranslationTextComponent("Day %s", 1 + TimeHelper.getElapsedDays(mc.level.getDayTime()));
                 }
+
+                @Override
+                public int getX() {
+                    return -20;
+                }
             });
         }
     }

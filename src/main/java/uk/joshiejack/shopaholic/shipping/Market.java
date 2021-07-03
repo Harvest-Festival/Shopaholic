@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Market extends WorldSavedData {
-    private static final String DATA_NAME = "Market";
+    private static final String DATA_NAME = "market";
     private final Map<UUID, Shipping> shippingData = new HashMap<>();
 
     public Market() { super(DATA_NAME); }

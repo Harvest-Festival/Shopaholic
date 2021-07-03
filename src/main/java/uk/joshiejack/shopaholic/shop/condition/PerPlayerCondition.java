@@ -35,7 +35,7 @@ public class PerPlayerCondition extends Condition {
         if (type != CheckType.SHOP_LISTING) return false;
         else {
             CompoundNBT tag = target.getPlayer().getPersistentData().getCompound(MODID);
-            String label = department.id() + ":" + listing.getID();
+            String label = department.id() + ":" + listing.id();
             return tag.getInt(label) < max;
         }
     }
@@ -43,7 +43,7 @@ public class PerPlayerCondition extends Condition {
     @Override
     public void onPurchase(PlayerEntity player, @Nonnull Department department, @Nonnull Listing listing) {
         CompoundNBT tag = player.getPersistentData().getCompound(MODID);
-        String label = department.id() + ":" + listing.getID();
+        String label = department.id() + ":" + listing.id();
         tag.putInt(label, tag.getInt(label) + 1);
     }
 }

@@ -1,4 +1,4 @@
-package uk.joshiejack.shopaholic.client.gui.button;
+package uk.joshiejack.shopaholic.client.gui.widget.button;
 
 //public abstract class ButtonArrow extends GuiButton {
 //    protected final ShopScreen shop;

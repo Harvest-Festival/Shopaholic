@@ -19,6 +19,6 @@ public class ListingJS {
     }
 
     public String id() {
-        return listing.getID();
+        return listing.id();
     }
 }

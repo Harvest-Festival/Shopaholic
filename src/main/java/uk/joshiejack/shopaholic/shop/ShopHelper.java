@@ -1,18 +1,24 @@
 package uk.joshiejack.shopaholic.shop;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 
 public class ShopHelper {
-    public static void resetGUI() {
-        /*GuiScreen screen = Minecraft.getMinecraft().currentScreen;
-        if (screen instanceof ShopScreen) {
-            ((ShopScreen)screen).refresh();
-        } */ //TODO
+    @OnlyIn(Dist.CLIENT)
+    public static void refreshShop() {
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen instanceof DepartmentScreen) {
+            ((DepartmentScreen)screen).refresh();
+        }
     }
 
     public static void open(Collection<Department> shops, ShopTarget target, InputMethod method) {
