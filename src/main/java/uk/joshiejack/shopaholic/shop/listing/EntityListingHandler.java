@@ -6,13 +6,15 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.EntityIcon;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
-public class EntityListingHandler extends ListingHandler<EntityListingHandler.EntitySpawnData> {
+public class EntityListingHandler implements ListingHandler<EntityListingHandler.EntitySpawnData> {
     @Override
     public EntitySpawnData getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
         Row row = database.table("entity_listings").fetch_where("id=" + data);
@@ -21,29 +23,26 @@ public class EntityListingHandler extends ListingHandler<EntityListingHandler.En
     }
 
     @Override
-    public boolean isValid(EntitySpawnData data) {
-        return data.type != null;
+    public boolean isValid(EntitySpawnData object) {
+        return object.type != null;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public ITextComponent getDisplayName(EntitySpawnData object) {
+        return object.type.getDescription();
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public Icon createIcon(EntitySpawnData object) {
+        return new EntityIcon(object.type, 1);
     }
 
     @Override
-    public String getValidityError() {
-        return "Entity does not exist";
-    }
-
-    @Override
-    public ITextComponent getDisplayName(EntitySpawnData data) {
-        return data.type.getDescription();
-    }
-
-    @Override
-    public Icon createIcon(EntitySpawnData data) {
-        return new EntityIcon(data.type, 1);
-    }
-
-    @Override
-    public void purchase(PlayerEntity player, EntitySpawnData data) {
+    public void purchase(PlayerEntity player, EntitySpawnData object) {
         if (!player.level.isClientSide)
-            data.type.spawn((ServerWorld) player.level, new CompoundNBT(), null, player, player.blockPosition(), SpawnReason.SPAWN_EGG, true, true);
+            object.type.spawn((ServerWorld) player.level, new CompoundNBT(), null, player, player.blockPosition(), SpawnReason.SPAWN_EGG, true, true);
     }
 
     public static class EntitySpawnData {

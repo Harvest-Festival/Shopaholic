@@ -6,7 +6,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class NamedCondition extends Condition {
+public class NamedCondition implements Condition {
     private String name;
 
     @Override

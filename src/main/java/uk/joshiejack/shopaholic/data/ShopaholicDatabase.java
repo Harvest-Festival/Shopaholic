@@ -43,6 +43,8 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
         addStockMechanic("limited_1", 1, 1);
         addStockMechanic("only_1", 1, 0);
 
+
+
         ShopBuilder.of("test_shop", "Piggy Bank")
                 .vendor(Vendor.entity("pig", EntityType.PIG))
                 .condition(ConditionBuilder.named("pig_name", "George"))

@@ -11,7 +11,7 @@ import uk.joshiejack.shopaholic.shop.Listing;
 
 import javax.annotation.Nonnull;
 
-public class EntityNearbyCondition extends Condition {
+public class EntityNearbyCondition implements Condition {
     private EntityPredicate predicate;
     private double range;
 

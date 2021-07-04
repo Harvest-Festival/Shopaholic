@@ -16,36 +16,33 @@ import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 import java.util.List;
 
-public class ItemListingHandler extends ListingHandler<ItemStack> {
+public class ItemListingHandler implements ListingHandler<ItemStack> {
     @Override
     public ItemStack getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
         return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data)));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public String getValidityError() {
-        return "Item does not exist";
+    public void addTooltip(List<ITextComponent> list, ItemStack object) {
+        list.addAll(object.getTooltipLines(null, ITooltipFlag.TooltipFlags.NORMAL));
+    }
+
+    @Override
+    public boolean isValid(ItemStack object) {
+        return !object.isEmpty();
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void addTooltip(List<ITextComponent> list, ItemStack stack) {
-        list.addAll(stack.getTooltipLines(null, ITooltipFlag.TooltipFlags.NORMAL));
+    public ITextComponent getDisplayName(ItemStack object) {
+        return object.getHoverName();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
-    public boolean isValid(ItemStack stack) {
-        return !stack.isEmpty();
-    }
-
-    @Override
-    public ITextComponent getDisplayName(ItemStack stack) {
-        return stack.getHoverName();
-    }
-
-    @Override
-    public Icon createIcon(ItemStack stack) {
-        return new ItemIcon(stack);
+    public Icon createIcon(ItemStack object) {
+        return new ItemIcon(object);
     }
 
     @Override
@@ -54,9 +51,9 @@ public class ItemListingHandler extends ListingHandler<ItemStack> {
     }
 
     @Override
-    public void purchase(PlayerEntity player, ItemStack stack) {
-        if (!stack.isEmpty()) {
-            ItemHandlerHelper.giveItemToPlayer(player, stack.copy());
+    public void purchase(PlayerEntity player, ItemStack object) {
+        if (!object.isEmpty()) {
+            ItemHandlerHelper.giveItemToPlayer(player, object.copy());
         }
     }
 }

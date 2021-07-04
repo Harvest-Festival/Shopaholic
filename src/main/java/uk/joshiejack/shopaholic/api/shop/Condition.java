@@ -1,45 +1,64 @@
 package uk.joshiejack.shopaholic.api.shop;
 
-import com.google.common.collect.Maps;
 import net.minecraft.entity.player.PlayerEntity;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
-import java.util.Set;
 
-public abstract class Condition {
-    private static final Map<String, Condition> REGISTRY = Maps.newHashMap();
-
-    public static void register(String name, Condition condition) {
-        REGISTRY.put(name, condition);
-    }
-
-    public static Condition get(String string) {
-        return REGISTRY.get(string);
-    }
-
-    public void onPurchase(PlayerEntity player, @Nonnull Department department, @Nonnull Listing listing) {}
-
-    public boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
+public interface Condition {
+    /**
+     * Tests if the condition is met for a listing
+     *
+     * @param target        the shop target instance
+     * @param department    the department that is open
+     * @param listing       the listing that is being tested
+     * @param type          the checking type, the result may vary
+     * @return              if the condition is met
+     */
+    default boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
         return valid(target, type);
     }
 
-    public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
+    /**
+     * Tests if the condition is met for a department
+     *
+     * @param target        the shop target instance
+     * @param type          the checking type, the result may vary
+     * @return              if the condition is met
+     */
+    default boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         return true;
     }
 
-    public abstract Condition create(Row database, String id);
+    /**
+     * Called when a listing with this condition is purchased
+     * some conditions need to manipulate player data so this is where you do that
+     * @param player            the player who purchased
+     * @param department        the department
+     * @param listing           the listing they purchased
+     */
+    default void onPurchase(PlayerEntity player, @Nonnull Department department, @Nonnull Listing listing) {}
 
-    public void merge(Row data) {}
+    /**
+     * Used to create new instance of this comparator using data from the Penguin-Lib database system
+     * @param row   the row data for this comparator
+     * @param id    the id of this condition
+     * @return  an instance of this comparator with the data applied
+     *          some comparators are immutable so will just return themselves
+     */
+    Condition create(Row row, String id);
 
-    public static Set<String> types() {
-        return REGISTRY.keySet();
-    }
+    /** Some conditions may want to let users add to them in separate rows
+     *  And so a condition can appear twice, this is used to merge a new
+     *  piece of data in to this existing condition. Not used often but handy!
+     * @param row   the row data
+     */
+    default void merge(Row row) {}
 
-    public enum CheckType {
+
+    enum CheckType {
         SHOP_EXISTS, SHOP_IS_OPEN, SHOP_LISTING
     }
 }

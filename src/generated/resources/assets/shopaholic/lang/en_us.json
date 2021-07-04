@@ -20,5 +20,6 @@
   "gui.shopaholic.manager.x.1000": "Hold down %s for 1000x",
   "gui.shopaholic.shop.error": "Error",
   "gui.shopaholic.shop.free": "Free",
+  "gui.shopaholic.shop.heal": "Health Restoration",
   "item.shopaholic.economy_manager": "Economy Manager"
 }

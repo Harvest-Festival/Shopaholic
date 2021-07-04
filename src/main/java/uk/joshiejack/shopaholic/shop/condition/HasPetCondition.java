@@ -11,7 +11,7 @@ import uk.joshiejack.shopaholic.shop.Listing;
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
 
-public class HasPetCondition extends Condition {
+public class HasPetCondition implements Condition {
     private Predicate<TameableEntity> predicate;
 
     public HasPetCondition() {}

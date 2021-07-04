@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import java.time.DayOfWeek;
 import java.util.EnumMap;
 
-public class OpeningHoursCondition extends Condition {
+public class OpeningHoursCondition implements Condition {
     private final EnumMap<DayOfWeek, Pair<Integer, Integer>> hours = new EnumMap<>(DayOfWeek.class);
 
     @Override

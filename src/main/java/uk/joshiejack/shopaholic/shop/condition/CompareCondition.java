@@ -8,7 +8,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class CompareCondition extends Condition {
+public class CompareCondition implements Condition {
     private Comparator compare_1;
     private Comparator compare_2;
     private boolean greater;
@@ -16,6 +16,8 @@ public class CompareCondition extends Condition {
     private boolean equal;
 
     public CompareCondition() {}
+
+    //Specialised create method, passing all the comparators that registered
     public Condition create(Row data, Map<String, Comparator> comparators) {
         CompareCondition validator = new CompareCondition();
         validator.lesser = data.isTrue("less_than");
@@ -32,7 +34,6 @@ public class CompareCondition extends Condition {
         return this;
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         if (compare_1 == null || compare_2 == null) return false;

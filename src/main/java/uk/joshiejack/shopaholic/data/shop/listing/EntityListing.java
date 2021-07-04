@@ -14,6 +14,6 @@ public class EntityListing extends SublistingBuilder {
 
     @Override
     public void save(ShopaholicDatabase data) {
-        data.addEntry("entity_listings", "ID,Entity,Scale", CSVUtils.join(this.data, entity.type.getRegistryName().toString(), entity.scale));
+        data.addEntry("entity_listings", "ID,Entity", CSVUtils.join(this.data, entity.type.getRegistryName().toString()));
     }
 }

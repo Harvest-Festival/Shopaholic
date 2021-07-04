@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Set;
 
-public class ShippedCondition extends Condition {
+public class ShippedCondition implements Condition {
     private List<ItemStack> stacks = Lists.newArrayList();
     private int count;
 

@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 import static uk.joshiejack.shopaholic.Shopaholic.MODID;
 
-public class PerPlayerCondition extends Condition {
+public class PerPlayerCondition implements Condition {
     private int max;
 
     public PerPlayerCondition() {}
@@ -22,7 +22,7 @@ public class PerPlayerCondition extends Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return type == CheckType.SHOP_LISTING && super.valid(target, type);
+        return type == CheckType.SHOP_LISTING;
     }
 
     @Override

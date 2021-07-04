@@ -7,7 +7,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class InDimensionCondition extends Condition {
+public class InDimensionCondition implements Condition {
     private ResourceLocation dimension;
 
     @Override

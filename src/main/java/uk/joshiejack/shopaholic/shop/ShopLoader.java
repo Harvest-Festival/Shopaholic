@@ -36,7 +36,7 @@ public class ShopLoader {
     public static void onDatabaseCollected(DatabasePopulateEvent event) {
         //Update the database with the simple departments
         //Very simple listings AND Generic one for any types
-        ListingHandler.HANDLERS.forEach((type, handler) -> {
+        ShopRegistries.LISTING_HANDLERS.forEach((type, handler) -> {
             event.table("very_simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("type"), type, sdl.get(type), "unlimited"));
             event.table("simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), type, sdl.get(type), sdl.get("stock mechanic")));
         });
@@ -78,13 +78,13 @@ public class ShopLoader {
 
         //Create all the conditions
         Map<String, Condition> conditions = Maps.newHashMap(); //Temporary Registry
-        for (String type : Condition.types()) {
+        for (String type : ShopRegistries.CONDITIONS.keySet()) {
             event.table("condition_" + type).rows().forEach(condition -> {
                 String conditionID = condition.id();
                 if (conditions.containsKey(conditionID)) {
                     conditions.get(conditionID).merge(condition);
                 } else {
-                    Condition theCondition = Condition.get(type);
+                    Condition theCondition = ShopRegistries.CONDITIONS.get(type);
                     if (theCondition != null) {
                         if (theCondition instanceof CompareCondition)
                             conditions.put(conditionID, ((CompareCondition) theCondition).create(condition, comparators));
@@ -156,7 +156,7 @@ public class ShopLoader {
                         List<String> data_entries = builder ? ListingBuilder.BUILDERS.get(sublisting.get("data").toString()).items() : Lists.newArrayList(sublisting.get("data").toString());
                         for (int i = 0; i < data_entries.size(); i++) {
                             String subID = builder ? originalSubID + "$" + i : originalSubID;
-                            ListingHandler<?> handler = ListingHandler.HANDLERS.get(sub_type);
+                            ListingHandler<?> handler = ShopRegistries.LISTING_HANDLERS.get(sub_type);
                             if (handler == null)
                                 Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the listing handler type: " + sub_type + " for " + departmentID + ": " + listingID + " :" + subID);
                             else {

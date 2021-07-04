@@ -1,6 +1,6 @@
-b324e40af615ce64c8e03ff139220fbf583d6ef3 assets/shopaholic/lang/en_us.json
+4653eb52a297edae5a4caa8550a84c83ae48ea6f assets/shopaholic/lang/en_us.json
 c74bb78aa1c0780029c84ade009719c7abd41199 assets/shopaholic/models/item/economy_manager.json
-c5a3d2656ec143cf7dea216adb63a3296f0cca97 data/shopaholic/database/item_values.csv
+0f253cdbe4cae09b746b8acd66f90596c6792a06 data/shopaholic/database/item_values.csv
 a3127c0a0106bd2a6498cc79774f0546a879930b data/shopaholic/database/shops/conditions/condition_named.csv
 5764a3537495c97b0053341d4cae5b4018056cf6 data/shopaholic/database/shops/departments.csv
 1aeecaa55c76ee8bb67034bf5729b7566a2434bc data/shopaholic/database/shops/shop_conditions.csv

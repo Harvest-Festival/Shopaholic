@@ -6,7 +6,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
 
-public class HasNBTTagCondition extends Condition {
+public class HasNBTTagCondition implements Condition {
     private String key;
     private String value;
 

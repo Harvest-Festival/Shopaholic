@@ -86,6 +86,7 @@ public class Sublisting<P> {
         return handler;
     }
 
+    @OnlyIn(Dist.CLIENT)
     public ITextComponent getDisplayName() {
         return !displayName.getContents().isEmpty() ? displayName : handler.getDisplayName(object);
     }

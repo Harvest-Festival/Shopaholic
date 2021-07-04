@@ -10,7 +10,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class TimeCondition extends Condition {
+public class TimeCondition implements Condition {
     private final List<Pair<Integer, Integer>> times = Lists.newArrayList();
 
     public TimeCondition() {}

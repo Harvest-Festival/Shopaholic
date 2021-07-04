@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
 import uk.joshiejack.penguinlib.item.base.BookItem;
 import uk.joshiejack.shopaholic.api.ShopaholicAPI;
-import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
@@ -80,28 +79,29 @@ public class Shopaholic {
         ShopaholicAPI.instance.registerComparator("penguin_team_status", new PenguinTeamStatusComparator());
         ShopaholicAPI.instance.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
         //Register Conditions
-        Condition.register("and", new AndCondition());
-        Condition.register("compare", new CompareCondition());
-        Condition.register("dimension", new InDimensionCondition());
-        Condition.register("entity_nearby", new EntityNearbyCondition());
-        Condition.register("has_nbt_tag", new HasNBTTagCondition());
-        Condition.register("has_pet", new HasPetCondition());
-        Condition.register("hours", new OpeningHoursCondition());
-        Condition.register("named", new NamedCondition());
-        Condition.register("or", new OrCondition());
-        Condition.register("per_player", new PerPlayerCondition());
-        Condition.register("shipped", new ShippedCondition());
-        Condition.register("time", new TimeCondition());
+        ShopaholicAPI.instance.registerCondition("and", new AndCondition());
+        ShopaholicAPI.instance.registerCondition("compare", new CompareCondition());
+        ShopaholicAPI.instance.registerCondition("dimension", new InDimensionCondition());
+        ShopaholicAPI.instance.registerCondition("entity_nearby", new EntityNearbyCondition());
+        ShopaholicAPI.instance.registerCondition("has_nbt_tag", new HasNBTTagCondition());
+        ShopaholicAPI.instance.registerCondition("has_pet", new HasPetCondition());
+        ShopaholicAPI.instance.registerCondition("hours", new OpeningHoursCondition());
+        ShopaholicAPI.instance.registerCondition("named", new NamedCondition());
+        ShopaholicAPI.instance.registerCondition("or", new OrCondition());
+        ShopaholicAPI.instance.registerCondition("per_player", new PerPlayerCondition());
+        ShopaholicAPI.instance.registerCondition("shipped", new ShippedCondition());
+        ShopaholicAPI.instance.registerCondition("time", new TimeCondition());
         //Register Listing Handlers
-        ListingHandler.register("bundle", new BundleListingHandler());
-        ListingHandler.register("department", new DepartmentListingHandler());
-        ListingHandler.register("entity", new EntityListingHandler());
-        ListingHandler.register("item", new ItemListingHandler());
-        ListingHandler.register("potion", new PotionEffectListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("bundle", new BundleListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("department", new DepartmentListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("entity", new EntityListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("heal", new HealListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("item", new ItemListingHandler());
+        ShopaholicAPI.instance.registerListingHandler("potion", new PotionEffectListingHandler());
         //Register Listing Builders
         //TODO? ListingBuilder.register("food", new FoodBuilder());
         //Cost Formulae
-        ShopaholicAPI.instance.registerCostFormula("default", (m, listing, level, mechanic, rand) -> listing.getGold());
+        ShopaholicAPI.instance.registerCostFormula("default", (m, player, listing, level, mechanic, rand) -> listing.getGold());
     }
 
     @SubscribeEvent
