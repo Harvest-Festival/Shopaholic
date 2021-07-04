@@ -20,6 +20,7 @@ import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.client.ClientStockLevels;
+import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 import uk.joshiejack.shopaholic.network.shop.SetPlayerShopSeed;
 import uk.joshiejack.shopaholic.network.shop.SyncStockLevelsPacket;
 import uk.joshiejack.shopaholic.shop.input.BlockShopInput;
@@ -135,7 +136,8 @@ public class Department {
         /* Open the shop */ //Open after the stock level has been received
         NetworkHooks.openGui((ServerPlayerEntity) target.getPlayer(),
                 new SimpleNamedContainerProvider((id, inv, data) ->
-                        Shopaholic.ShopaholicContainers.SHOP.get().create(id, inv).withData(this, target, reloadLastDepartment), name), buf -> {
+                        new DepartmentContainer(id, inv.player, null)
+                                .withData(this, target, reloadLastDepartment), name), buf -> {
                     buf.writeBoolean(reloadLastDepartment);
                     buf.writeUtf(id);
                     buf.writeVarLong(target.getPos().asLong());

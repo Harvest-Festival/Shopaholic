@@ -25,7 +25,7 @@ import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = Shopaholic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Shopaholic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ShopaholicClient {
     public static final ITextComponent EMPTY_STRING = new StringTextComponent(Strings.EMPTY);
 

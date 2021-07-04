@@ -2,6 +2,8 @@ package uk.joshiejack.shopaholic.client.gui.widget.button;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.widget.AbstractButton;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
@@ -12,6 +14,7 @@ import uk.joshiejack.shopaholic.shop.Department;
 
 import javax.annotation.Nonnull;
 
+@OnlyIn(Dist.CLIENT)
 public class DepartmentTabButton extends AbstractButton<DepartmentScreen> {
     private final Department department;
 

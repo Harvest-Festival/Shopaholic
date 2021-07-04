@@ -7,6 +7,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.client.gui.book.widget.AbstractButton;
@@ -19,6 +21,7 @@ import uk.joshiejack.shopaholic.network.bank.SwitchWalletPacket;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class SwitchAccountButton extends AbstractButton {
     private static final List<ITextComponent> active = Lists.newArrayList(new TranslationTextComponent("gui.shopaholic.manager.wallet.currently",
             new TranslationTextComponent("gui.shopaholic.manager.wallet.active").withStyle(TextFormatting.GREEN)));

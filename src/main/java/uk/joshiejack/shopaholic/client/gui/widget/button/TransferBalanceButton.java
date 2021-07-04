@@ -7,6 +7,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
 import uk.joshiejack.penguinlib.client.gui.book.widget.AbstractButton;
@@ -21,6 +23,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class TransferBalanceButton extends AbstractButton {
     private static final ITextComponent FROM_SHARED = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.shared").withStyle(TextFormatting.GOLD);
     private static final ITextComponent FROM_PERSONAL = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.personal").withStyle(TextFormatting.GOLD);
