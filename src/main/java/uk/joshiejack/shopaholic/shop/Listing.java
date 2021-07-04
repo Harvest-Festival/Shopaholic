@@ -13,6 +13,7 @@ import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.event.ItemPurchasedEvent;
 import uk.joshiejack.shopaholic.network.shop.SyncStockLevelPacket;
+import uk.joshiejack.shopaholic.api.shop.CostFormula;
 import uk.joshiejack.shopaholic.shop.inventory.Inventory;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
@@ -70,7 +71,7 @@ public class Listing {
             return 0L;
         } else {
             random.setSeed(player.getPersistentData().getCompound("PenguinStatuses").getInt("ShopSeed") + listing_id.hashCode() * 3643257684289L); //Get the shop seed
-            long result = costScript.getCost(999999999L, getSubListing(stock), stock.getStockLevel(this), stockMechanic, random);
+            long result = costScript.getCost(999999999L, player, getSubListing(stock), stock.getStockLevel(this), stockMechanic, random);
             if (result == 999999999L) {
                 Shopaholic.LOGGER.log(Level.ERROR, "Had an error while processing getCost for the item: " + department.id() + ":" + listing_id);
                 return 999999999;

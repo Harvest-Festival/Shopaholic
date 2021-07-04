@@ -9,13 +9,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 
-@SuppressWarnings("ConstantConditions")
 public class DepartmentListingHandler extends ListingHandler<String> {
-    @Override
-    public String getType() {
-        return "department";
-    }
-
     @Override
     public String getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
         return data;
@@ -40,11 +34,6 @@ public class DepartmentListingHandler extends ListingHandler<String> {
                 shop.open(target, false);
             }
         }
-    }
-
-    @Override
-    public String getStringFromObject(String shop) {
-        return shop.toString();
     }
 
     @Override

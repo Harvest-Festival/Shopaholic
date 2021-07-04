@@ -16,13 +16,11 @@ import java.util.Map;
 public abstract class ListingHandler<T> {
     public static final Map<String, ListingHandler<?>> HANDLERS = Maps.newHashMap();
     protected final List<Pair<T, Long>> items = Lists.newArrayList();
-    public abstract String getType();
     public abstract Icon createIcon(T t);
     public int getCount(T t) { return 1; }
     public abstract void purchase(PlayerEntity player, T t);
     public abstract boolean isValid(T t);
     public abstract ITextComponent getDisplayName(T t);
-    public abstract String getStringFromObject(T t);
     public abstract String getValidityError();
 
     @OnlyIn(Dist.CLIENT)

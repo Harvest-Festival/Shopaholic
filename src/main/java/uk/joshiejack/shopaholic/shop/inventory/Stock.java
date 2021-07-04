@@ -10,10 +10,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.MapHelper;
 import uk.joshiejack.penguinlib.util.helpers.MathsHelper;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.network.shop.SetStockedItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
-import uk.joshiejack.shopaholic.shop.ShopHelper;
 
 import java.util.Random;
 
@@ -42,7 +42,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
     public void setStockLevel(Listing listing, int stock) {
         stockLevels.put(listing, stock);
         if (stock <= 0)
-            ShopHelper.refreshShop(); //Stock levels have changed
+            ShopaholicClient.refreshShop(); //Stock levels have changed
     }
 
     public int getStockedObject(Listing listing) {

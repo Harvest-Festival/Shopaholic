@@ -8,9 +8,9 @@ import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.DepartmentJS;
 import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.ShopHelper;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
+import uk.joshiejack.shopaholic.shop.input.InputToShop;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class ShopUtils {
 
     public static void open(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        ShopHelper.open(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, InputMethod.SCRIPT);
+        InputToShop.open(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, InputMethod.SCRIPT);
     }
 
     public static void open(PlayerJS<?> player, EntityJS entityJS, String id) {
@@ -43,17 +43,17 @@ public class ShopUtils {
 
     public static boolean has(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
+        return InputToShop.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT) != null;
     }
 
     public static boolean isOpen(PlayerJS<?> player, EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
+        return InputToShop.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_IS_OPEN, InputMethod.SCRIPT) != null;
     }
 
     public static DepartmentJS get(PlayerJS<?> player, @Nonnull EntityJS entityJS) {
         ShopTarget target = target(player, entityJS);
-        return new DepartmentJS(Objects.requireNonNull(ShopHelper.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
+        return new DepartmentJS(Objects.requireNonNull(InputToShop.getFirstShop(ENTITY_TO_SHOP.get((EntityShopInput) target.getInput()), target, Condition.CheckType.SHOP_EXISTS, InputMethod.SCRIPT)));
     }
 
     public static DepartmentJS get(String name) {

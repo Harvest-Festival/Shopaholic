@@ -43,7 +43,6 @@ import uk.joshiejack.shopaholic.loot.CapValue;
 import uk.joshiejack.shopaholic.loot.RatioValue;
 import uk.joshiejack.shopaholic.loot.SetValue;
 import uk.joshiejack.shopaholic.shipping.Market;
-import uk.joshiejack.shopaholic.shop.CostFormula;
 import uk.joshiejack.shopaholic.shop.ShopaholicAPIImpl;
 import uk.joshiejack.shopaholic.shop.comparator.*;
 import uk.joshiejack.shopaholic.shop.condition.*;
@@ -102,7 +101,7 @@ public class Shopaholic {
         //Register Listing Builders
         //TODO? ListingBuilder.register("food", new FoodBuilder());
         //Cost Formulae
-        CostFormula.register("default", (m, listing, level, mechanic, rand) -> listing.getGold());
+        ShopaholicAPI.instance.registerCostFormula("default", (m, listing, level, mechanic, rand) -> listing.getGold());
     }
 
     @SubscribeEvent

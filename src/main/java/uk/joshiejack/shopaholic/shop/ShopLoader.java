@@ -21,6 +21,7 @@ import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
 import uk.joshiejack.shopaholic.shop.condition.CompareCondition;
+import uk.joshiejack.shopaholic.api.shop.CostFormula;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.InputToShop;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
@@ -186,7 +187,7 @@ public class ShopLoader {
 
                     if (sublistings.size() > 0 && sublistings.stream().allMatch(sublisting -> sublisting.getHandler().isValid(sublisting.getObject()))) {
                         StockMechanic stockMechanic = stock_mechanics.get(listing.get("stock mechanic").toString());
-                        CostFormula costScript = CostFormula.COST_FORMULAE.get(listing.get("cost formula").toString());
+                        CostFormula costScript = ShopRegistries.COST_FORMULAE.get(listing.get("cost formula").toString());
                         if (stockMechanic == null)
                             Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the stock mechanic: " + listing.get("stock mechanic") + " for " + departmentID + ":" + listingID);
                         else if (costScript == null)

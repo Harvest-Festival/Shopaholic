@@ -7,9 +7,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.network.AbstractPacketSyncDepartment;
 import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.ShopHelper;
 import uk.joshiejack.shopaholic.shop.inventory.Stock;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
@@ -37,6 +37,6 @@ public class SyncStockLevelsPacket extends AbstractPacketSyncDepartment {
     @OnlyIn(Dist.CLIENT)
     public void handleClientPacket() {
         department.getStockLevels(Minecraft.getInstance().level).deserializeNBT(data);
-        ShopHelper.refreshShop(); //Stock levels have changed
+        ShopaholicClient.refreshShop(); //Stock levels have changed
     }
 }

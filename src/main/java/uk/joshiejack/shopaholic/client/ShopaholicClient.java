@@ -3,6 +3,7 @@ package uk.joshiejack.shopaholic.client;
 import joptsimple.internal.Strings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -58,6 +59,14 @@ public class ShopaholicClient {
                     return -20;
                 }
             });
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void refreshShop() {
+        Screen screen = Minecraft.getInstance().screen;
+        if (screen instanceof DepartmentScreen) {
+            ((DepartmentScreen)screen).refresh();
         }
     }
 }

@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Shop {
-    private static final Map<Department, Shop> subshops = Maps.newHashMap();
+    private static final Map<Department, Shop> DEPARTMENT_TO_SHOP = Maps.newHashMap();
     private final List<Department> departments = Lists.newArrayList();
-    private String id;
+    private final String id;
     private final String name;
     private Department last;
 
@@ -36,7 +36,7 @@ public class Shop {
     }
 
     public static Shop get(Department shop) {
-        Shop market = shop.getShop() != null ? shop.getShop() : subshops.get(shop);
+        Shop market = shop.getShop() != null ? shop.getShop() : DEPARTMENT_TO_SHOP.get(shop);
         if (market != null && market.last == null) {
             market.last = shop;
         }

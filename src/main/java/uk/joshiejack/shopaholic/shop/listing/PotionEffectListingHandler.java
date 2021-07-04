@@ -6,19 +6,16 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
-public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
-    @Override
-    public String getType() {
-        return "potion";
-    }
+import java.util.Objects;
 
-    @SuppressWarnings("ConstantConditions")
+public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
     @Override
     public EffectInstance getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
         Row row = database.table("potion_listings").fetch_where("id=" + data);
@@ -28,12 +25,6 @@ public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
         boolean ambient = row.get("is ambient");
         boolean particles = row.get("show particles");
         return new EffectInstance(effect, duration, amplifier, ambient, particles);
-    }
-
-    @Override
-    public String getStringFromObject(EffectInstance instance) {
-        return instance.getEffect().getRegistryName().toString() + " " + instance.getDuration() + " "
-                + instance.getAmplifier() + " " + instance.isAmbient() + " " + instance.showIcon();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -60,8 +51,10 @@ public class PotionEffectListingHandler extends ListingHandler<EffectInstance> {
 
     @Override
     public void purchase(PlayerEntity player, EffectInstance effect) {
-        if (!player.level.isClientSide) {
-            player.addEffect(new EffectInstance(effect)); //COPY!
-        }
+        if (player.hasEffect(effect.getEffect()))
+            ObfuscationReflectionHelper.setPrivateValue(EffectInstance.class,
+                    Objects.requireNonNull(player.getEffect(effect.getEffect())),
+                    Objects.requireNonNull(player.getEffect(effect.getEffect())).getDuration() + effect.getDuration(), "field_76460_b");
+        player.addEffect(new EffectInstance(effect)); //COPY!
     }
 }

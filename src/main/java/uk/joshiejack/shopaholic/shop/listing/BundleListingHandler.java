@@ -16,11 +16,6 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("rawtypes")
 public class BundleListingHandler extends ListingHandler<List<Pair<ListingHandler, Object>>> {
-    @Override
-    public String getType() {
-        return "bundle";
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public Icon createIcon(List<Pair<ListingHandler, Object>> pairs) {
@@ -67,19 +62,5 @@ public class BundleListingHandler extends ListingHandler<List<Pair<ListingHandle
     public ITextComponent getDisplayName(List<Pair<ListingHandler, Object>> pairs) {
         ListingHandler handle = pairs.get(0).getKey();
         return handle.getDisplayName(pairs.get(0).getValue());
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public String getStringFromObject(List<Pair<ListingHandler, Object>> pairs) {
-        StringBuilder builder = new StringBuilder();
-        for (Pair<ListingHandler, Object> pair: pairs) {
-            builder.append(pair.getKey().getType());
-            builder.append("#");
-            builder.append(pair.getKey().getStringFromObject(pair.getValue()));
-            builder.append(",");
-        }
-
-        return builder.substring(0 , builder.toString().length() - 1);
     }
 }
