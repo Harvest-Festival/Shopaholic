@@ -41,8 +41,8 @@ public class DepartmentListingHandler implements ListingHandler<String> {
     }
 
     @Override
-    public boolean isValid(String object) {
-        return object != null && !object.isEmpty();
+    public boolean isValid(Object object) {
+        return object instanceof String && !((String)object).isEmpty();
     }
 }
 

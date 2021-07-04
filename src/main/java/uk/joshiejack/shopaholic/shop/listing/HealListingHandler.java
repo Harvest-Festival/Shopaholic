@@ -20,8 +20,8 @@ public class HealListingHandler implements ListingHandler<Float> {
     }
 
     @Override
-    public boolean isValid(Float object) {
-        return true;
+    public boolean isValid(Object object) {
+        return object instanceof Float;
     }
 
     @OnlyIn(Dist.CLIENT)

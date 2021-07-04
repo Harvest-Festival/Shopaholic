@@ -4,10 +4,10 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
 //Conditions
-public class Named extends ConditionBuilder {
+public class NamedConditionBuilder extends ConditionBuilder {
     protected final String name;
 
-    public Named(String id, String name) {
+    public NamedConditionBuilder(String id, String name) {
         super(id);
         this.name = name;
     }

@@ -29,8 +29,8 @@ public class ItemListingHandler implements ListingHandler<ItemStack> {
     }
 
     @Override
-    public boolean isValid(ItemStack object) {
-        return !object.isEmpty();
+    public boolean isValid(Object object) {
+        return object instanceof ItemStack && !((ItemStack)object).isEmpty();
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -1,2 +1,4 @@
 ID,Name,Vendor ID,Opening Method
+friendly_chest,Daryl the Chest,daryl,right_click
+diamond_worship,The Great Diamond Heist,diamond,right_click
 test_shop,Piggy Bank,pig,right_click

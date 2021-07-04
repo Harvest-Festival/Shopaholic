@@ -6,14 +6,14 @@ import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BundleListing extends SublistingBuilder {
-    private final List<SublistingBuilder> builders = new ArrayList<>();
+public class BundleListingBuilder extends SublistingBuilder<BundleListingBuilder> {
+    private final List<SublistingBuilder<?>> builders = new ArrayList<>();
 
-    public BundleListing(String bundleID) {
+    public BundleListingBuilder(String bundleID) {
         super("bundle", bundleID);
     }
 
-    public BundleListing addToBundle(SublistingBuilder builder) {
+    public BundleListingBuilder addToBundle(SublistingBuilder<?> builder) {
         this.builders.add(builder);
         return this;
     }

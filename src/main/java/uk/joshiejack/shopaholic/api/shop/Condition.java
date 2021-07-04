@@ -28,9 +28,7 @@ public interface Condition {
      * @param type          the checking type, the result may vary
      * @return              if the condition is met
      */
-    default boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return true;
-    }
+    default boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) { return true; };
 
     /**
      * Called when a listing with this condition is purchased

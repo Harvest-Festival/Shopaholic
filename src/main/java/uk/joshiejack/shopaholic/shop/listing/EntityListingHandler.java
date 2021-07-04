@@ -23,8 +23,8 @@ public class EntityListingHandler implements ListingHandler<EntityListingHandler
     }
 
     @Override
-    public boolean isValid(EntitySpawnData object) {
-        return object.type != null;
+    public boolean isValid(Object object) {
+        return object instanceof EntitySpawnData && ((EntitySpawnData)object).type != null;
     }
 
     @OnlyIn(Dist.CLIENT)

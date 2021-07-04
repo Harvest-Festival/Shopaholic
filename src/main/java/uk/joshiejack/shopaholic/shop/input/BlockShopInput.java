@@ -1,9 +1,9 @@
 package uk.joshiejack.shopaholic.shop.input;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.Property;
+import net.minecraft.tileentity.TileEntity;
 import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
@@ -18,8 +18,9 @@ public class BlockShopInput extends ShopInput<Block> {
 
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {
-        BlockState state = target.getWorld().getBlockState(target.getPos());
-        Property<?> property = state.getBlock().getStateDefinition().getProperty(key);
-        return property != null && state.getValue(property).toString().equals(value);
+        TileEntity tile = target.getWorld().getBlockEntity(target.getPos());
+        if (tile == null) return false;
+        CompoundNBT serialized = tile.serializeNBT();
+        return serialized.contains(key) && serialized.getString(key).equals(value);
     }
 }

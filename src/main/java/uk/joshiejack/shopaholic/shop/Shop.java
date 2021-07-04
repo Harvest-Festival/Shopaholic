@@ -20,6 +20,10 @@ public class Shop {
         this.name = new TranslationTextComponent(name);
     }
 
+    public static void clear() {
+        DEPARTMENT_TO_SHOP.clear();
+    }
+
     public String id() {
         return id;
     }

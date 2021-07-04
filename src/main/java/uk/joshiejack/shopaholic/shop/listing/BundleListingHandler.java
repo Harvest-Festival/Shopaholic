@@ -43,8 +43,8 @@ public class BundleListingHandler implements ListingHandler<List<Pair<ListingHan
     }
 
     @Override
-    public boolean isValid(List<Pair<ListingHandler, Object>> object) {
-        return !object.isEmpty();
+    public boolean isValid(Object object) {
+        return object instanceof List && !((List)object).isEmpty();
     }
 
     @OnlyIn(Dist.CLIENT)

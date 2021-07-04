@@ -14,7 +14,7 @@ public class AndCondition extends AbstractListCondition {
 
     @Override
     protected String getFieldName() {
-        return "and_condition";
+        return "condition id";
     }
 
     @Override

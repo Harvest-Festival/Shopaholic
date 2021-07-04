@@ -17,8 +17,8 @@ public class OpeningHoursCondition implements Condition {
     public Condition create(Row data, String id) {
         OpeningHoursCondition validator = new OpeningHoursCondition();
         for (DayOfWeek weekday: TimeHelper.DAYS) {
-            int open = data.getTime(TimeHelper.shortName(weekday) + "_start");
-            int close = data.getTime(TimeHelper.shortName(weekday) + "_end");
+            int open = data.getTime(TimeHelper.shortName(weekday) + " open");
+            int close = data.getTime(TimeHelper.shortName(weekday) + " close");
             if (open >= 0 && close >= 0) {
                 validator.hours.put(weekday, Pair.of(open, close));
             }

@@ -16,7 +16,7 @@ import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
 import uk.joshiejack.shopaholic.api.shop.Condition;
-import uk.joshiejack.shopaholic.api.shop.IImmutable;
+import uk.joshiejack.shopaholic.api.shop.IImutableComparator;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@SuppressWarnings("rawtypes")
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class ShopLoader {
     @SubscribeEvent
@@ -55,11 +56,18 @@ public class ShopLoader {
     @SuppressWarnings("unchecked")
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onDatabaseLoaded(DatabaseLoadedEvent event) { //LOW, So we appear after recipes have been added
+        //Clear out all existing shop related data
+        Shop.clear(); //Clear out the department -> shop mappings
+        Department.REGISTRY.clear(); //Clear out all the registered departments
+        InputToShop.BLOCK_TO_SHOP.clear(); //Clear the block - > shop mappings
+        InputToShop.ENTITY_TO_SHOP.clear(); //Clear the entity - > shop mappings
+        InputToShop.ITEM_TO_SHOP.clear(); //Clear the item - > shop mappings
+
         //Temporary Registry, Create all the comparators
         Map<String, Comparator> comparators = Maps.newHashMap(); //Temporary Registry
         //for all the type of comparators
         ShopRegistries.COMPARATORS.forEach((type, comparator) -> {
-            if (comparator instanceof IImmutable)
+            if (comparator instanceof IImutableComparator)
                 comparators.put(type, comparator);
             else {
                 event.table("comparator_" + type).rows().forEach(row -> {
@@ -147,7 +155,7 @@ public class ShopLoader {
                 event.table("department_listings").where("department id=" + departmentID).forEach(listing -> {
                     String listingID = listing.id();
                     String dataID = listingID.contains("$") ? listingID.split("\\$")[0] : listingID;
-                    List<Sublisting> sublistings = Lists.newArrayList();//handler.getObjectsFromDatabase(database.get(), department_id, data_id);
+                    List<Sublisting<?>> sublistings = Lists.newArrayList();//handler.getObjectsFromDatabase(database.get(), department_id, data_id);
                     event.table("sublistings").where("department id=" + departmentID + "&listing id=" + dataID).forEach(sublisting -> {
                         String originalSubID = sublisting.id();
                         String originalSubType = sublisting.get("type");

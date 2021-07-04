@@ -14,7 +14,7 @@ public class OrCondition extends AbstractListCondition {
 
     @Override
     protected String getFieldName() {
-        return "or_condition";
+        return "condition id";
     }
 
     @Deprecated

@@ -9,7 +9,6 @@ import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.network.shop.SwitchDepartmentPacket;
 import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.Shop;
 
 import javax.annotation.Nonnull;
 
@@ -19,7 +18,7 @@ public class DepartmentTabButton extends AbstractButton<DepartmentScreen> {
     public DepartmentTabButton(DepartmentScreen screen, int x, int y, Department department) {
         super(screen, x, y, 21, 21, ShopaholicClient.EMPTY_STRING,
                 (btn) -> {
-                    Shop.get(department).setLast(department);
+                    //Shop.get(department).setLast(department);
                     PenguinNetwork.sendToServer(new SwitchDepartmentPacket(department));
                 },
                 (btn, mtx, mX, mY) -> {

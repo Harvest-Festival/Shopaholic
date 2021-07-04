@@ -1,0 +1,12 @@
+Department ID,Listing ID,ID,Type,Data,Gold,Weight
+nether_store,gold,default,item,minecraft:gold_ingot,5000,1
+nether_store,magma_cream,default,potion,fire_resist,0,1
+nether_store,nether_ore,item_1,item,minecraft:nether_gold_ore,450,1
+nether_store,nether_ore,item_2,item,minecraft:nether_quartz_ore,220,1
+overworld_store,saplings,item_1,item,minecraft:spruce_sapling,0,1
+overworld_store,saplings,item_2,item,minecraft:jungle_sapling,0,1
+overworld_store,saplings,item_3,item,minecraft:birch_sapling,0,1
+overworld_store,saplings,item_4,item,minecraft:oak_sapling,0,1
+overworld_store,multi_type,item_1,potion,potions,4200,1
+overworld_store,multi_type,item_2,bundle,cow_equipment,500,1
+overworld_store,multi_type,item_3,entity,cow,9000,1

@@ -1,2 +1,4 @@
 ID,Type,Data
+daryl,block,minecraft:chest
+diamond,item,minecraft:diamond
 pig,entity,minecraft:pig

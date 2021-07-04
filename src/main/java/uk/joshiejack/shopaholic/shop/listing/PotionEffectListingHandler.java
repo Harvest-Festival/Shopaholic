@@ -31,8 +31,8 @@ public class PotionEffectListingHandler implements ListingHandler<EffectInstance
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public boolean isValid(EffectInstance object) {
-        return object.getEffect() != null;
+    public boolean isValid(Object object) {
+        return object instanceof EffectInstance && ((EffectInstance)object).getEffect() != null;
     }
 
     @OnlyIn(Dist.CLIENT)

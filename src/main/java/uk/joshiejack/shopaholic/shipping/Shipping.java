@@ -4,9 +4,11 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.tags.ITag;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -170,6 +172,14 @@ public class Shipping implements INBTSerializable<CompoundNBT> {
 
         public boolean matches(ItemStack stack) {
             return ItemStack.isSame(stack, this.stack) && ItemStack.tagMatches(stack, this.stack);
+        }
+
+        public boolean matches(Item item) {
+            return stack.getItem() == item;
+        }
+
+        public boolean matches(ITag.INamedTag<Item> tag) {
+            return tag.contains(this.stack.getItem());
         }
 
         public void merge(SoldItem holder) {

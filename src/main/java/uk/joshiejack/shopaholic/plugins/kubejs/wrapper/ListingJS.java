@@ -9,8 +9,7 @@ public class ListingJS {
         this.listing = listing;
     }
 
-    @SuppressWarnings("rawtypes, unchecked")
-    public SublistingJS<?> sublisting(int id) {
+    public SublistingJS<?> sublisting(String id) {
         return new SublistingJS<>(listing.getSublistingByID(id));
     }
 

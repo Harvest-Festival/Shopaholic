@@ -25,36 +25,34 @@ import java.util.Random;
 
 public class Listing {
     protected final List<Condition> conditions = Lists.newArrayList();
-    private final LootRegistryWithID<Sublisting> sublistings = new LootRegistryWithID<>();
+    private final LootRegistryWithID<Sublisting<?>> sublistings = new LootRegistryWithID<>();
     private final String listing_id;
     protected final Department department;
     private final StockMechanic stockMechanic;
     private final CostFormula costScript;
     private static final Random random = new Random();
 
-    public Listing(Department department, String listing_id, List<Sublisting> sublistings, CostFormula costScript, StockMechanic stockMechanic) {
+    public Listing(Department department, String listing_id, List<Sublisting<?>> sublistings, CostFormula costScript, StockMechanic stockMechanic) {
         this.department = department;
         this.listing_id = listing_id;
         this.costScript = costScript;
         this.stockMechanic = stockMechanic;
         this.department.addListing(this);
-        for (int id = 0; id < sublistings.size(); id++) {
-            this.sublistings.add(id, sublistings.get(id).setIntID(id), sublistings.get(id).getWeight());
-        }
+        sublistings.forEach(sublisting -> this.sublistings.add(sublisting.id(), sublisting, sublisting.getWeight()));
     }
 
-    public LootRegistryWithID<Sublisting> getSublistings() { return sublistings; }
+    public LootRegistryWithID<Sublisting<?>> getSublistings() { return sublistings; }
 
     public boolean isSingleEntry() {
         return sublistings.isSingleEntry();
     }
 
-    public Sublisting<?> getSublistingByID(int id) {
+    public Sublisting<?> getSublistingByID(String id) {
         return sublistings.byID(id);
     }
 
-    public int getRandomID(Random random) {
-        return sublistings.get(random).int_id();
+    public String getRandomID(Random random) {
+        return sublistings.get(random).id();
     }
 
     public StockMechanic getStockMechanic() {
@@ -80,20 +78,15 @@ public class Listing {
     }
 
     public Sublisting<?> getSubListing(Stock stock) {
-        return isSingleEntry() ? getSublistingByID(0) : getSublistingByID(stock.getStockedObject(this));
+        return isSingleEntry() ? sublistings.get(random) : getSublistingByID(stock.getStockedObject(this));
     }
 
     /**
      * If this can be listed for this player
      **/
     public boolean canList(@Nonnull ShopTarget target, Stock stock) {
-        for (Condition condition : conditions) {
-            if (!condition.valid(target, department, this, Condition.CheckType.SHOP_LISTING)) {
-                return false;
-            }
-        }
-
-        return stock.getStockLevel(this) > 0;
+        return stock.getStockLevel(this) > 0
+                && conditions.stream().allMatch(condition -> condition.valid(target, department, this, Condition.CheckType.SHOP_LISTING));
     }
 
     /**

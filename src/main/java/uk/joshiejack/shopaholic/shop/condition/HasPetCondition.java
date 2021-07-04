@@ -5,8 +5,6 @@ import net.minecraft.entity.passive.TameableEntity;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
-import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.Listing;
 
 import javax.annotation.Nonnull;
 import java.util.function.Predicate;
@@ -25,7 +23,7 @@ public class HasPetCondition implements Condition {
     }
 
     @Override
-    public boolean valid(@Nonnull ShopTarget target, @Nonnull Department department, @Nonnull Listing listing, @Nonnull CheckType type) {
+    public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
         return target.getWorld().getLoadedEntitiesOfClass(TameableEntity.class, target.getPlayer().getBoundingBox().inflate(128D), predicate).stream()
                 .anyMatch(e -> target.getPlayer().getUUID().equals(e.getOwnerUUID()));
     }

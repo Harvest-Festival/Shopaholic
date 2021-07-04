@@ -18,8 +18,8 @@ public class HasNBTTagCondition implements Condition {
     @Override
     public Condition create(Row data, String id) {
         HasNBTTagCondition validator = new HasNBTTagCondition();
-        validator.key = data.get("tag_name");
-        validator.value = data.get("tag_data");
+        validator.key = data.get("tag name");
+        validator.value = data.get("tag data");
         return validator;
     }
 }

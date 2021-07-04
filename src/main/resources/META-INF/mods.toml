@@ -25,3 +25,9 @@ license="MIT"
     versionRange="[0.4.0,)"
     ordering="NONE"
     side="BOTH"
+[[dependencies.shopaholic]]
+   modId="simplyseasons"
+   mandatory=false
+   versionRange="[1.16.5-1.0.7,)"
+   ordering="AFTER"
+   side="BOTH"

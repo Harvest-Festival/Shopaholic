@@ -2,11 +2,15 @@ package uk.joshiejack.shopaholic.data.shop;
 
 import com.google.gson.JsonObject;
 import joptsimple.internal.Strings;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.condition.ConditionBuilder;
 import uk.joshiejack.shopaholic.data.shop.listing.ListingBuilder;
+import uk.joshiejack.shopaholic.data.shop.listing.SublistingBuilder;
+import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +43,29 @@ public class DepartmentBuilder {
         return this;
     }
 
+    public DepartmentBuilder entityListing(EntityType<?> entity, int gold) {
+        listing(ListingBuilder.of(entity.getRegistryName().getPath())
+                .addSublisting(SublistingBuilder.entity(entity.getRegistryName().getPath(),
+                        new EntityListingHandler.EntitySpawnData(entity)).cost(gold)));
+        return this;
+    }
+
+    //Shorthands
+    public DepartmentBuilder itemListing(Item item, int gold) {
+        listing(ListingBuilder.of(item.getRegistryName().getPath())
+                .addSublisting(SublistingBuilder.item(item).cost(gold)));
+        return this;
+    }
+
     public void save(ShopaholicDatabase data) {
         listings.forEach(listing -> {
+            if (listing.stockMechanicBuilder != null)
+                data.addStockMechanic(listing.stockMechanicBuilder.id, listing.stockMechanicBuilder.max, listing.stockMechanicBuilder.replenish);
             data.addEntry("department_listings", "Department ID,ID,Stock Mechanic,Cost Formula", CSVUtils.join(id, listing.id, listing.stockMechanic, listing.costFormula));
             listing.conditions.forEach(condition -> {
                 data.addEntry("listing_conditions", "Department ID,Listing ID,Condition ID", CSVUtils.join(id, listing.id, condition.id));
                 String previous = data.subfolder;
-                data.subfolder = "conditions";
+                data.subfolder = "shops/conditions";
                 condition.save(data);
                 data.subfolder = previous;
             });

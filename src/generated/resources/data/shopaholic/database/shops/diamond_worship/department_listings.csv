@@ -1,0 +1,6 @@
+Department ID,ID,Stock Mechanic,Cost Formula
+nether_store,gold,unlimited,default
+nether_store,magma_cream,5_daily,default
+nether_store,nether_ore,unlimited,default
+overworld_store,saplings,unlimited,default
+overworld_store,multi_type,unlimited,default

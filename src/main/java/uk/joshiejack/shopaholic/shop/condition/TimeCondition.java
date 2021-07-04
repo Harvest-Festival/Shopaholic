@@ -14,32 +14,12 @@ public class TimeCondition implements Condition {
     private final List<Pair<Integer, Integer>> times = Lists.newArrayList();
 
     public TimeCondition() {}
-    public TimeCondition(String openinghours) {
-        //Convert > MONDAY
-        String[] hours = openinghours.replace(" ", "").split(";");
-        for (String time: hours) {
-            processTimeString(time);
-        }
-    }
-
-    private void processTimeString(String time) {
-        String[] split = time.split("-");
-        if (split.length == 2) {
-            int start = Integer.parseInt(split[0]);
-            int end = Integer.parseInt(split[1]);
-            addOpening(start, end);
-        }
-    }
-
-    private void addOpening(int start, int end) {
-        times.add(Pair.of(start, end));
-    }
 
     @Override
     public Condition create(Row data, String id) {
         TimeCondition validator = new TimeCondition();
-        int open = data.getTime("start");
-        int close = data.getTime("end");
+        int open = data.getTime("open");
+        int close = data.getTime("close");
         if (open >= 0 && close >= 0) {
             validator.times.add(Pair.of(open, close));
         }
@@ -49,8 +29,8 @@ public class TimeCondition implements Condition {
 
     @Override
     public void merge(Row data) {
-        int open = data.getTime("start");
-        int close = data.getTime("end");
+        int open = data.getTime("open");
+        int close = data.getTime("close");
         if (open >= 0 && close >= 0) {
             times.add(Pair.of(open, close));
         }

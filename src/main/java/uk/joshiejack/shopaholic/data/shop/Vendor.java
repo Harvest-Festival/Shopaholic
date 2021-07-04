@@ -1,5 +1,6 @@
 package uk.joshiejack.shopaholic.data.shop;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 
@@ -21,5 +22,9 @@ public class Vendor {
 
     public static Vendor item(String id, Item item) {
         return new Vendor(id, "item", item.getRegistryName().toString());
+    }
+
+    public static Vendor block(String id, Block block) {
+        return new Vendor(id, "block", block.getRegistryName().toString());
     }
 }

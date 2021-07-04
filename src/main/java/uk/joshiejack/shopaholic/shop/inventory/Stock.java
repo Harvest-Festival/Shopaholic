@@ -2,6 +2,7 @@ package uk.joshiejack.shopaholic.shop.inventory;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraftforge.api.distmarker.Dist;
@@ -15,12 +16,13 @@ import uk.joshiejack.shopaholic.network.shop.SetStockedItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 
+import java.util.Map;
 import java.util.Random;
 
 public class Stock implements INBTSerializable<CompoundNBT> {
     private static final Random initialRandom = new Random();
     private final Object2IntMap<Listing> stockLevels = new Object2IntOpenHashMap<>();
-    private final Object2IntMap<Listing> stockItems = new Object2IntOpenHashMap<>();
+    private final Map<Listing, String> stockItems = new Object2ObjectOpenHashMap<>();
     private final Department department;
 
     public Stock(Department department) {
@@ -34,7 +36,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
         MapHelper.adjustOrPut(stockLevels, listing, -1, listing.getStockMechanic().getMaximum() - 1);
     }
 
-    public void setStockedItem(Listing listing, int stockID) {
+    public void setStockedItem(Listing listing, String stockID) {
         stockItems.put(listing, stockID);
     }
 
@@ -45,11 +47,8 @@ public class Stock implements INBTSerializable<CompoundNBT> {
             ShopaholicClient.refreshShop(); //Stock levels have changed
     }
 
-    public int getStockedObject(Listing listing) {
-        if (!stockItems.containsKey(listing)) {
-            stockItems.put(listing, listing.getRandomID(initialRandom));
-            return 0;
-        } else return stockItems.getInt(listing);
+    public String getStockedObject(Listing listing) {
+        return stockItems.computeIfAbsent(listing, (l) -> listing.getRandomID(initialRandom));
     }
 
     public int getStockLevel(Listing listing) {
@@ -63,7 +62,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
         }
 
         for (Listing listing : stockItems.keySet()) {
-            int id = listing.getRandomID(random);
+            String id = listing.getRandomID(random);
             stockItems.put(listing, id);
             PenguinNetwork.sendToEveryone(new SetStockedItemPacket(department, listing, id));
         }
@@ -86,7 +85,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
         stockItems.forEach((key, value) -> {
             CompoundNBT tag = new CompoundNBT();
             tag.putString("Key", key.id());
-            tag.putInt("Value", value);
+            tag.putString("Value", value);
             stockList.add(tag);
         });
 
@@ -112,7 +111,7 @@ public class Stock implements INBTSerializable<CompoundNBT> {
             CompoundNBT tag = stock.getCompound(i);
             Listing listing = department.getListingByID(tag.getString("Key"));
             if (listing != null)
-                stockItems.put(listing, tag.getInt("Value"));
+                stockItems.put(listing, tag.getString("Value"));
         }
     }
 }

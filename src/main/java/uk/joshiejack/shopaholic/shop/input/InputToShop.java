@@ -2,8 +2,6 @@ package uk.joshiejack.shopaholic.shop.input;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,14 +30,14 @@ public class InputToShop {
                 ENTITY_TO_SHOP.get(new EntityShopInput(ForgeRegistries.ENTITIES.getValue(data))).add(department);
                 break;
             case "item":
-                ITEM_TO_SHOP.get(new ItemShopInput(new ItemStack(ForgeRegistries.ITEMS.getValue(data)))).add(department);
+                ITEM_TO_SHOP.get(new ItemShopInput(ForgeRegistries.ITEMS.getValue(data))).add(department);
                 break;
         }
     }
 
     @SubscribeEvent
     public static void onBlockInteract(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getWorld().isClientSide || event.getHand() == Hand.OFF_HAND) return;
+        if (event.getWorld().isClientSide) return;
         BlockShopInput input = new BlockShopInput(event.getWorld().getBlockState(event.getPos()).getBlock());
         open(BLOCK_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getEntity(), event.getPlayer(), event.getItemStack(), input),
@@ -48,7 +46,7 @@ public class InputToShop {
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        if (event.getWorld().isClientSide || event.getHand() == Hand.OFF_HAND) return;
+        if (event.getWorld().isClientSide) return;
         EntityShopInput input = new EntityShopInput(event.getTarget());
         open(ENTITY_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getTarget(), event.getPlayer(), event.getItemStack(), input),
@@ -57,8 +55,8 @@ public class InputToShop {
 
     @SubscribeEvent
     public static void onItemInteract(PlayerInteractEvent.RightClickItem event) {
-        if (event.getWorld().isClientSide || event.getHand() == Hand.OFF_HAND) return;
-        ItemShopInput input = new ItemShopInput(event.getItemStack());
+        if (event.getWorld().isClientSide) return;
+        ItemShopInput input = new ItemShopInput(event.getItemStack().getItem());
         open(ITEM_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getEntity(), event.getPlayer(), event.getItemStack(), input),
                 event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK);

@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
 import uk.joshiejack.penguinlib.item.base.BookItem;
 import uk.joshiejack.shopaholic.api.ShopaholicAPI;
-import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.data.ShopaholicBlockStates;
@@ -80,12 +79,13 @@ public class Shopaholic {
         ShopaholicAPI.instance.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
         //Register Conditions
         ShopaholicAPI.instance.registerCondition("and", new AndCondition());
+        ShopaholicAPI.instance.registerCondition("block_state", new BlockStateCondition());
         ShopaholicAPI.instance.registerCondition("compare", new CompareCondition());
-        ShopaholicAPI.instance.registerCondition("dimension", new InDimensionCondition());
         ShopaholicAPI.instance.registerCondition("entity_nearby", new EntityNearbyCondition());
         ShopaholicAPI.instance.registerCondition("has_nbt_tag", new HasNBTTagCondition());
         ShopaholicAPI.instance.registerCondition("has_pet", new HasPetCondition());
-        ShopaholicAPI.instance.registerCondition("hours", new OpeningHoursCondition());
+        ShopaholicAPI.instance.registerCondition("opening_hours", new OpeningHoursCondition());
+        ShopaholicAPI.instance.registerCondition("in_dimension", new InDimensionCondition());
         ShopaholicAPI.instance.registerCondition("named", new NamedCondition());
         ShopaholicAPI.instance.registerCondition("or", new OrCondition());
         ShopaholicAPI.instance.registerCondition("per_player", new PerPlayerCondition());

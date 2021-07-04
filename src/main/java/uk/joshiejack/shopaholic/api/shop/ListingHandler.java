@@ -42,7 +42,7 @@ public interface ListingHandler<T> {
      * @param object        the object to test
      * @return  if it is valid
      */
-    boolean isValid(T object);
+    boolean isValid(Object object);
 
     /**
      * The display name of this object, used in the shop screen, if no custom name is set

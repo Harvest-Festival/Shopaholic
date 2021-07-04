@@ -2,7 +2,6 @@ package uk.joshiejack.shopaholic.client.gui;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -20,6 +19,7 @@ import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
+import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.widget.button.*;
@@ -60,7 +60,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         this.purchased = Pair.of(ItemIcon.EMPTY, 0);
         this.stock = menu.department.getStockLevels(minecraft.level);
         this.contents = Lists.newArrayList();
-        for (Listing listing : ImmutableList.copyOf(menu.department.getListings())) {
+        for (Listing listing : menu.department.getListings()) {
             if (listing.canList(menu.target, stock)) {
                 contents.add(listing);
             }
@@ -88,9 +88,12 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     @Override
     protected void renderLabels(@Nonnull MatrixStack matrix, int mouseX, int mouseY) {
         matrix.pushPose();
-        float scale = 1.5F;
+        int width = PenguinClient.FANCY_FONT.get().width(getShopName());
+        boolean larger = width <= 110;
+        boolean smaller = width >= 140;
+        float scale = larger ? 1.5F : smaller ? 0.75F : 1F;
         matrix.scale(scale, scale, scale);
-        PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22/scale, 17/scale, 0xF1B81F);
+        PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22/scale, (17/scale) + (!larger && !smaller ? 3 : smaller ? 6 :0), 0xF1B81F);
         matrix.popPose();
         drawCoinage(matrix, leftPos, topPos + 19, Wallet.getActive().getBalance());
         drawPlayerInventory(matrix);
@@ -106,13 +109,11 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     }
 
     private void drawCoinage(@Nonnull MatrixStack matrix, int x, int y, long gold) {
-        //GlStateManager.disableDepth();
         String formatted = formatter.format(gold);
         int width = PenguinClient.FANCY_FONT.get().width(formatted);
         PenguinClient.FANCY_FONT.get().draw(matrix, formatted, 220 - width, 20, 0xFFF5CB5C);
         minecraft.getTextureManager().bind(EXTRA);
         blit(matrix, 224, 17, 244, 244, 12, 12);
-        //GlStateManager.enableDepth();
     }
 
     private void drawPlayerInventory(@Nonnull MatrixStack matrix) {
@@ -198,9 +199,11 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         if (menu.shop != null && menu.shop.getDepartments().size() > 1) {
             int j = 0;
             for (Department department : menu.shop.getDepartments()) {
-                if (department.getListings().stream().anyMatch(l -> l.canList(menu.target, stock))) {
-                    addButton(new DepartmentTabButton(this, leftPos + 5, topPos + 38 + (j * 23), department));
-                    j++;
+                if (department.isValidFor(menu.target, Condition.CheckType.SHOP_LISTING)) {
+                    if (department.getListings().stream().anyMatch(l -> l.canList(menu.target, stock))) {
+                        addButton(new DepartmentTabButton(this, leftPos + 5, topPos + 38 + (j * 23), department));
+                        j++;
+                    }
                 }
             }
 

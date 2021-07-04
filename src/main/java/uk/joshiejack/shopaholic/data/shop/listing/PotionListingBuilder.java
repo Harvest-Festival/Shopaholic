@@ -4,10 +4,10 @@ import net.minecraft.potion.EffectInstance;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
-public class PotionListing extends SublistingBuilder {
+public class PotionListingBuilder extends SublistingBuilder<PotionListingBuilder> {
     private final EffectInstance effect;
 
-    public PotionListing(String id, EffectInstance effect) {
+    public PotionListingBuilder(String id, EffectInstance effect) {
         super("potion", id);
         this.effect = effect;
     }

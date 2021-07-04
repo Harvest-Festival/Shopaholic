@@ -14,7 +14,7 @@ import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SublistingBuilder {
+public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
     public final List<ItemStack> materials = new ArrayList<>();
     public final List<Pair<ITag.INamedTag<Item>, Integer>> tagMaterials = new ArrayList<>();
     public final String data;
@@ -32,57 +32,61 @@ public abstract class SublistingBuilder {
         this.id = "default";
     }
 
-    public static ItemListing item(Item item) {
-        return new ItemListing(item);
+    public static ItemListingBuilder item(Item item) {
+        return new ItemListingBuilder(item);
     }
 
-    public static PotionListing potion(String id, EffectInstance effect) {
-        return new PotionListing(id, effect);
+    public static PotionListingBuilder potion(String id, EffectInstance effect) {
+        return new PotionListingBuilder(id, effect);
     }
 
-    public static EntityListing entity(String id, EntityListingHandler.EntitySpawnData spawnData) {
-        return new EntityListing(id, spawnData);
+    public static EntityListingBuilder entity(String id, EntityListingHandler.EntitySpawnData spawnData) {
+        return new EntityListingBuilder(id, spawnData);
     }
 
-    public static DepartmentListing department(String departmentID) {
-        return new DepartmentListing(departmentID);
+    public static DepartmentListingBuilder department(String departmentID) {
+        return new DepartmentListingBuilder(departmentID);
     }
 
-    public static BundleListing bundle(String bundleID) {
-        return new BundleListing(bundleID);
+    public static BundleListingBuilder bundle(String bundleID) {
+        return new BundleListingBuilder(bundleID);
     }
 
-    public SublistingBuilder id(String id) {
+    public static HealListingBuilder heal(float healAmount) {
+        return new HealListingBuilder(healAmount);
+    }
+
+    public T id(String id) {
         this.id = id;
-        return this;
+        return (T) this;
     }
 
-    public SublistingBuilder cost(int cost) {
+    public T cost(int cost) {
         gold = cost;
-        return this;
+        return (T) this;
     }
 
-    public SublistingBuilder weight(int weight) {
+    public SublistingBuilder<T> weight(int weight) {
         this.weight = weight;
         return this;
     }
 
-    public SublistingBuilder material(ItemStack stack) {
-        materials.add(stack);
+    public SublistingBuilder<T> material(Item item, int count) {
+        materials.add(new ItemStack(item, count));
         return this;
     }
 
-    public SublistingBuilder material(ITag.INamedTag<Item> stack, int count) {
+    public SublistingBuilder<T> material(ITag.INamedTag<Item> stack, int count) {
         tagMaterials.add(Pair.of(stack, count));
         return this;
     }
 
-    public SublistingBuilder name(String name) {
+    public SublistingBuilder<T> name(String name) {
         this.name = name;
         return this;
     }
 
-    public SublistingBuilder icon(Icon icon) {
+    public SublistingBuilder<T> icon(Icon icon) {
         this.icon = icon.toJson(new JsonObject()).toString();
         return this;
     }

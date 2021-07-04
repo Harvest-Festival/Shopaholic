@@ -80,7 +80,6 @@ public abstract class AbstractListingButton extends AbstractButton<DepartmentScr
             if (multiplier == 10 && !canPurchase(stackSize + 10)) multiplier = 1;
             if (canPurchase(multiplier)) {
                 stackSize += multiplier;
-                wallet.setBalance(wallet.getBalance() - goldCost * multiplier);
                 screen.updatePurchased(display, multiplier * sublisting.getCount());
             }
 

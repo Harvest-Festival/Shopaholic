@@ -11,7 +11,7 @@ public interface Comparator {
      * @return  an instance of this comparator with the data applied
      *          some comparators are immutable so will just return themselves
      */
-    default Comparator create(Row row) { return this; }
+    Comparator create(Row row);
 
     /**
      * Return the value of this comparator

@@ -4,14 +4,14 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 
-public class Compare extends ConditionBuilder {
+public class CompareConditionBuilder extends ConditionBuilder {
     protected ComparatorBuilder compare1;
     protected ComparatorBuilder compare2;
     protected boolean lessThan;
     protected boolean equalTo;
     protected boolean greaterThan;
 
-    public Compare(String id, ComparatorBuilder compare1, boolean lessThan, boolean equalTo, boolean greaterThan, ComparatorBuilder compare2) {
+    public CompareConditionBuilder(String id, ComparatorBuilder compare1, boolean lessThan, boolean equalTo, boolean greaterThan, ComparatorBuilder compare2) {
         super(id);
         this.compare1 = compare1;
         this.compare2 = compare2;

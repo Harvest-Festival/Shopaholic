@@ -4,10 +4,10 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
-public class EntityListing extends SublistingBuilder {
+public class EntityListingBuilder extends SublistingBuilder<EntityListingBuilder> {
     private final EntityListingHandler.EntitySpawnData entity;
 
-    public EntityListing(String id, EntityListingHandler.EntitySpawnData entity) {
+    public EntityListingBuilder(String id, EntityListingHandler.EntitySpawnData entity) {
         super("entity", id);
         this.entity = entity;
     }

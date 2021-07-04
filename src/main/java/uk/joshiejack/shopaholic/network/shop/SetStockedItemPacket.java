@@ -11,10 +11,10 @@ import uk.joshiejack.shopaholic.shop.Listing;
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
 public class SetStockedItemPacket extends AbstractPacketSyncDepartment {
     private Listing listing;
-    private int stockID;
+    private String stockID;
 
     public SetStockedItemPacket() { }
-    public SetStockedItemPacket(Department department, Listing listing, int stockID) {
+    public SetStockedItemPacket(Department department, Listing listing, String stockID) {
         super(department);
         this.listing = listing;
         this.stockID = stockID;
@@ -24,14 +24,14 @@ public class SetStockedItemPacket extends AbstractPacketSyncDepartment {
     public void encode(PacketBuffer buf) {
         super.encode(buf);
         buf.writeUtf(listing.id());
-        buf.writeInt(stockID);
+        buf.writeUtf(stockID);
     }
 
     @Override
     public void decode(PacketBuffer buf) {
         super.decode(buf);
         listing = department.getListingByID(buf.readUtf());
-        stockID = buf.readInt();
+        stockID = buf.readUtf();
     }
 
     @Override
