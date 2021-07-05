@@ -25,7 +25,7 @@ public abstract class AbstractPurchaseItemPacket extends AbstractPacketSyncDepar
     @Override
     public void decode(PacketBuffer buf) {
         super.decode(buf);
-        listing = department.getListingByID(buf.readUtf());
+        listing = department.getListingByID(buf.readUtf(32767));
         amount =  buf.readInt();
     }
 }

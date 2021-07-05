@@ -19,6 +19,6 @@ public abstract class AbstractPacketSyncDepartment extends PenguinPacket {
 
     @Override
     public void decode(PacketBuffer buf) {
-        department = Department.REGISTRY.get(buf.readUtf());
+        department = Department.REGISTRY.get(buf.readUtf(32767));
     }
 }

@@ -133,7 +133,7 @@ public class Shopaholic {
 
     public static class ShopaholicItems {
         public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Shopaholic.MODID);
-        public static final RegistryObject<Item> ECONOMY_MANAGER = ITEMS.register("economy_manager", () -> new BookItem(new Item.Properties().stacksTo(1).tab(ItemGroup.TAB_MISC), () -> (id, inv, p) -> new EconomyManagerContainer(id)));
+        public static final RegistryObject<Item> ECONOMY_MANAGER = ITEMS.register("economy_manager", () -> new BookItem(new Item.Properties().stacksTo(1).tab(ItemGroup.TAB_MISC), () -> (id, inv, p) -> new EconomyManagerContainer(id), false));
     }
 
     public static class ShopaholicSounds {
