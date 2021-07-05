@@ -13,11 +13,9 @@ public class ShopaholicCommands {
     public static void registerCommands(RegisterCommandsEvent event) {
         event.getDispatcher().register(
                 LiteralArgumentBuilder.<CommandSource>literal(Shopaholic.MODID)
-                        .requires(cs -> cs.hasPermission(2))
-                        .then(GoldCommand.register())
+                        .then(GoldCommand.register().requires(cs -> cs.hasPermission(2)))
                         .then(ShipCommand.register())
-                //TODO.then(ShareCommand.register())
-                //TODO.then(TransferCommand.register())
+                        .then(OpenShopCommand.register())
         );
     }
 }

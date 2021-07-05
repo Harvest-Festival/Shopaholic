@@ -4,6 +4,9 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -43,11 +46,11 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     private static final TranslationTextComponent FREE = new TranslationTextComponent("gui.shopaholic.shop.free");
     private static final TranslationTextComponent ERROR = new TranslationTextComponent("gui.shopaholic.shop.error");
     private static final Cache<Long, ITextComponent> COST_CACHE = CacheBuilder.newBuilder().build();
+    private static final Object2IntMap<Department> SCROLL_POS = new Object2IntOpenHashMap<>();
     private Collection<Listing> contents;
     public Stock stock;
     private Pair<Icon, Integer> purchased;
     private int listingCount;
-    private int start;
     private int end;
 
     public DepartmentScreen(DepartmentContainer container, PlayerInventory inv) {
@@ -66,7 +69,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             }
         }
 
-        setStart(0); //Reload
+        setStart(getStartPos()); //Reload
     }
 
     private ITextComponent getShopName() {
@@ -93,7 +96,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         boolean smaller = width >= 140;
         float scale = larger ? 1.5F : smaller ? 0.75F : 1F;
         matrix.scale(scale, scale, scale);
-        PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22/scale, (17/scale) + (!larger && !smaller ? 3 : smaller ? 6 :0), 0xF1B81F);
+        PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22 / scale, (17 / scale) + (!larger && !smaller ? 3 : smaller ? 6 : 0), 0xF1B81F);
         matrix.popPose();
         drawCoinage(matrix, leftPos, topPos + 19, Wallet.getActive().getBalance());
         drawPlayerInventory(matrix);
@@ -147,35 +150,41 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     }
 
     public void refresh() {
-        setStart(start);
+        setStart(getStartPos());
+    }
+
+    private int getStartPos() {
+        return SCROLL_POS.getOrDefault(menu.department, 0);
     }
 
     public void setStart(int i) {
         buttons.clear();
+        children.clear();
 
-//        //Up Arrow
-//        addButton(new ButtonArrow(this, -1, 225, 0, leftPos + 232, topPos + 60) {
-//            @Override
-//            protected void updateVisiblity() {
-//                visible = start != 0;
-//            }
-//        });
+        //Up Arrow
+        addButton(new NavigationButton(this, leftPos + 232, topPos + 60, -1, 225, new TranslationTextComponent("button.penguinlib.previous")) {
+            @Override
+            protected void updateVisibility() {
+                visible = getStartPos() != 0;
+            }
+        });
 
-//        //Down Arrow
-//        addButton(new ButtonArrow(this, +1, 242, 1, leftPos + 232, topPos + 210) {
-//            @Override
-//            protected void updateVisiblity() {
-//                visible = start < end;
-//            }
-//        });
+        //Down Arrow
+        addButton(new NavigationButton(this, leftPos + 232, topPos + 210, +1, 242, new TranslationTextComponent("button.penguinlib.next")) {
+            @Override
+            protected void updateVisibility() {
+                visible = getStartPos() < end;
+            }
+        });
 
         end = contents.size() - 10;
-        start = Math.max(0, Math.min(end, i));
+        SCROLL_POS.put(menu.department, Math.max(0, Math.min(end, i)));
         listingCount = 2;
 
         //Arrows are added, now add the items being sold
         int position = 0;
         int pPosition = 0;
+        int start = getStartPos();
         Iterator<Listing> it = contents.iterator();
         while (it.hasNext() && position <= 180) {
             Listing listing = it.next();
@@ -194,7 +203,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             pPosition++;
         }
 
-        //if (buttons.size() == 2) //addButton(new ButtonOutOfStock(this, 3, leftPos + 28, 38 + topPos + position));
+        if (listingCount == 2) addButton(new OutOfStockLabel(leftPos + 28, 38 + topPos + position, menu.department));
         //Tabs
         if (menu.shop != null && menu.shop.getDepartments().size() > 1) {
             int j = 0;
@@ -212,7 +221,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             }
         }
 
-        addButton(new DropItemButton(this));
+        //addButton(new DropItemButton(this));
     }
 
     private int addButton(Listing listing, int left, int top, int space) {
@@ -254,18 +263,31 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     @Override
     public boolean mouseClicked(double x, double y, int mouseButton) {
-        boolean ret = super.mouseClicked(x, y, mouseButton);
-        if (getFocused() == null)
-            updatePurchased(ItemIcon.EMPTY, 0);
-        //TODO?if (selectedButton == null) {
-        //updatePurchased(ItemStack.EMPTY, 0);
-        //}
+        //Skip the container below
+        for (IGuiEventListener iguieventlistener : this.children()) {
+            if (iguieventlistener.mouseClicked(x, y, mouseButton)) {
+                setFocused(iguieventlistener);
+                if (mouseButton == 0) {
+                    this.setDragging(true);
+                }
 
-        return ret;
+                return true;
+            }
+        }
+
+        updatePurchased(ItemIcon.EMPTY, 0);
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double dir) {
+        scroll((int) -dir);
+        return super.mouseScrolled(mouseX, mouseY, dir);
     }
 
     public void scroll(int amount) {
-        setStart(start + amount);
+        setStart(getStartPos() + amount);
+        init(); //reload?
     }
 
     @Override

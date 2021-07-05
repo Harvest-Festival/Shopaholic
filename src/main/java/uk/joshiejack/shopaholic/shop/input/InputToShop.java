@@ -11,26 +11,33 @@ import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
+import uk.joshiejack.shopaholic.shop.Shop;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class InputToShop {
     public static final Multimap<BlockShopInput, Department> BLOCK_TO_SHOP = HashMultimap.create();
     public static final Multimap<EntityShopInput, Department> ENTITY_TO_SHOP = HashMultimap.create();
     public static final Multimap<ItemShopInput, Department> ITEM_TO_SHOP = HashMultimap.create();
+    public static final Map<String, Shop> COMMAND_TO_SHOP = new HashMap<>();
 
-    public static void register(String type, ResourceLocation data, Department department) {
+    public static void register(String type, String data, Department department) {
         switch (type) {
             case "block":
-                BLOCK_TO_SHOP.get(new BlockShopInput(ForgeRegistries.BLOCKS.getValue(data))).add(department);
+                BLOCK_TO_SHOP.get(new BlockShopInput(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(data)))).add(department);
                 break;
             case "entity":
-                ENTITY_TO_SHOP.get(new EntityShopInput(ForgeRegistries.ENTITIES.getValue(data))).add(department);
+                ENTITY_TO_SHOP.get(new EntityShopInput(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(data)))).add(department);
                 break;
             case "item":
-                ITEM_TO_SHOP.get(new ItemShopInput(ForgeRegistries.ITEMS.getValue(data))).add(department);
+                ITEM_TO_SHOP.get(new ItemShopInput(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data)))).add(department);
+                break;
+            case "command":
+                COMMAND_TO_SHOP.put(data, department.getShop());
                 break;
         }
     }
@@ -62,11 +69,14 @@ public class InputToShop {
                 event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK);
     }
 
-    public static void open(Collection<Department> shops, ShopTarget target, InputMethod method) {
+    public static boolean open(Collection<Department> shops, ShopTarget target, InputMethod method) {
         Department shop = getFirstShop(shops, target, Condition.CheckType.SHOP_IS_OPEN, method);
         if (shop != null) {
             shop.open(target, true);
+            return true;
         }
+
+        return false;
     }
 
     @Nullable

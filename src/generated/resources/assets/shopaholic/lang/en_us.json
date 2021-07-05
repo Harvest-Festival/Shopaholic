@@ -21,5 +21,6 @@
   "gui.shopaholic.shop.error": "Error",
   "gui.shopaholic.shop.free": "Free",
   "gui.shopaholic.shop.heal": "Health Restoration",
+  "gui.shopaholic.shop.outofstock": "Out of Stock",
   "item.shopaholic.economy_manager": "Economy Manager"
 }

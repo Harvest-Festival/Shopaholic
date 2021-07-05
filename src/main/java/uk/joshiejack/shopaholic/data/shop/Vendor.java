@@ -27,4 +27,8 @@ public class Vendor {
     public static Vendor block(String id, Block block) {
         return new Vendor(id, "block", block.getRegistryName().toString());
     }
+
+    public static Vendor command(String id, String command) {
+        return new Vendor(id, "command", command);
+    }
 }

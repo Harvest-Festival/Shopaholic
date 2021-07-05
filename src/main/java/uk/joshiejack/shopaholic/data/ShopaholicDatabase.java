@@ -58,10 +58,15 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
                 )
                 .save(this);
 
+        DepartmentBuilder overworldStore = DepartmentBuilder.of("overworld_store", new ItemIcon(Items.SPRUCE_SAPLING), "Overworld Store");
+        for (Item item: ForgeRegistries.ITEMS) {
+            if (random.nextInt(10) == 0)
+                overworldStore.itemListing(item, 100 + random.nextInt(901));
+        }
 
         ShopBuilder.of("diamond_worship", "The Great Diamond Heist")
-                .vendor(Vendor.item("diamond", Items.DIAMOND))
-                .openWith(InputMethod.RIGHT_CLICK)
+                .vendor(Vendor.command("diamond_store", "diamond"))
+                .openWith(InputMethod.COMMAND)
                 .department(DepartmentBuilder.of("nether_store", new ItemIcon(Items.QUARTZ), "Nether Store")
                         .condition(ConditionBuilder.inDimension("in_nether", World.NETHER))
                         .listing(ListingBuilder.of("gold")
@@ -75,7 +80,7 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
                                 .addSublisting(SublistingBuilder.item(Items.NETHER_GOLD_ORE).cost(450))
                                 .addSublisting(SublistingBuilder.item(Items.NETHER_QUARTZ_ORE).cost(220)))
                 )
-                .department(DepartmentBuilder.of("overworld_store", new ItemIcon(Items.SPRUCE_SAPLING), "Overworld Store")
+                .department(overworldStore
                         .condition(ConditionBuilder.inDimension("in_overworld", World.OVERWORLD))
                         .listing(ListingBuilder.of("saplings")
                                 .addSublisting(SublistingBuilder.item(Items.SPRUCE_SAPLING)

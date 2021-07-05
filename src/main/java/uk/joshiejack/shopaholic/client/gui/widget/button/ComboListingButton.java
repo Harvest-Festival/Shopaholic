@@ -30,7 +30,6 @@ public class ComboListingButton extends GoldListingButton {
             MaterialCost material = icons.get(i);
             int x = this.x + (sublisting.getGold() == 0 ? 48 : 0) + 135 - (i * 16);
             int y = this.y + 3;
-            //TODO:
             boolean subTooltipHovered = mouseX >= x && mouseY >= y && mouseX < x + 14 && mouseY < y + 14;
             if (subTooltipHovered)
                 GuiUtils.drawHoveringText(matrix, material.getIcon().getTooltipLines(mc.player), mouseX, mouseY, screen.width, screen.height, 200, screen.getMinecraft().font);

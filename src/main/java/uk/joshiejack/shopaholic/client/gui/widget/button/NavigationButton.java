@@ -1,41 +1,38 @@
 package uk.joshiejack.shopaholic.client.gui.widget.button;
 
-//public abstract class ButtonArrow extends GuiButton {
-//    protected final ShopScreen shop;
-//    private final int xCoord;
-//    private final int amount;
-//
-//    public ButtonArrow(ShopScreen shop, int amount, int xCoord, int buttonId, int x, int y) {
-//        super(buttonId, x, y, "");
-//        this.shop = shop;
-//        this.xCoord = xCoord;
-//        this.width = 14;
-//        this.height = 12;
-//        this.amount = amount;
-//    }
-//
-//    @Override
-//    public void drawButton(@Nonnull Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-//        updateVisiblity();
-//        if (visible) {
-//            mc.getTextureManager().bindTexture(ShopScreen.EXTRA);
-//            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-//            hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-//            int state = getHoverState(hovered);
-//            GlStateManager.enableBlend();
-//            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-//            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-//            drawTexturedModalRect(x, y, xCoord, state * 12, width, height);
-//            mouseDragged(mc, mouseX, mouseY);
-//            GlStateManager.color(1.0F, 1.0F, 1.0F);
-//        }
-//    }
-//
-//    protected abstract void updateVisiblity();
-//
-//    @Override
-//    public void mouseReleased(int mouseX, int mouseY) {
-//        if (GuiScreen.isShiftKeyDown()) shop.scroll(amount * 10);
-//        else shop.scroll(amount);
-//    }
-//}
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+import uk.joshiejack.penguinlib.client.gui.widget.AbstractButton;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
+
+import javax.annotation.Nonnull;
+
+@OnlyIn(Dist.CLIENT)
+public abstract class NavigationButton extends AbstractButton<DepartmentScreen> {
+    private final int textureX;
+
+    public NavigationButton(DepartmentScreen screen, int x, int y, int scrollAmount, int textureX, ITextComponent name) {
+        super(screen, x, y, 14, 12, name,
+                (btn) -> screen.scroll(Screen.hasShiftDown() ? scrollAmount * 10 : scrollAmount),
+                (btn, mtx, mX, mY) -> {
+                    GuiUtils.drawHoveringText(mtx, Lists.newArrayList(btn.getMessage()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font);
+                });
+        this.textureX = textureX;
+    }
+
+    @Override
+    protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
+        updateVisibility();
+        if (visible) {
+            mc.getTextureManager().bind(DepartmentScreen.EXTRA);
+            blit(matrix, x, y, textureX, (hovered ? 12 : 0), width, height);
+        }
+    }
+
+    protected abstract void updateVisibility();
+}

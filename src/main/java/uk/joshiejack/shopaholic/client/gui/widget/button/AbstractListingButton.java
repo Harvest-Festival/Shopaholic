@@ -73,13 +73,14 @@ public abstract class AbstractListingButton extends AbstractButton<DepartmentScr
 
     private void whilePressed() {
         //If ctrl is down,
-        if (hoverTimer == 0 || (hoverTimer % 20 == 0 && Screen.hasControlDown())) {
+        if (hoverTimer == 0 || (hoverTimer % 10 == 0 && Screen.hasControlDown())) {
             Icon display = listing.getSubListing(screen.stock).getIcon();
             long goldCost = listing.getGoldCost(screen.getMenu().target.getPlayer(), screen.stock);
             int multiplier = Screen.hasShiftDown() ? 10 : 1;
             if (multiplier == 10 && !canPurchase(stackSize + 10)) multiplier = 1;
             if (canPurchase(multiplier)) {
                 stackSize += multiplier;
+                Wallet.getActive().setBalance(Wallet.getActive().getBalance() - goldCost * multiplier);
                 screen.updatePurchased(display, multiplier * sublisting.getCount());
             }
 

@@ -1,4 +1,4 @@
 ID,Type,Data
 daryl,block,minecraft:chest
-diamond,item,minecraft:diamond
+diamond_store,command,diamond
 pig,entity,minecraft:pig

@@ -16,7 +16,6 @@ import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.penguinlib.util.helpers.TimeHelper;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
-import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.client.ClientStockLevels;
@@ -34,7 +33,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class Department {
-    private static final ITextComponent DEFAULT_OUT_OF = new TranslationTextComponent(Shopaholic.MODID + ".shop.outof");
+    private static final ITextComponent DEFAULT_OUT_OF = new TranslationTextComponent("gui.shopaholic.shop.outofstock");
     public static final Map<String, Department> REGISTRY = Maps.newHashMap();
     private final Map<String, Listing> listings = Maps.newLinkedHashMap();
     private final NonNullList<Condition> conditions = NonNullList.create();
@@ -43,13 +42,12 @@ public class Department {
     private Icon icon;
     private ITextComponent name;
     private final InputMethod method;
-    private ITextComponent outof;
+    private ITextComponent outOfStockText;
 
     public Department(Shop shop, String department_id, InputMethod method) {
         this.id = department_id;
         this.shop = shop;
         this.name = new StringTextComponent(Strings.EMPTY);
-        this.outof = DEFAULT_OUT_OF;
         this.icon = ItemIcon.EMPTY;
         this.method = method;
         this.shop.getDepartments().add(this);
@@ -69,11 +67,15 @@ public class Department {
         return id;
     }
 
+    public InputMethod getMethod() {
+        return method;
+    }
+
     public Department setName(String name) {
         if (name.contains(":")) {
             String[] split = StringHelper.decompose(name, ':');
-            this.name = new TranslationTextComponent(split[0] + ".shop.department." + split[1] + ".name");
-            this.outof = new TranslationTextComponent(split[0] + ".shop.department." + split[1] + ".outof");
+            this.name = new TranslationTextComponent("shop.department." + split[0] + "." + split[1] + ".name");
+            this.outOfStockText = new TranslationTextComponent("shop.department." + split[0] + "." + split[1] + ".outofstock");
         } else this.name = new TranslationTextComponent(name);
 
         return this;
@@ -108,9 +110,8 @@ public class Department {
         return name;
     }
 
-    public ITextComponent getOutofText() {
-        ITextComponent translated = outof;
-        return outof.getContents().equals(translated.getString()) ? StringHelper.localize(Shopaholic.MODID + ".shop.outof") : translated;
+    public ITextComponent getOutOfStockText() {
+        return outOfStockText == null ? DEFAULT_OUT_OF : outOfStockText;
     }
 
     public boolean isValidFor(ShopTarget target, Condition.CheckType type, InputMethod method) {
