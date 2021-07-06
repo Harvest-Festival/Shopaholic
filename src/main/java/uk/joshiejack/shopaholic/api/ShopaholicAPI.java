@@ -1,14 +1,16 @@
 package uk.joshiejack.shopaholic.api;
 
+import uk.joshiejack.shopaholic.api.bank.IBank;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.CostFormula;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
 public class ShopaholicAPI {
-    public static IShopaholicAPI instance = null;
+    public static IRegistry registry = null;
+    public static IBank bank = null;
 
-    public interface IShopaholicAPI {
+    public interface IRegistry {
         /**
          * Register a new comparator type
          * @param name          the name to register is as, used in the database

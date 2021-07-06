@@ -68,7 +68,7 @@ public class Listing {
             Shopaholic.LOGGER.log(Level.ERROR, "Cost script was null for: " + department.id() + ":" + listing_id);
             return 0L;
         } else {
-            random.setSeed(player.getPersistentData().getCompound("PenguinStatuses").getInt("ShopSeed") + listing_id.hashCode() * 3643257684289L); //Get the shop seed
+            random.setSeed(player.getPersistentData().getInt("ShopaholicSeed") + listing_id.hashCode() * 3643257684289L); //Get the shop seed
             long result = costScript.getCost(999999999L, player, getSubListing(stock), stock.getStockLevel(this), stockMechanic, random);
             if (result == 999999999L) {
                 Shopaholic.LOGGER.log(Level.ERROR, "Had an error while processing getCost for the item: " + department.id() + ":" + listing_id);

@@ -33,8 +33,8 @@ public class ServerPurchaseItemPacket extends AbstractPurchaseItemPacket {
         long cost = listing.getGoldCost(player, department.getStockLevels(player.level)); //TownHelper.getClosestTownToEntity(player, false).getShops().getSellValue(shop, purchasable); //TODO: Enable adjusted value
         long total = cost * amount;
         if (vault.getBalance() - total >= 0) {
-            if (total >= 0) vault.decreaseGold(player.level, total);
-            else vault.increaseGold(player.level, total);
+            if (total >= 0) vault.decreaseBalance(player.level, total);
+            else vault.increaseBalance(player.level, total);
             for (int i = 0; i < amount; i++) {
                 listing.purchase(player); //TODO: Call handler and stuff
                 //TownHelper.getClosestTownToEntity(player, false).getShops().onPurchasableHandled(player, shop, purchasable);

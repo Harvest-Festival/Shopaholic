@@ -91,7 +91,7 @@ public class Shipping implements INBTSerializable<CompoundNBT> {
     public void onNewDay(ServerWorld world) {
         if (toSell.size() > 0) {
             Vault vault = shared ? Bank.get(world).getVaultForTeam(uuid).shared() : Bank.get(world).getVaultForTeam(uuid).personal();
-            toSell.forEach(holder -> vault.increaseGold(world, holder.gold)); //Increase the vault for this players uuid
+            toSell.forEach(holder -> vault.increaseBalance(world, holder.gold)); //Increase the vault for this players uuid
             CompoundNBT tag = new CompoundNBT();
             tag.put("ToSell", writeHolderCollection(toSell));
             if (shared) PenguinNetwork.sendToTeam(new ShipPacket(tag), world, uuid);

@@ -40,13 +40,13 @@ public class Vault implements INBTSerializable<CompoundNBT> {
         return balance;
     }
 
-    public void decreaseGold(World world, long amount) {
+    public void decreaseBalance(World world, long amount) {
         if (amount < 0) amount = 0;
         expenses += amount;
         setBalance(world, balance - amount);
     }
 
-    public void increaseGold(World world, long amount) {
+    public void increaseBalance(World world, long amount) {
         if (amount < 0) amount = 0;
         income += amount;
 

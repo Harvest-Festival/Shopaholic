@@ -6,7 +6,7 @@ import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.CostFormula;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
 
-public class ShopaholicAPIImpl implements ShopaholicAPI.IShopaholicAPI {
+public class RegistryImpl implements ShopaholicAPI.IRegistry {
     @Override
     public void registerCostFormula(String name, CostFormula formula) {
         ShopRegistries.COST_FORMULAE.put(name, formula);

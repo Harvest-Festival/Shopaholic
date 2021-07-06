@@ -11,8 +11,8 @@ import uk.joshiejack.shopaholic.plugins.simplyseasons.SeasonDaysComparator;
 public class SimplySeasonsPlugin implements IModPlugin {
     @Override
     public void setup() {
-        ShopaholicAPI.instance.registerComparator("season_days", new SeasonDaysComparator());
-        ShopaholicAPI.instance.registerCondition("season", new SeasonCondition());
-        ShopaholicAPI.instance.registerCondition("season_predicate", new SeasonPredicateCondition());
+        ShopaholicAPI.registry.registerComparator("season_days", new SeasonDaysComparator());
+        ShopaholicAPI.registry.registerCondition("season", new SeasonCondition());
+        ShopaholicAPI.registry.registerCondition("season_predicate", new SeasonPredicateCondition());
     }
 }
