@@ -14,11 +14,6 @@ public class ItemShopInput extends ShopInput<Item> {
         super(buf.readRegistryIdSafe(Item.class));
     }
 
-    @Override
-    public void encode(PacketBuffer buf) {
-        buf.writeRegistryId(id);
-    }
-
     @SuppressWarnings("ConstantConditions")
     @Override
     public boolean hasTag(ShopTarget target, String key, String value) {

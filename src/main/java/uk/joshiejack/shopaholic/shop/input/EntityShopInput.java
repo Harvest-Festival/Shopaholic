@@ -29,9 +29,4 @@ public class EntityShopInput extends ShopInput<EntityType<?>> {
     public boolean hasTag(ShopTarget target, String key, String value) {
         return target.getEntity().saveWithoutId(new CompoundNBT()).getString(key).equals(value);
     }
-
-    @Override
-    public void encode(PacketBuffer buf) {
-        buf.writeRegistryId(id);
-    }
 }

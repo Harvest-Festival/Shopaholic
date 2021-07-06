@@ -46,27 +46,30 @@ public class InputToShop {
     public static void onBlockInteract(PlayerInteractEvent.RightClickBlock event) {
         if (event.getWorld().isClientSide) return;
         BlockShopInput input = new BlockShopInput(event.getWorld().getBlockState(event.getPos()).getBlock());
-        open(BLOCK_TO_SHOP.get(input),
+        if(open(BLOCK_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getEntity(), event.getPlayer(), event.getItemStack(), input),
-                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK);
+                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK))
+            event.setCanceled(true);
     }
 
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         if (event.getWorld().isClientSide) return;
         EntityShopInput input = new EntityShopInput(event.getTarget());
-        open(ENTITY_TO_SHOP.get(input),
+        if(open(ENTITY_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getTarget(), event.getPlayer(), event.getItemStack(), input),
-                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK);
+                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK))
+            event.setCanceled(true);
     }
 
     @SubscribeEvent
     public static void onItemInteract(PlayerInteractEvent.RightClickItem event) {
         if (event.getWorld().isClientSide) return;
         ItemShopInput input = new ItemShopInput(event.getItemStack().getItem());
-        open(ITEM_TO_SHOP.get(input),
+        if(open(ITEM_TO_SHOP.get(input),
                 new ShopTarget(event.getWorld(), event.getPos(), event.getEntity(), event.getPlayer(), event.getItemStack(), input),
-                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK);
+                event.getPlayer().isShiftKeyDown() ? InputMethod.SHIFT_RIGHT_CLICK : InputMethod.RIGHT_CLICK))
+            event.setCanceled(true);
     }
 
     public static boolean open(Collection<Department> shops, ShopTarget target, InputMethod method) {

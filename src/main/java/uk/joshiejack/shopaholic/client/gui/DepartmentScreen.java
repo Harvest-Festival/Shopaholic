@@ -92,7 +92,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     protected void renderLabels(@Nonnull MatrixStack matrix, int mouseX, int mouseY) {
         matrix.pushPose();
         int width = PenguinClient.FANCY_FONT.get().width(getShopName());
-        boolean larger = width <= 110;
+        boolean larger = width <= 90;
         boolean smaller = width >= 140;
         float scale = larger ? 1.5F : smaller ? 0.75F : 1F;
         matrix.scale(scale, scale, scale);
