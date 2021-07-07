@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import uk.joshiejack.shopaholic.ShopaholicConfig;
+import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.bank.Wallet;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 
@@ -38,7 +38,7 @@ public class RenderGold {
 
     @SubscribeEvent
     public static void onRenderOverlay(RenderGameOverlayEvent.Pre event) {
-        if (ShopaholicConfig.enableHUD && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if (ShopaholicClientConfig.enableGoldHUD.get() && event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
             Minecraft mc = Minecraft.getInstance();
             MatrixStack matrix = event.getMatrixStack();
             matrix.pushPose();
@@ -47,16 +47,16 @@ public class RenderGold {
             int maxWidth = event.getWindow().getGuiScaledWidth();
             int maxHeight = event.getWindow().getGuiScaledHeight();
             String text = NumberFormat.getNumberInstance(Locale.ENGLISH).format(Wallet.getActive().getBalance());
-            float adjustedX = ((ShopaholicConfig.goldX / 100F) * maxWidth);
-            float adjustedY = ((ShopaholicConfig.goldY / 100F) * maxHeight);
+            float adjustedX = ((ShopaholicClientConfig.goldHUDX.get() / 100F) * maxWidth);
+            float adjustedY = ((ShopaholicClientConfig.goldHUDY.get() / 100F) * maxHeight);
 
-            if (ShopaholicConfig.enableGoldIcon) {
+            if (ShopaholicClientConfig.enableGoldIconHUD.get()) {
                 mc.getTextureManager().bind(DepartmentScreen.EXTRA);
-                int coinX = (int) (ShopaholicConfig.goldLeft ? maxWidth - mc.font.width(text) - 20 + adjustedX : maxWidth - adjustedX - 14);
+                int coinX = (int) (ShopaholicClientConfig.goldRenderSide.get() == ShopaholicClientConfig.GoldRenderSide.LEFT ? maxWidth - mc.font.width(text) - 20 + adjustedX : maxWidth - adjustedX - 14);
                 mc.gui.blit(event.getMatrixStack(), coinX, (int) (2 + adjustedY), 244, 244, 12, 12);
             }
 
-            int textX = (int) (ShopaholicConfig.goldLeft ? maxWidth - mc.font.width(text) - 5 + (int) adjustedX : maxWidth - adjustedX - 18 - mc.font.width(text));
+            int textX = (int) (ShopaholicClientConfig.goldRenderSide.get() == ShopaholicClientConfig.GoldRenderSide.LEFT ? maxWidth - mc.font.width(text) - 5 + (int) adjustedX : maxWidth - adjustedX - 18 - mc.font.width(text));
             mc.font.drawShadow(matrix, text, textX, 4 + adjustedY, 0xFFFFFFFF);
 
             RenderSystem.disableBlend();
