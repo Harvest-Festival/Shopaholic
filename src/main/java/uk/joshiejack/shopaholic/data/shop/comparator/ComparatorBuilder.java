@@ -42,6 +42,8 @@ public abstract class ComparatorBuilder {
         return new NumberComparatorBuilder(id, value);
     }
 
+    public static ComparatorBuilder playerHealth() { return new Immutable("player_health"); }
+
     public static ComparatorBuilder rainLevel() {
         return new Immutable("rain_level");
     }
@@ -56,6 +58,9 @@ public abstract class ComparatorBuilder {
     public static AbstractItemComparatorBuilder shippedAmount(String id) {
         return new AbstractItemComparatorBuilder(id, "comparator_shipped");
     }
+
+    public static ComparatorBuilder vendorHealth() { return new Immutable("vendor_health"); }
+
 
     public abstract void save(ShopaholicDatabase data);
 

@@ -2,6 +2,7 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -93,6 +94,10 @@ public class Sublisting<P> {
 
     public boolean isGoldOnly() {
         return materials.isEmpty();
+    }
+
+    public ItemStack getItem() {
+        return object instanceof ItemStack ? (ItemStack) object : ItemStack.EMPTY;
     }
 
     public Icon getIcon() {

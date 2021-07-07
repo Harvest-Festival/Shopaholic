@@ -1,16 +1,15 @@
 package uk.joshiejack.shopaholic.shop.listing;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
-import uk.joshiejack.penguinlib.util.icon.ItemIcon;
+import uk.joshiejack.penguinlib.util.icon.TextureIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 
 public class HealListingHandler implements ListingHandler<Float> {
     private static final ITextComponent NAME = new TranslationTextComponent("gui.shopaholic.shop.heal");
@@ -33,7 +32,7 @@ public class HealListingHandler implements ListingHandler<Float> {
     @OnlyIn(Dist.CLIENT)
     @Override
     public Icon createIcon(Float object) {
-        return new ItemIcon(new ItemStack(Items.POTION)); //TODO: TEXTURE ICON
+        return new TextureIcon(DepartmentScreen.EXTRA, 192, 240);
     }
 
     @Override

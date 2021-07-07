@@ -42,6 +42,7 @@ import uk.joshiejack.shopaholic.loot.CapValue;
 import uk.joshiejack.shopaholic.loot.RatioValue;
 import uk.joshiejack.shopaholic.loot.SetValue;
 import uk.joshiejack.shopaholic.shipping.Market;
+import uk.joshiejack.shopaholic.shipping.ShippingRegistry;
 import uk.joshiejack.shopaholic.shop.RegistryImpl;
 import uk.joshiejack.shopaholic.shop.comparator.*;
 import uk.joshiejack.shopaholic.shop.condition.*;
@@ -77,10 +78,12 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerComparator("item_in_inventory", new ItemInInventoryComparator());
         ShopaholicAPI.registry.registerComparator("light_level", new LightLevelComparator());
         ShopaholicAPI.registry.registerComparator("number", new NumberComparator());
+        ShopaholicAPI.registry.registerComparator("player_health", new PlayerHealthLevelComparator());
         ShopaholicAPI.registry.registerComparator("rain_level", new RainLevelComparator());
         ShopaholicAPI.registry.registerComparator("redstone_level", new RedstoneSignalComparator());
         ShopaholicAPI.registry.registerComparator("shipped", new ShippedCountComparator());
         ShopaholicAPI.registry.registerComparator("temperature", new TemperatureComparator());
+        ShopaholicAPI.registry.registerComparator("vendor_health", new VendorHealthLevelComparator());
         //Register Conditions
         ShopaholicAPI.registry.registerCondition("and", new AndCondition());
         ShopaholicAPI.registry.registerCondition("block_state", new BlockStateCondition());
@@ -107,6 +110,9 @@ public class Shopaholic {
         //TODO? ListingBuilder.register("food", new FoodBuilder());
         //Cost Formulae
         ShopaholicAPI.registry.registerCostFormula("default", (m, player, listing, level, mechanic, rand) -> listing.getGold());
+        ShopaholicAPI.registry.registerCostFormula("decreasing_cost", (e, player, listing, level, mechanic, rand) -> listing.getGold() * (1 + (level / mechanic.getMaximum())));
+        ShopaholicAPI.registry.registerCostFormula("increasing_cost", (e, player, listing, level, mechanic, rand) -> listing.getGold() * (1 + (1 - level / mechanic.getMaximum())));
+        ShopaholicAPI.registry.registerCostFormula("shipping_value", (e, player, listing, level, mechanic, rand) -> ShippingRegistry.getValue(listing.getItem()));
     }
 
     @SubscribeEvent
