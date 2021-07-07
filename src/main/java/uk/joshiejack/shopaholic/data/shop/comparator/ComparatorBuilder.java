@@ -21,6 +21,11 @@ public abstract class ComparatorBuilder {
         return new BlockTagOnTargetComparatorBuilder(id, tag);
     }
 
+    public static ComparatorBuilder canSeeSky() {
+        return new Immutable("can_see_sky");
+    }
+
+
     public static AbstractItemComparatorBuilder held(String id) {
         return new AbstractItemComparatorBuilder(id, "comparator_held");
     }
@@ -37,9 +42,16 @@ public abstract class ComparatorBuilder {
         return new NumberComparatorBuilder(id, value);
     }
 
+    public static ComparatorBuilder rainLevel() {
+        return new Immutable("rain_level");
+    }
+
+
     public static ComparatorBuilder redstoneSignal() {
         return new Immutable("redstone_signal");
     }
+
+    public static ComparatorBuilder temperature() { return new Immutable("temperature"); }
 
     public static AbstractItemComparatorBuilder shippedAmount(String id) {
         return new AbstractItemComparatorBuilder(id, "comparator_shipped");

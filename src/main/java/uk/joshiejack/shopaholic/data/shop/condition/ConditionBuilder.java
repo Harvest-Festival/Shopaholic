@@ -56,6 +56,10 @@ public abstract class ConditionBuilder {
         return new NamedConditionBuilder(id, name);
     }
 
+    public static NotConditionBuilder not(String id, ConditionBuilder... conditions) {
+        return new NotConditionBuilder(id, conditions);
+    }
+
     public static OpenHoursConditionBuilder openingHours(String id) {
         return new OpenHoursConditionBuilder(id);
     }

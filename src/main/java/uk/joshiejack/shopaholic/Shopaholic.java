@@ -71,13 +71,16 @@ public class Shopaholic {
     private void setupCommon(FMLCommonSetupEvent event) {
         //Register Comparators
         ShopaholicAPI.registry.registerComparator("add", new AddComparator());
+        ShopaholicAPI.registry.registerComparator("can_see_sky", new CanSeeSkyComparator());
+        ShopaholicAPI.registry.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
         ShopaholicAPI.registry.registerComparator("item_in_hand", new ItemInHandComparator());
         ShopaholicAPI.registry.registerComparator("item_in_inventory", new ItemInInventoryComparator());
         ShopaholicAPI.registry.registerComparator("light_level", new LightLevelComparator());
         ShopaholicAPI.registry.registerComparator("number", new NumberComparator());
+        ShopaholicAPI.registry.registerComparator("rain_level", new RainLevelComparator());
         ShopaholicAPI.registry.registerComparator("redstone_level", new RedstoneSignalComparator());
         ShopaholicAPI.registry.registerComparator("shipped", new ShippedCountComparator());
-        ShopaholicAPI.registry.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
+        ShopaholicAPI.registry.registerComparator("temperature", new TemperatureComparator());
         //Register Conditions
         ShopaholicAPI.registry.registerCondition("and", new AndCondition());
         ShopaholicAPI.registry.registerCondition("block_state", new BlockStateCondition());
@@ -88,6 +91,7 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerCondition("opening_hours", new OpeningHoursCondition());
         ShopaholicAPI.registry.registerCondition("in_dimension", new InDimensionCondition());
         ShopaholicAPI.registry.registerCondition("named", new NamedCondition());
+        ShopaholicAPI.registry.registerCondition("not", new NotCondition());
         ShopaholicAPI.registry.registerCondition("or", new OrCondition());
         ShopaholicAPI.registry.registerCondition("per_player", new PerPlayerCondition());
         ShopaholicAPI.registry.registerCondition("shipped", new ShippedCondition());
