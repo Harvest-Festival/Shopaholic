@@ -1,6 +1,0 @@
-Shop ID,ID,Icon,Name
-friendly_chest,nbt_test,"{""entity"":""minecraft:horse"",""scale"":4}",Horsey Land
-diamond_worship,nether_store,{""item"":""minecraft:quartz""},Nether Store
-diamond_worship,overworld_store,{""item"":""minecraft:spruce_sapling""},Overworld Store
-test_shop,test_department,{""item"":""minecraft:gold_ingot""},Gold Store
-test_shop,crafting_central,{""item"":""minecraft:crafting_table""},Crafting Central

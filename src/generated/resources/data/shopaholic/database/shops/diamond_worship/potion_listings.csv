@@ -1,3 +1,0 @@
-ID,Effect,Duration,Amplifier,Is Ambient,Show Particles
-fire_resist,minecraft:fire_resistance,1000,0,false,true
-potions,minecraft:invisibility,5000,0,false,true

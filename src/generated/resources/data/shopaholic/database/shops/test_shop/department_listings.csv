@@ -1,8 +1,0 @@
-Department ID,ID,Stock Mechanic,Cost Formula
-test_department,apple,unlimited,default
-test_department,bucket,unlimited,default
-test_department,poison,unlimited,default
-test_department,food,unlimited,default
-crafting_central,furnace,unlimited,default
-crafting_central,stairs,only_1,default
-crafting_central,piggy_bank,unlimited,default

@@ -1,4 +1,0 @@
-Department ID,Listing ID,ID,Type,Data,Gold,Weight
-nbt_test,truffle,default,item,husbandry:truffle,9999,1
-nbt_test,horse,default,entity,horse,0,1
-nbt_test,heal,default,heal,10.0,0,1
