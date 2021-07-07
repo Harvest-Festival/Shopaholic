@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
-import uk.joshiejack.shopaholic.data.shop.condition.ShippedConditionBuilder;
 
 //TODO ALL THE COMPARATORS
 public abstract class ComparatorBuilder {
@@ -22,12 +21,12 @@ public abstract class ComparatorBuilder {
         return new BlockTagOnTargetComparatorBuilder(id, tag);
     }
 
-    public static ItemInInventoryComparatorBuilder itemInInventory(String id, Item item) {
-        return new ItemInInventoryComparatorBuilder(id, item);
+    public static AbstractItemComparatorBuilder held(String id) {
+        return new AbstractItemComparatorBuilder(id, "comparator_held");
     }
 
-    public static ItemTagInInventoryComparatorBuilder itemTag(String id, ITag.INamedTag<Item> tag) {
-        return new ItemTagInInventoryComparatorBuilder(id, tag);
+    public static AbstractItemComparatorBuilder itemInInventory(String id, Item item) {
+        return new AbstractItemComparatorBuilder(id, "comparator_item_in_inventory");
     }
 
     public static ComparatorBuilder lightLevel() {
@@ -42,8 +41,8 @@ public abstract class ComparatorBuilder {
         return new Immutable("redstone_signal");
     }
 
-    public static ShippedComparatorBuilder shippedAmount(String id) {
-        return new ShippedComparatorBuilder(id);
+    public static AbstractItemComparatorBuilder shippedAmount(String id) {
+        return new AbstractItemComparatorBuilder(id, "comparator_shipped");
     }
 
     public abstract void save(ShopaholicDatabase data);

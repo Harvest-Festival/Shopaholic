@@ -71,12 +71,12 @@ public class Shopaholic {
     private void setupCommon(FMLCommonSetupEvent event) {
         //Register Comparators
         ShopaholicAPI.registry.registerComparator("add", new AddComparator());
+        ShopaholicAPI.registry.registerComparator("item_in_hand", new ItemInHandComparator());
         ShopaholicAPI.registry.registerComparator("item_in_inventory", new ItemInInventoryComparator());
         ShopaholicAPI.registry.registerComparator("light_level", new LightLevelComparator());
         ShopaholicAPI.registry.registerComparator("number", new NumberComparator());
         ShopaholicAPI.registry.registerComparator("redstone_level", new RedstoneSignalComparator());
         ShopaholicAPI.registry.registerComparator("shipped", new ShippedCountComparator());
-        ShopaholicAPI.registry.registerComparator("item_tag_in_inventory", new ItemTagInInventoryComparator());
         ShopaholicAPI.registry.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
         //Register Conditions
         ShopaholicAPI.registry.registerCondition("and", new AndCondition());

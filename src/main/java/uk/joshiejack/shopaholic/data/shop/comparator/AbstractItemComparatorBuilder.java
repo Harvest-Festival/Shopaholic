@@ -9,27 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ShippedComparatorBuilder extends ComparatorBuilder {
+public class AbstractItemComparatorBuilder extends ComparatorBuilder {
     private final List<Item> items = new ArrayList<>();
     private final List<ITag.INamedTag<Item>> tags = new ArrayList<>();
+    private final String file;
 
-    public ShippedComparatorBuilder(String id) {
+    public AbstractItemComparatorBuilder(String id, String file) {
         super(id);
+        this.file = file;
     }
 
-    public ShippedComparatorBuilder countItem(Item item) {
+    public AbstractItemComparatorBuilder countItem(Item item) {
         items.add(item);
         return this;
     }
 
-    public ShippedComparatorBuilder countTag(ITag.INamedTag<Item> tag) {
+    public AbstractItemComparatorBuilder countTag(ITag.INamedTag<Item> tag) {
         tags.add(tag);
         return this;
     }
 
     @Override
     public void save(ShopaholicDatabase data) {
-        items.forEach(item -> data.addEntry("comparator_shipped", "ID,Item", CSVUtils.join(id, Objects.requireNonNull(item.getRegistryName()).toString())));
-        tags.forEach(tag -> data.addEntry("comparator_shipped", "ID,Item", CSVUtils.join(id, ("tag:" + tag.getName()))));
+        items.forEach(item -> data.addEntry(file, "ID,Item", CSVUtils.join(id, Objects.requireNonNull(item.getRegistryName()).toString())));
+        tags.forEach(tag -> data.addEntry(file, "ID,Item", CSVUtils.join(id, ("tag:" + tag.getName()))));
     }
 }
