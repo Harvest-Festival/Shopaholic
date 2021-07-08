@@ -12,7 +12,7 @@ public class BlockTagOnTargetComparator implements Comparator {
     private ITag.INamedTag<Block> tag;
 
     @Override
-    public Comparator create(Row data) {
+    public Comparator create(Row data, String id) {
         BlockTagOnTargetComparator comparator = new BlockTagOnTargetComparator();
         comparator.tag = data.blockTag();
         return comparator;

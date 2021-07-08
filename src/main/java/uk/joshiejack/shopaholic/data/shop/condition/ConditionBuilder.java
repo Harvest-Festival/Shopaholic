@@ -52,6 +52,10 @@ public abstract class ConditionBuilder {
         return new SeasonConditionBuilder(id, season);
     }
 
+    public static KubeJSConditionBuilder kubejs(String id) {
+        return new KubeJSConditionBuilder(id);
+    }
+
     public static NamedConditionBuilder named(String id, String name) {
         return new NamedConditionBuilder(id, name);
     }
@@ -71,6 +75,7 @@ public abstract class ConditionBuilder {
     public static PerPlayerConditionBuilder perPlayer(String id, int max) {
         return new PerPlayerConditionBuilder(id, max);
     }
+
 
     public static TimeConditionBuilder timeOpen(String id) {
         return new TimeConditionBuilder(id);

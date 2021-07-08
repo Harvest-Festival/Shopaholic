@@ -77,7 +77,7 @@ public class ShopLoader {
                     } else {
                         Comparator theComparator = ShopRegistries.COMPARATORS.get(type);
                         if (theComparator != null) {
-                            comparators.put(comparatorID, theComparator.create(row));
+                            comparators.put(comparatorID, theComparator.create(row, comparatorID));
                         }
                     }
                 });

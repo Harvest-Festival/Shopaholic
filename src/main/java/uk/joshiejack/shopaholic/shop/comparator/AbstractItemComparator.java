@@ -19,7 +19,7 @@ public abstract class AbstractItemComparator implements Comparator {
     public abstract AbstractItemComparator create();
 
     @Override
-    public Comparator create(Row data) {
+    public Comparator create(Row data, String id) {
         AbstractItemComparator comparator = create();
         addEntry(comparator, data);
         return comparator;

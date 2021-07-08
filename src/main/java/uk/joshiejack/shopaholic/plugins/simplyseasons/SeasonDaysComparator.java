@@ -11,7 +11,7 @@ public class SeasonDaysComparator implements Comparator {
     private int days;
 
     @Override
-    public Comparator create(Row row) {
+    public Comparator create(Row row, String id) {
         SeasonDaysComparator comparator = new SeasonDaysComparator();
         comparator.days = row.getAsInt("days");
         return comparator;

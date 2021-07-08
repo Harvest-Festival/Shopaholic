@@ -8,9 +8,12 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
 import uk.joshiejack.penguinlib.util.interfaces.IModPlugin;
 import uk.joshiejack.shopaholic.Shopaholic;
+import uk.joshiejack.shopaholic.api.ShopaholicAPI;
 import uk.joshiejack.shopaholic.event.ItemGetValueEvent;
 import uk.joshiejack.shopaholic.event.ItemPurchasedEvent;
 import uk.joshiejack.shopaholic.event.ItemShippedEvent;
+import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptComparator;
+import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptCondition;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemGetValueEventJS;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemPurchasedEventJS;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemShippedEventJS;
@@ -24,6 +27,8 @@ public class KubeJSPlugin implements IModPlugin {
     @Override
     public void setup() {
         MinecraftForge.EVENT_BUS.register(KubeJSPlugin.class);
+        ShopaholicAPI.registry.registerComparator("kubejs", new KubeJSScriptComparator());
+        ShopaholicAPI.registry.registerCondition("kubejs", new KubeJSScriptCondition());
     }
 
     @SubscribeEvent

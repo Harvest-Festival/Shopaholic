@@ -10,7 +10,7 @@ public class NumberComparator implements Comparator {
     private int value;
 
     @Override
-    public Comparator create(Row data) {
+    public Comparator create(Row data, String id) {
         NumberComparator comparator = new NumberComparator();
         comparator.value = data.get("number");
         return comparator;

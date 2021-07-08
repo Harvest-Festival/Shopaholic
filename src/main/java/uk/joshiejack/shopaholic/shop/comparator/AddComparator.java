@@ -18,7 +18,7 @@ public class AddComparator extends AbstractListComparator {
     }
 
     @Override
-    public Comparator create(Row database) {
+   public Comparator create(Row database, String id) {
         return new AddComparator();
     }
 

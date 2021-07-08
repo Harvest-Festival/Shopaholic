@@ -11,7 +11,7 @@ public interface Comparator {
      * @return  an instance of this comparator with the data applied
      *          some comparators are immutable so will just return themselves
      */
-    Comparator create(Row row);
+    Comparator create(Row row, String id);
 
     /**
      * Return the value of this comparator

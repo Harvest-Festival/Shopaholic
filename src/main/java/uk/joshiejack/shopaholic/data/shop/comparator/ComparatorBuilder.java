@@ -34,6 +34,10 @@ public abstract class ComparatorBuilder {
         return new AbstractItemComparatorBuilder(id, "comparator_item_in_inventory");
     }
 
+    public static KubeJSComparatorBuilder kubejs(String id) {
+        return new KubeJSComparatorBuilder(id);
+    }
+
     public static ComparatorBuilder lightLevel() {
         return new Immutable("light_level");
     }
