@@ -25,16 +25,16 @@ public class KubeJSScriptComparator implements Comparator {
 
     @Override
     public int getValue(@Nonnull ShopTarget target) {
-        KubeJSComparatorGetEvent e = new KubeJSComparatorGetEvent(target);
+        KubeJSComparatorGetEventJS e = new KubeJSComparatorGetEventJS(target);
         e.post(FMLEnvironment.dist == Dist.CLIENT ? ScriptType.CLIENT : ScriptType.SERVER, Shopaholic.MODID + ".comparator." + id);
         return e.getValue();
     }
 
-    public static class KubeJSComparatorGetEvent extends PlayerEventJS {
+    public static class KubeJSComparatorGetEventJS extends PlayerEventJS {
         private final ShopTargetWrapper target;
         private int value = 0;
 
-        public KubeJSComparatorGetEvent(ShopTarget target) {
+        public KubeJSComparatorGetEventJS(ShopTarget target) {
             this.target = new ShopTargetWrapper(target);
         }
 

@@ -56,6 +56,14 @@ public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
         return new HealListingBuilder(healAmount);
     }
 
+    public static CommandListingBuilder command(String command) {
+        return new CommandListingBuilder(command);
+    }
+
+    public static KubeJSScriptListingBuilder kubejs(String script) {
+        return new KubeJSScriptListingBuilder(script);
+    }
+
     public T id(String id) {
         this.id = id;
         return (T) this;

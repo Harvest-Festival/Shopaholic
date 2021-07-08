@@ -25,17 +25,17 @@ public class KubeJSScriptCondition implements Condition {
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        KubeJSConditionValidateEvent e = new KubeJSConditionValidateEvent(target, type);
+        KubeJSConditionValidateEventJS e = new KubeJSConditionValidateEventJS(target, type);
         e.post(FMLEnvironment.dist == Dist.CLIENT ? ScriptType.CLIENT : ScriptType.SERVER, Shopaholic.MODID + ".condition." + id);
         return e.isValid();
     }
 
-    public static class KubeJSConditionValidateEvent extends PlayerEventJS {
+    public static class KubeJSConditionValidateEventJS extends PlayerEventJS {
         private final ShopTargetWrapper target;
         private final CheckType type;
         private boolean valid = false;
 
-        public KubeJSConditionValidateEvent(ShopTarget target, CheckType type) {
+        public KubeJSConditionValidateEventJS(ShopTarget target, CheckType type) {
             this.target = new ShopTargetWrapper(target);
             this.type = type;
         }

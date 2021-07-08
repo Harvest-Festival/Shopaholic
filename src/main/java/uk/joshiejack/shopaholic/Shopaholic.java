@@ -101,6 +101,7 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerCondition("time", new TimeCondition());
         //Register Listing Handlers
         ShopaholicAPI.registry.registerListingHandler("bundle", new BundleListingHandler());
+        ShopaholicAPI.registry.registerListingHandler("command", new CommandListingHandler());
         ShopaholicAPI.registry.registerListingHandler("department", new DepartmentListingHandler());
         ShopaholicAPI.registry.registerListingHandler("entity", new EntityListingHandler());
         ShopaholicAPI.registry.registerListingHandler("heal", new HealListingHandler());
