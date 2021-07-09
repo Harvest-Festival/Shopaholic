@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import joptsimple.internal.Strings;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.tags.ITag;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
@@ -62,6 +63,13 @@ public class DepartmentBuilder {
                 .addSublisting(SublistingBuilder.sell().cost(-gold).material(item, 1)));
         return this;
     }
+
+    public DepartmentBuilder sellListing(ITag.INamedTag<Item> item, int gold) {
+        listing(ListingBuilder.of("sell_" + item.getName().getPath())
+                .addSublisting(SublistingBuilder.sell().cost(-gold).material(item, 1)));
+        return this;
+    }
+
 
     public void save(ShopaholicDatabase data) {
         listings.forEach(listing -> {

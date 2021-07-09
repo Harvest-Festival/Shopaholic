@@ -23,7 +23,7 @@ public class CompareConditionBuilder extends ConditionBuilder {
     @Override
     public void save(ShopaholicDatabase data) {
         data.addEntry("condition_compare", "ID,Comparator 1 ID,Less Than,Equal To,Greater Than,Comparator 2 ID",
-                CSVUtils.join(id, compare1.id, lessThan, greaterThan, equalTo, compare2.id));
+                CSVUtils.join(id, compare1.id, lessThan, equalTo, greaterThan, compare2.id));
         compare1.save(data);
         compare2.save(data);
     }

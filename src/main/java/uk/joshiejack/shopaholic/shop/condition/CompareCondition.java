@@ -20,11 +20,11 @@ public class CompareCondition implements Condition {
     //Specialised create method, passing all the comparators that registered
     public Condition create(Row data, Map<String, Comparator> comparators) {
         CompareCondition validator = new CompareCondition();
-        validator.lesser = data.isTrue("less_than");
-        validator.equal = data.isTrue("equal_to");
-        validator.greater = data.isTrue("greater_than");
-        validator.compare_1 = comparators.get(data.get("comparator_1_id").toString());
-        validator.compare_2 = comparators.get(data.get("comparator_2_id").toString());
+        validator.lesser = data.isTrue("less than");
+        validator.equal = data.isTrue("equal to");
+        validator.greater = data.isTrue("greater than");
+        validator.compare_1 = comparators.get(data.get("comparator 1 id").toString());
+        validator.compare_2 = comparators.get(data.get("comparator 2 id").toString());
         return validator;
     }
 
