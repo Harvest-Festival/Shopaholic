@@ -101,7 +101,9 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerCondition("block_state", new BlockStateCondition());
         ShopaholicAPI.registry.registerCondition("compare", new CompareCondition());
         ShopaholicAPI.registry.registerCondition("entity_nearby", new EntityNearbyCondition());
-        ShopaholicAPI.registry.registerCondition("has_nbt_tag", new HasNBTTagCondition());
+        ShopaholicAPI.registry.registerCondition("entity_has_nbt_tag", new EntityHasNBTTagCondition().setTarget(EntityHasNBTTagCondition.TargetType.ENTITY));
+        ShopaholicAPI.registry.registerCondition("item_has_nbt_tag", new ItemStackHasNBTTagCondition());
+        ShopaholicAPI.registry.registerCondition("player_has_nbt_tag", new EntityHasNBTTagCondition().setTarget(EntityHasNBTTagCondition.TargetType.PLAYER));
         ShopaholicAPI.registry.registerCondition("has_pet", new HasPetCondition());
         ShopaholicAPI.registry.registerCondition("opening_hours", new OpeningHoursCondition());
         ShopaholicAPI.registry.registerCondition("in_dimension", new InDimensionCondition());
@@ -109,8 +111,10 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerCondition("not", new NotCondition());
         ShopaholicAPI.registry.registerCondition("or", new OrCondition());
         ShopaholicAPI.registry.registerCondition("per_player", new PerPlayerCondition());
+        ShopaholicAPI.registry.registerCondition("player_named", new PlayerNamed());
         ShopaholicAPI.registry.registerCondition("shipped", new ShippedCondition());
         ShopaholicAPI.registry.registerCondition("time", new TimeCondition());
+        ShopaholicAPI.registry.registerCondition("tile_entity_has_nbt_tag", new TileEntityHasNBTTagCondition());
         //Register Listing Handlers
         ShopaholicAPI.registry.registerListingHandler("bundle", new BundleListingHandler());
         ShopaholicAPI.registry.registerListingHandler("command", new CommandListingHandler());

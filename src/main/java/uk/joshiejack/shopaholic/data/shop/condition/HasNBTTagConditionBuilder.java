@@ -5,17 +5,17 @@ import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
 //Conditions
 public class HasNBTTagConditionBuilder extends ConditionBuilder {
-    private final String tagName;
+    private final String type;
     private final String tagData;
 
-    public HasNBTTagConditionBuilder(String id, String tagName, String tagData) {
+    public HasNBTTagConditionBuilder(String type, String id, String tagData) {
         super(id);
-        this.tagName = tagName;
+        this.type = type;
         this.tagData = tagData;
     }
 
     @Override
     public void save(ShopaholicDatabase data) {
-        data.addEntry("condition_has_nbt_tag", "ID,Tag Name,Tag Data", CSVUtils.join(id, tagName, tagData));
+        data.addEntry(String.format("condition_%s_has_nbt_tag", type), "ID,Data", CSVUtils.join(id, tagData));
     }
 }

@@ -1,11 +1,15 @@
 package uk.joshiejack.shopaholic.shop.input;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.common.util.Lazy;
 import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 public class ItemShopInput extends ShopInput<Item> {
+    private Lazy<ItemStack> asStack = Lazy.of(() -> new ItemStack(id));
+
     public ItemShopInput(Item item) {
         super(item);
     }
@@ -14,9 +18,8 @@ public class ItemShopInput extends ShopInput<Item> {
         super(buf.readRegistryIdSafe(Item.class));
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public boolean hasTag(ShopTarget target, String key, String value) {
-        return target.getStack().hasTag() && target.getStack().getTag().getString(key).equals(value);
+    public String getName(ShopTarget target) {
+        return asStack.get().getHoverName().getString();
     }
 }

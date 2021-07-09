@@ -36,10 +36,10 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
 //                        .listing(ListingBuilder.of("heal").addSublisting(SublistingBuilder.heal(10).material(Items.NETHER_STAR, 99)))
 //                )
 //                .save(this);
-
+//
 //        ShopBuilder.of("friendly_chest", "Daryl the Chest")
 //                .vendor(Vendor.block("daryl", Blocks.CHEST))
-//                .condition(ConditionBuilder.hasNBTTag("is_daryl", "CustomName", "{\"text\":\"daryl\"}"))
+//                .condition(ConditionBuilder.tileEntityHasNBTTag("is_daryl", "CustomName:'{\"text\":\"daryl\"}'"))
 //                .department(DepartmentBuilder.of("nbt_test", new EntityIcon(EntityType.HORSE, 4), "Horsey Land")
 //                        .itemListing(HusbandryItems.TRUFFLE.get(), 9999)
 //                        .entityListing(EntityType.HORSE, 0)

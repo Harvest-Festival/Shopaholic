@@ -7,18 +7,18 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
-public class NamedCondition implements Condition {
+public class PlayerNamed implements Condition {
     private Pattern pattern;
 
     @Override
     public Condition create(Row data, String id) {
-        NamedCondition validator = new NamedCondition();
+        PlayerNamed validator = new PlayerNamed();
         validator.pattern = Pattern.compile(data.name());
         return validator;
     }
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
-        return pattern.matcher(target.getInput().getName(target)).matches();
+        return pattern.matcher(target.getPlayer().getName().getString()).matches();
     }
 }

@@ -24,6 +24,10 @@ public abstract class ShopInput<T extends IForgeRegistryEntry<T>> {
         return Objects.equals(id.getRegistryName(), input.id.getRegistryName());
     }
 
+    public T get() {
+        return id;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id.getRegistryName());
@@ -32,6 +36,4 @@ public abstract class ShopInput<T extends IForgeRegistryEntry<T>> {
     public String getName(ShopTarget target) {
         return Objects.requireNonNull(id.getRegistryName()).toString();
     }
-
-    public abstract boolean hasTag(ShopTarget target, String key, String value);
 }

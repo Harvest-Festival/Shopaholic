@@ -32,8 +32,8 @@ public abstract class ConditionBuilder {
         return new BlockStateConditionBuilder(id, stateName, stateValue);
     }
 
-    public static HasNBTTagConditionBuilder hasNBTTag(String id, String tagName, String tagData) {
-        return new HasNBTTagConditionBuilder(id, tagName, tagData);
+    public static HasNBTTagConditionBuilder entityHasNBTTag(String id, String tagData) {
+        return new HasNBTTagConditionBuilder("entity", id, tagData);
     }
 
     public static HasPetConditionBuilder hasPet(String id, EntityType<?> entityType) {
@@ -52,12 +52,16 @@ public abstract class ConditionBuilder {
         return new SeasonConditionBuilder(id, season);
     }
 
+    public static HasNBTTagConditionBuilder itemHasNBTTag(String id, String tagData) {
+        return new HasNBTTagConditionBuilder("item", id, tagData);
+    }
+
     public static KubeJSConditionBuilder kubejs(String id) {
         return new KubeJSConditionBuilder(id);
     }
 
     public static NamedConditionBuilder named(String id, String name) {
-        return new NamedConditionBuilder(id, name);
+        return new NamedConditionBuilder("named", id, name);
     }
 
     public static NotConditionBuilder not(String id, ConditionBuilder... conditions) {
@@ -76,6 +80,17 @@ public abstract class ConditionBuilder {
         return new PerPlayerConditionBuilder(id, max);
     }
 
+    public static HasNBTTagConditionBuilder playerHasNBTTag(String id, String tagData) {
+        return new HasNBTTagConditionBuilder("player", id, tagData);
+    }
+
+    public static NamedConditionBuilder playerNamed(String id, String name) {
+        return new NamedConditionBuilder("player_named", id, name);
+    }
+
+    public static HasNBTTagConditionBuilder tileEntityHasNBTTag(String id, String tagData) {
+        return new HasNBTTagConditionBuilder("tile_entity", id, tagData);
+    }
 
     public static TimeConditionBuilder timeOpen(String id) {
         return new TimeConditionBuilder(id);
