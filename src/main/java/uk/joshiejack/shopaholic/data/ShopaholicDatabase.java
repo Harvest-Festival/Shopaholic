@@ -8,6 +8,8 @@ import uk.joshiejack.penguinlib.data.generators.AbstractDatabaseProvider;
 import uk.joshiejack.shopaholic.Shopaholic;
 
 public class ShopaholicDatabase extends AbstractDatabaseProvider {
+
+    public ShopaholicDatabase(String modid, DataGenerator gen) { super(gen, modid); }
     public ShopaholicDatabase(DataGenerator gen) {
         super(gen, Shopaholic.MODID);
     }
