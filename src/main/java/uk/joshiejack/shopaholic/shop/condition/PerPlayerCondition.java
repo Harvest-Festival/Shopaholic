@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundNBT;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
+import uk.joshiejack.shopaholic.client.ShopaholicClient;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 
@@ -45,5 +46,9 @@ public class PerPlayerCondition implements Condition {
         CompoundNBT tag = player.getPersistentData().getCompound(MODID);
         String label = department.id() + ":" + listing.id();
         tag.putInt(label, tag.getInt(label) + 1);
+        if (player.level.isClientSide) {
+            if (tag.getInt(label) >= max)
+                ShopaholicClient.refreshShop();
+        }
     }
 }
