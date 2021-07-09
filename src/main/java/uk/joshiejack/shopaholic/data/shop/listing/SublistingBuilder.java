@@ -9,6 +9,7 @@ import net.minecraft.tags.ITag;
 import org.apache.commons.lang3.tuple.Pair;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
+import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 
 import java.util.ArrayList;
@@ -62,6 +63,14 @@ public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
 
     public static KubeJSScriptListingBuilder kubejs(String script) {
         return new KubeJSScriptListingBuilder(script);
+    }
+
+    public static StatusListingBuilder playerStatus(String id, String field, ComparatorBuilder comparator) {
+        return new StatusListingBuilder("player_status", id, field, comparator);
+    }
+
+    public static StatusListingBuilder teamStatus(String id, String field, ComparatorBuilder comparator) {
+        return new StatusListingBuilder("team_status", id, field, comparator);
     }
 
     public T id(String id) {

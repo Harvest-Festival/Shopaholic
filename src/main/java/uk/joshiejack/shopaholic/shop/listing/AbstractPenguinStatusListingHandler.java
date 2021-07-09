@@ -25,11 +25,13 @@ public abstract class AbstractPenguinStatusListingHandler implements ListingHand
     }
 
     public Pair<String, Comparator> getObjectFromDatabase(DatabaseLoadedEvent event, String s, Map<String, Comparator> comparators) {
-        Row row = event.table("penguin_statuses").fetch_where("id=" + s);
+        Row row = event.table(getTableName()).fetch_where("id=" + s);
         String field = row.get("field");
-        Comparator comparator = comparators.get(row.get("comparator").toString());
+        Comparator comparator = comparators.get(row.get("comparator id").toString());
         return Pair.of(field, comparator);
     }
+
+    protected abstract String getTableName();
 
     //Unused
     @Override

@@ -15,4 +15,9 @@ public class TeamStatusListingHandler extends AbstractPenguinStatusListingHandle
             data.put("PenguinStatuses", new CompoundNBT());
         data.getCompound("PenguinStatuses").putInt(object.getLeft(), object.getRight().getValue(ShopTarget.fromPlayer(player)));
     }
+
+    @Override
+    protected String getTableName() {
+        return "team_statuses";
+    }
 }
