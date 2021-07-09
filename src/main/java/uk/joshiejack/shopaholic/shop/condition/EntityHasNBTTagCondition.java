@@ -40,6 +40,7 @@ public class EntityHasNBTTagCondition extends AbstractHasNBTTagCondition<Entity>
 
     @Override
     public boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) {
+        System.out.println("TESTING THOS?");
         return predicate.test(predicateTarget == TargetType.PLAYER ? target.getPlayer() : target.getEntity());
     }
 
