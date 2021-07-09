@@ -43,6 +43,7 @@ public class DepartmentBuilder {
         return this;
     }
 
+    //Shorthands
     public DepartmentBuilder entityListing(EntityType<?> entity, int gold) {
         listing(ListingBuilder.of(entity.getRegistryName().getPath())
                 .addSublisting(SublistingBuilder.entity(entity.getRegistryName().getPath(),
@@ -50,10 +51,15 @@ public class DepartmentBuilder {
         return this;
     }
 
-    //Shorthands
     public DepartmentBuilder itemListing(Item item, int gold) {
         listing(ListingBuilder.of(item.getRegistryName().getPath())
                 .addSublisting(SublistingBuilder.item(item).cost(gold)));
+        return this;
+    }
+
+    public DepartmentBuilder sellListing(Item item, int gold) {
+        listing(ListingBuilder.of("sell_" + item.getRegistryName().getPath())
+                .addSublisting(SublistingBuilder.sell().cost(-gold).material(item, 1)));
         return this;
     }
 
