@@ -73,6 +73,10 @@ public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
         return new StatusListingBuilder("team_status", id, field, comparator);
     }
 
+    public static GoldListingBuilder sell() {
+        return new GoldListingBuilder();
+    }
+
     public T id(String id) {
         this.id = id;
         return (T) this;

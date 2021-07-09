@@ -120,6 +120,7 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerListingHandler("command", new CommandListingHandler());
         ShopaholicAPI.registry.registerListingHandler("department", new DepartmentListingHandler());
         ShopaholicAPI.registry.registerListingHandler("entity", new EntityListingHandler());
+        ShopaholicAPI.registry.registerListingHandler("gold", new GoldListingHandler());
         ShopaholicAPI.registry.registerListingHandler("heal", new HealListingHandler());
         ShopaholicAPI.registry.registerListingHandler("item", new ItemListingHandler());
         ShopaholicAPI.registry.registerListingHandler("potion", new PotionEffectListingHandler());

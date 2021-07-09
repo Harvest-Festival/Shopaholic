@@ -36,7 +36,7 @@ public class ShopLoader {
         //Update the database with the simple departments
         //Very simple listings AND Generic one for any types
         ShopRegistries.LISTING_HANDLERS.forEach((type, handler) -> {
-            event.table("very_simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("type"), type, sdl.get(type), "unlimited"));
+            event.table("very_simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get(type), type, sdl.get(type), "unlimited"));
             event.table("simple_department_listings_" + type).rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), type, sdl.get(type), sdl.get("stock mechanic")));
         });
 

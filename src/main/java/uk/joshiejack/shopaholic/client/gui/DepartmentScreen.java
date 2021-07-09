@@ -245,7 +245,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         return 0;
     }
 
-    public ITextComponent getCostAsTextComponent(long cost) {
+    public static ITextComponent getCostAsTextComponent(long cost) {
         try {
             return cost == 0 ? FREE :
                     COST_CACHE.get(cost, () -> new StringTextComponent(StringHelper.convertNumberToString(cost)));

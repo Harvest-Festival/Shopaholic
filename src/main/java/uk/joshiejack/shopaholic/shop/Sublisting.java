@@ -9,6 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 
 import java.util.List;
 import java.util.Objects;
@@ -89,7 +90,7 @@ public class Sublisting<P> {
 
     @OnlyIn(Dist.CLIENT)
     public ITextComponent getDisplayName() {
-        return !displayName.getContents().isEmpty() ? displayName : handler.getDisplayName(object);
+        return !displayName.getContents().isEmpty() ? displayName : gold < 0 ? DepartmentScreen.getCostAsTextComponent(Math.abs(gold)) : handler.getDisplayName(object);
     }
 
     public boolean isGoldOnly() {
@@ -109,7 +110,7 @@ public class Sublisting<P> {
     }
 
     public int getCount() {
-        return handler.getCount(object);
+        return gold < 0 ? (int) Math.abs(gold) : handler.getCount(object);
     }
 
     @OnlyIn(Dist.CLIENT)

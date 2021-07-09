@@ -22,13 +22,13 @@ public class GoldListingButton extends AbstractListingButton {
         //GlStateManager.color(1.0F, 1.0F, 1.0F);
         //Draw the cost
         long goldCost = listing.getGoldCost(screen.getMenu().target.getPlayer(), screen.stock);
-        ITextComponent cost = screen.getCostAsTextComponent(goldCost);
-        if (goldCost != 0) {
+        ITextComponent cost = DepartmentScreen.getCostAsTextComponent(goldCost);
+        if (goldCost > 0) {
             int width = mc.font.width(cost);
             drawString(matrix, mc.font, cost, x + 180 - width, y + (height - 8) / 2, color);
             mc.getTextureManager().bind(DepartmentScreen.EXTRA);
             blit(matrix, x + 184, (y + (height - 8) / 2) - 2, 244, 244, 12, 12);
-        } else if (sublisting.getMaterials().isEmpty()) {
+        } else if (goldCost == 0 && sublisting.getMaterials().isEmpty()) {
             int width = mc.font.width(cost);
             drawString(matrix, mc.font, cost, x + 194 - width, y + (height - 8) / 2, color);
         }
