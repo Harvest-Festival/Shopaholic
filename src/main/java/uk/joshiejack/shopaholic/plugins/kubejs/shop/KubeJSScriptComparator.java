@@ -8,12 +8,13 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.MutableComparator;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.ShopTargetWrapper;
 
 import javax.annotation.Nonnull;
 
-public class KubeJSScriptComparator implements Comparator {
+public class KubeJSScriptComparator implements MutableComparator {
     private String id;
 
     @Override

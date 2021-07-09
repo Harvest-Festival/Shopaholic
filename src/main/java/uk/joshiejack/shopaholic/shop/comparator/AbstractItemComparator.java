@@ -8,11 +8,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.MutableComparator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractItemComparator implements Comparator {
+public abstract class AbstractItemComparator implements MutableComparator {
     protected final List<Item> items = new ArrayList<>();
     protected final List<ITag.INamedTag<Item>> tags = new ArrayList<>();
 

@@ -1,22 +1,11 @@
 package uk.joshiejack.shopaholic.data;
 
 import joptsimple.internal.Strings;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import uk.joshiejack.husbandry.item.HusbandryItems;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.penguinlib.data.generators.AbstractDatabaseProvider;
-import uk.joshiejack.penguinlib.util.icon.EntityIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.data.shop.DepartmentBuilder;
-import uk.joshiejack.shopaholic.data.shop.ShopBuilder;
-import uk.joshiejack.shopaholic.data.shop.Vendor;
-import uk.joshiejack.shopaholic.data.shop.condition.ConditionBuilder;
-import uk.joshiejack.shopaholic.data.shop.listing.ListingBuilder;
-import uk.joshiejack.shopaholic.data.shop.listing.SublistingBuilder;
 
 public class ShopaholicDatabase extends AbstractDatabaseProvider {
     public ShopaholicDatabase(DataGenerator gen) {
@@ -36,17 +25,17 @@ public class ShopaholicDatabase extends AbstractDatabaseProvider {
         addStockMechanic("unlimited", 1000000000, 1000000000);
         addStockMechanic("limited_1", 1, 1);
         addStockMechanic("only_1", 1, 0);
-
-        ShopBuilder.of("friendly_chest", "Daryl the Chest")
-                .vendor(Vendor.block("daryl", Blocks.CHEST))
-                .condition(ConditionBuilder.hasNBTTag("is_daryl", "CustomName", "{\"text\":\"daryl\"}"))
-                .condition(ConditionBuilder.kubejs("test_script"))
-                .department(DepartmentBuilder.of("nbt_test", new EntityIcon(EntityType.HORSE, 4), "Horsey Land")
-                        .itemListing(HusbandryItems.TRUFFLE.get(), 9999)
-                        .entityListing(EntityType.HORSE, 0)
-                        .listing(ListingBuilder.of("heal").addSublisting(SublistingBuilder.heal(10).material(Items.NETHER_STAR, 99)))
-                )
-                .save(this);
+////
+//        ShopBuilder.of("friendly_chest", "Daryl the Chest")
+//                .vendor(Vendor.block("daryl", Blocks.CHEST))
+//                .condition(ConditionBuilder.hasNBTTag("is_daryl", "CustomName", "{\"text\":\"daryl\"}"))
+//                .condition(ConditionBuilder.kubejs("test_script"))
+//                .department(DepartmentBuilder.of("nbt_test", new EntityIcon(EntityType.HORSE, 4), "Horsey Land")
+//                        .itemListing(HusbandryItems.TRUFFLE.get(), 9999)
+//                        .entityListing(EntityType.HORSE, 0)
+//                        .listing(ListingBuilder.of("heal").addSublisting(SublistingBuilder.heal(10).material(Items.NETHER_STAR, 99)))
+//                )
+//                .save(this);
 
 //        ShopBuilder.of("friendly_chest", "Daryl the Chest")
 //                .vendor(Vendor.block("daryl", Blocks.CHEST))
