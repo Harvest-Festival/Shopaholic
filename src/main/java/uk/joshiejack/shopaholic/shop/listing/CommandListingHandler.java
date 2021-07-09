@@ -25,7 +25,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class CommandListingHandler implements ICommandSource, ListingHandler<String> {
-    private static final Lazy<Icon> ICON = Lazy.of(() -> new ItemIcon(Items.COMMAND_BLOCK));
+    public static final Lazy<Icon> ICON = Lazy.of(() -> new ItemIcon(Items.COMMAND_BLOCK));
+
     @Override
     public String getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
         return data;

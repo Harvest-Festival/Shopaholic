@@ -14,17 +14,15 @@ import uk.joshiejack.penguinlib.events.DatabasePopulateEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
-import uk.joshiejack.shopaholic.api.shop.Comparator;
-import uk.joshiejack.shopaholic.api.shop.Condition;
-import uk.joshiejack.shopaholic.api.shop.IImutableComparator;
-import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.*;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
+import uk.joshiejack.shopaholic.shop.comparator.AbstractListComparator;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
 import uk.joshiejack.shopaholic.shop.condition.CompareCondition;
-import uk.joshiejack.shopaholic.api.shop.CostFormula;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.InputToShop;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
+import uk.joshiejack.shopaholic.shop.listing.AbstractPenguinStatusListingHandler;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,21 +65,20 @@ public class ShopLoader {
         Map<String, Comparator> comparators = Maps.newHashMap(); //Temporary Registry
         //for all the type of comparators
         ShopRegistries.COMPARATORS.forEach((type, comparator) -> {
-            if (comparator instanceof IImutableComparator)
-                comparators.put(type, comparator);
-            else {
+            if (comparator instanceof MutableComparator) {
                 event.table("comparator_" + type).rows().forEach(row -> {
                     String comparatorID = row.id();
                     if (comparators.containsKey(comparatorID)) {
-                        comparators.get(comparatorID).merge(row);
+                        ((MutableComparator)comparators.get(comparatorID)).merge(row);
                     } else {
                         Comparator theComparator = ShopRegistries.COMPARATORS.get(type);
                         if (theComparator != null) {
-                            comparators.put(comparatorID, theComparator.create(row, comparatorID));
+                            comparators.put(comparatorID, ((MutableComparator)theComparator).create(row, comparatorID));
                         }
                     }
                 });
-            }
+            } else
+                comparators.put(type, comparator);
         });
 
         //Create all the conditions
@@ -102,6 +99,8 @@ public class ShopLoader {
             });
         }
 
+        comparators.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListComparator).forEach(entry ->
+                ((AbstractListComparator)entry).initList(event, entry.getKey(), comparators));
         conditions.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListCondition).forEach(entry ->
                 ((AbstractListCondition) entry.getValue()).initList(event, entry.getKey(), conditions));
 
@@ -168,7 +167,10 @@ public class ShopLoader {
                             if (handler == null)
                                 Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the listing handler type: " + sub_type + " for " + departmentID + ": " + listingID + " :" + subID);
                             else {
-                                Sublisting<?> theSublisting = new Sublisting(subID, handler, handler.getObjectFromDatabase(event, data_entries.get(i)));
+                                Sublisting<?> theSublisting = new Sublisting(subID, handler,
+                                        handler instanceof AbstractPenguinStatusListingHandler ?
+                                                ((AbstractPenguinStatusListingHandler)handler).getObjectFromDatabase(event, data_entries.get(i), comparators)
+                                        : handler.getObjectFromDatabase(event, data_entries.get(i)));
                                 theSublisting.setGold(sublisting.getAsLong("gold"));
                                 theSublisting.setWeight(sublisting.getAsDouble("weight"));
                                 String materialID = subID.contains("$") ? subID.split("\\$")[0] : subID;

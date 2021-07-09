@@ -1,6 +1,7 @@
 package uk.joshiejack.shopaholic;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -28,6 +29,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.joshiejack.penguinlib.inventory.AbstractBookContainer;
 import uk.joshiejack.penguinlib.item.base.BookItem;
+import uk.joshiejack.penguinlib.util.helpers.PlayerHelper;
+import uk.joshiejack.penguinlib.world.teams.PenguinTeams;
 import uk.joshiejack.shopaholic.api.ShopaholicAPI;
 import uk.joshiejack.shopaholic.bank.Bank;
 import uk.joshiejack.shopaholic.bank.BankAPIImpl;
@@ -41,6 +44,7 @@ import uk.joshiejack.shopaholic.inventory.EconomyManagerContainer;
 import uk.joshiejack.shopaholic.loot.CapValue;
 import uk.joshiejack.shopaholic.loot.RatioValue;
 import uk.joshiejack.shopaholic.loot.SetValue;
+import uk.joshiejack.shopaholic.plugins.SimplySeasonsPlugin;
 import uk.joshiejack.shopaholic.shipping.Market;
 import uk.joshiejack.shopaholic.shipping.ShippingRegistry;
 import uk.joshiejack.shopaholic.shop.RegistryImpl;
@@ -72,18 +76,26 @@ public class Shopaholic {
     private void setupCommon(FMLCommonSetupEvent event) {
         //Register Comparators
         ShopaholicAPI.registry.registerComparator("add", new AddComparator());
-        ShopaholicAPI.registry.registerComparator("can_see_sky", new CanSeeSkyComparator());
         ShopaholicAPI.registry.registerComparator("block_tag_on_target", new BlockTagOnTargetComparator());
+        ShopaholicAPI.registry.registerComparator("can_see_sky", (t) -> t.getWorld().canSeeSky(t.getPos()) ? 1 : 0);
         ShopaholicAPI.registry.registerComparator("item_in_hand", new ItemInHandComparator());
         ShopaholicAPI.registry.registerComparator("item_in_inventory", new ItemInInventoryComparator());
-        ShopaholicAPI.registry.registerComparator("light_level", new LightLevelComparator());
+        ShopaholicAPI.registry.registerComparator("light_level", (t) -> t.getWorld().getLightEmission(t.getPos()));
         ShopaholicAPI.registry.registerComparator("number", new NumberComparator());
-        ShopaholicAPI.registry.registerComparator("player_health", new PlayerHealthLevelComparator());
-        ShopaholicAPI.registry.registerComparator("rain_level", new RainLevelComparator());
-        ShopaholicAPI.registry.registerComparator("redstone_level", new RedstoneSignalComparator());
+        ShopaholicAPI.registry.registerComparator("player_health", (t) -> (int) t.getPlayer().getHealth());
+        ShopaholicAPI.registry.registerComparator("player_status", new StatusComparator((t, s) -> PlayerHelper.getPenguinStatuses(t.getPlayer()).getInt(s)));
+        ShopaholicAPI.registry.registerComparator("player_x", (t) -> t.getPlayer().blockPosition().getX());
+        ShopaholicAPI.registry.registerComparator("player_y", (t) -> t.getPlayer().blockPosition().getY());
+        ShopaholicAPI.registry.registerComparator("player_z", (t) -> t.getPlayer().blockPosition().getZ());
+        ShopaholicAPI.registry.registerComparator("rain_level", (t) -> t.getWorld().isThundering() && t.getWorld().isRaining() ? 2 : t.getWorld().isRaining() ? 1 : 0);
+        ShopaholicAPI.registry.registerComparator("redstone_level", (t) -> t.getWorld().getDirectSignalTo(t.getPos()));
         ShopaholicAPI.registry.registerComparator("shipped", new ShippedCountComparator());
-        ShopaholicAPI.registry.registerComparator("temperature", new TemperatureComparator());
-        ShopaholicAPI.registry.registerComparator("vendor_health", new VendorHealthLevelComparator());
+        ShopaholicAPI.registry.registerComparator("team_status", new StatusComparator((t, s) -> PenguinTeams.getPenguinStatuses(t.getPlayer()).getInt(s)));
+        ShopaholicAPI.registry.registerComparator("temperature", (t) -> SimplySeasonsPlugin.loaded ? SimplySeasonsPlugin.getTemperature(t) : (int) t.getWorld().getBiome(t.getPos()).getTemperature(t.getPos()));
+        ShopaholicAPI.registry.registerComparator("vendor_health", (t) -> t.getEntity() instanceof LivingEntity ? (int) ((LivingEntity) t.getEntity()).getHealth() : 0);
+        ShopaholicAPI.registry.registerComparator("vendor_x", (t) -> t.getPos().getX());
+        ShopaholicAPI.registry.registerComparator("vendor_y", (t) -> t.getPos().getY());
+        ShopaholicAPI.registry.registerComparator("vendor_z", (t) -> t.getPos().getZ());
         //Register Conditions
         ShopaholicAPI.registry.registerCondition("and", new AndCondition());
         ShopaholicAPI.registry.registerCondition("block_state", new BlockStateCondition());
@@ -107,6 +119,8 @@ public class Shopaholic {
         ShopaholicAPI.registry.registerListingHandler("heal", new HealListingHandler());
         ShopaholicAPI.registry.registerListingHandler("item", new ItemListingHandler());
         ShopaholicAPI.registry.registerListingHandler("potion", new PotionEffectListingHandler());
+        ShopaholicAPI.registry.registerListingHandler("player_status", new PlayerStatusListingHandler());
+        ShopaholicAPI.registry.registerListingHandler("team_status", new TeamStatusListingHandler());
         //Register Listing Builders
         //TODO? ListingBuilder.register("food", new FoodBuilder());
         //Cost Formulae

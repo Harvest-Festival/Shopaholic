@@ -5,6 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 
 public class ShopTarget {
     private World world; //The world that this target is in
@@ -22,6 +23,10 @@ public class ShopTarget {
         this.player = player;
         this.stack = stack;
         this.input = input;
+    }
+
+    public static ShopTarget fromPlayer(PlayerEntity player) {
+        return new ShopTarget(player.level, player.blockPosition(), player, player, player.getMainHandItem(), new EntityShopInput(player));
     }
 
     public ShopTarget asPlayer() {

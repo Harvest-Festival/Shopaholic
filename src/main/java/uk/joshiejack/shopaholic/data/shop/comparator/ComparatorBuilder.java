@@ -48,6 +48,23 @@ public abstract class ComparatorBuilder {
 
     public static ComparatorBuilder playerHealth() { return new Immutable("player_health"); }
 
+    public static StatusComparatorBuilder playerStatus(String id, String status) {
+        return new StatusComparatorBuilder("player", id, status);
+    }
+
+    public static ComparatorBuilder playerX() {
+        return new Immutable("player_x");
+    }
+
+    public static ComparatorBuilder playerY() {
+        return new Immutable("player_y");
+    }
+
+    public static ComparatorBuilder playerZ() {
+        return new Immutable("player_z");
+    }
+
+
     public static ComparatorBuilder rainLevel() {
         return new Immutable("rain_level");
     }
@@ -63,8 +80,23 @@ public abstract class ComparatorBuilder {
         return new AbstractItemComparatorBuilder(id, "comparator_shipped");
     }
 
+    public static StatusComparatorBuilder teamStatus(String id, String status) {
+        return new StatusComparatorBuilder("team", id, status);
+    }
+
     public static ComparatorBuilder vendorHealth() { return new Immutable("vendor_health"); }
 
+    public static ComparatorBuilder vendorX() {
+        return new Immutable("vendor_x");
+    }
+
+    public static ComparatorBuilder vendorY() {
+        return new Immutable("vendor_y");
+    }
+
+    public static ComparatorBuilder vendorZ() {
+        return new Immutable("vendor_z");
+    }
 
     public abstract void save(ShopaholicDatabase data);
 

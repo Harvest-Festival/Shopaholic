@@ -3,11 +3,12 @@ package uk.joshiejack.shopaholic.shop.comparator;
 import com.google.common.collect.Lists;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
+import uk.joshiejack.shopaholic.api.shop.MutableComparator;
 
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractListComparator implements Comparator {
+public abstract class AbstractListComparator implements MutableComparator {
     protected List<Comparator> comparators = Lists.newArrayList();
 
     protected abstract String getTableName();
