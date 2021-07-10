@@ -4,11 +4,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import uk.joshiejack.penguinlib.data.database.Row;
+import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.EntityIcon;
 import uk.joshiejack.penguinlib.util.icon.Icon;
@@ -18,9 +19,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 public class EntityListingHandler implements ListingHandler<EntityListingHandler.EntitySpawnData> {
     @Override
     public EntitySpawnData getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
-        Row row = database.table("entity_listings").fetch_where("id=" + data);
-        EntityType<?> type = row.entity();
-        return new EntitySpawnData(type);
+        return new EntitySpawnData(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(data)));
     }
 
     @Override
