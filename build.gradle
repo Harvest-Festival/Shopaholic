@@ -128,8 +128,8 @@ dependencies {
     compile fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
     compileOnly fg.deobf("uk.joshiejack.daydreamer:Daydreamer:${minecraft_version}-${daydreamer_version}")
     runtimeOnly fg.deobf("uk.joshiejack.daydreamer:Daydreamer:${minecraft_version}-${daydreamer_version}")
-    compile fg.deobf("uk.joshiejack.simplyseasons:Simply-Seasons:${minecraft_version}-${simplyseasons_version}")
-    compile fg.deobf("uk.joshiejack.husbandry:Husbandry:${minecraft_version}-${husbandry_version}")
+    compileOnly fg.deobf("uk.joshiejack.simplyseasons:Simply-Seasons:${minecraft_version}-${simplyseasons_version}")
+    compileOnly fg.deobf("uk.joshiejack.husbandry:Husbandry:${minecraft_version}-${husbandry_version}")
 }
 
 jar {

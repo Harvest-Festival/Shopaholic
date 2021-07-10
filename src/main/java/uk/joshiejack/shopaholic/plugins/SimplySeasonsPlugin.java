@@ -7,6 +7,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.plugins.simplyseasons.SeasonCondition;
 import uk.joshiejack.shopaholic.plugins.simplyseasons.SeasonDaysComparator;
 import uk.joshiejack.shopaholic.plugins.simplyseasons.SeasonPredicateCondition;
+import uk.joshiejack.simplyseasons.client.SSClientConfig;
 import uk.joshiejack.simplyseasons.world.season.SeasonalWorlds;
 
 @PenguinLoader("simplyseasons")
@@ -15,6 +16,10 @@ public class SimplySeasonsPlugin implements IModPlugin {
 
     public static int getTemperature(ShopTarget target) {
         return (int) SeasonalWorlds.getTemperature(target.getWorld(), target.getWorld().getBiome(target.getPos()), target.getPos());
+    }
+
+    public static boolean isHUDEnabled() {
+        return SSClientConfig.enableHUD.get();
     }
 
     @Override

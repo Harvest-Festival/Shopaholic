@@ -23,6 +23,7 @@ import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.client.gui.page.PageEconomyManager;
 import uk.joshiejack.shopaholic.inventory.DepartmentContainer;
+import uk.joshiejack.shopaholic.plugins.SimplySeasonsPlugin;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -47,7 +48,8 @@ public class ShopaholicClient {
         ScreenManager.register(Shopaholic.ShopaholicContainers.SHOP.get(),
                 ((DepartmentContainer container, PlayerInventory inv, ITextComponent text) -> new DepartmentScreen(container, inv)));
 
-        if (ShopaholicClientConfig.enableClockHUD.get()) {
+        boolean isSimplySeasonsEnabled = SimplySeasonsPlugin.loaded && SimplySeasonsPlugin.isHUDEnabled();
+        if (ShopaholicClientConfig.enableClockHUD.get() && !isSimplySeasonsEnabled) {
             HUDRenderer.RENDERERS.put(World.OVERWORLD, new HUDRenderer.HUDRenderData() {
                 @Override
                 public ITextComponent getHeader(Minecraft mc) {
