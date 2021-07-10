@@ -2,6 +2,7 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonParser;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +15,7 @@ import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.*;
+import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
 import uk.joshiejack.shopaholic.shop.comparator.AbstractListComparator;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
@@ -27,6 +29,8 @@ import java.util.Locale;
 @SuppressWarnings("rawtypes")
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class ShopLoader {
+    private static final ResourceLocation DEFAULT_BACKGROUND = new ResourceLocation(Shopaholic.MODID, "textures/gui/shop.png");
+
     @SubscribeEvent
     public static void onDatabaseCollected(DatabasePopulateEvent event) {
         //Update the database with the simple departments
@@ -38,6 +42,19 @@ public class ShopLoader {
 
         event.table("very_simple_department_listings").rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("data"), sdl.get("type"), sdl.get("data"), "unlimited"));
         event.table("simple_department_listings").rows().forEach(sdl -> registerSimpleListing(event, sdl, sdl.get("id"), sdl.get("type"), sdl.get("data"), sdl.get("stock mechanic")));
+
+        event.table("very_simple_shops").rows().forEach(vss -> {
+            String name = vss.name();
+            String id = name.replaceAll("[^a-zA-Z0-9\\s]", "").replace(" ", "_");
+            event.createTable("shops", "ID,Name,Background Texture,Extra Texture,Vendor ID,Opening Method")
+                    .insert(id, name, "default", "default", id, "right_click");
+            event.createTable("vendors", "ID,Type,Data").insert(id, vss.get("type").toString(), vss.get("data"));
+        });
+
+        event.table("simple_shops").rows().forEach(ss -> {
+            event.createTable("shops", "ID,Name,Background Texture,Extra Texture,Vendor ID,Opening Method")
+                    .insert(ss.id(), ss.name(), "default", "default", ss.get("vendor id"), "right_click");
+        });
     }
 
     private static void registerSimpleListing(DatabasePopulateEvent database, Row sdl, String id, String type, String data, String stock_mechanic) {
@@ -109,8 +126,10 @@ public class ShopLoader {
             String shopID = shop.id();
             String name = shop.name();
             String vendorID = shop.get("vendor id");
+            ResourceLocation background = shop.isEmpty("background texture") ? DEFAULT_BACKGROUND : shop.getRL("background texture");
+            ResourceLocation extra = shop.isEmpty("extra texture") ? DepartmentScreen.EXTRA : shop.getRL("extra texture");
             InputMethod opening_method = InputMethod.valueOf(shop.get("opening method").toString().toUpperCase(Locale.ENGLISH));
-            Shop theShop = new Shop(shopID, name);
+            Shop theShop = new Shop(shopID, name, background, extra);
             event.table("departments").where("shop id=" + shopID).forEach(department -> {
                 String departmentID = department.id();
                 Department theDepartment = new Department(theShop, departmentID, opening_method); //Add the department to the shop in creation

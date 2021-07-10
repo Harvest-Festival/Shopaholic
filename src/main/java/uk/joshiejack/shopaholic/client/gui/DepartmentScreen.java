@@ -41,7 +41,6 @@ import java.util.concurrent.ExecutionException;
 @OnlyIn(Dist.CLIENT)
 public class DepartmentScreen extends AbstractContainerScreen<DepartmentContainer> {
     public static final ResourceLocation EXTRA = new ResourceLocation(Shopaholic.MODID, "textures/gui/shop_extra.png");
-    private static final ResourceLocation BACKGROUND = new ResourceLocation(Shopaholic.MODID, "textures/gui/shop.png");
     private static final DecimalFormat formatter = new DecimalFormat("#,###");
     private static final TranslationTextComponent FREE = new TranslationTextComponent("gui.shopaholic.shop.free");
     private static final TranslationTextComponent ERROR = new TranslationTextComponent("gui.shopaholic.shop.error");
@@ -54,7 +53,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     private int end;
 
     public DepartmentScreen(DepartmentContainer container, PlayerInventory inv) {
-        super(container, inv, container.department.getLocalizedName(), BACKGROUND, 256, 256);
+        super(container, inv, container.department.getLocalizedName(), container.department.getShop().getBackground(), 256, 256);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     public void renderBg(@Nonnull MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
         super.renderBg(matrix, partialTicks, mouseX, mouseY);
         renderBackground(matrix);
-        minecraft.getTextureManager().bind(BACKGROUND);
+        minecraft.getTextureManager().bind(background);
         int heightToUse = Math.max(listingCount, 3);
         if (heightToUse < 12) {
             blit(matrix, leftPos, topPos - 12 + (20 * heightToUse), 0, 228, imageWidth, 28);
@@ -89,7 +88,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         matrix.scale(scale, scale, scale);
         PenguinClient.FANCY_FONT.get().draw(matrix, getShopName(), 22 / scale, (17 / scale) + (!larger && !smaller ? 3 : smaller ? 6 : 0), 0xF1B81F);
         matrix.popPose();
-        drawCoinage(matrix, leftPos, topPos + 19, Wallet.getActive().getBalance());
+        drawCoinage(matrix, Wallet.getActive().getBalance());
         drawPlayerInventory(matrix);
         if (purchased.getLeft() != ItemIcon.EMPTY) {
             float blit = minecraft.getItemRenderer().blitOffset;
@@ -102,7 +101,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         }
     }
 
-    private void drawCoinage(@Nonnull MatrixStack matrix, int x, int y, long gold) {
+    private void drawCoinage(@Nonnull MatrixStack matrix, long gold) {
         String formatted = formatter.format(gold);
         int width = PenguinClient.FANCY_FONT.get().width(formatted);
         PenguinClient.FANCY_FONT.get().draw(matrix, formatted, 220 - width, 20, 0xFFF5CB5C);
@@ -112,7 +111,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     private void drawPlayerInventory(@Nonnull MatrixStack matrix) {
         if (!ShopaholicClientConfig.enableInventoryView.get()) return;
-        minecraft.getTextureManager().bind(EXTRA);
+        minecraft.getTextureManager().bind(menu.shop.getExtra());
         blit(matrix, 240, 40, 0, 62, 100, 194);
 
         int x2 = 0, y2 = 0;

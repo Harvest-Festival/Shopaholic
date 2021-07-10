@@ -1,5 +1,6 @@
 package uk.joshiejack.shopaholic.data.shop;
 
+import net.minecraft.util.ResourceLocation;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.condition.ConditionBuilder;
@@ -16,6 +17,8 @@ public class ShopBuilder {
     protected InputMethod input = InputMethod.RIGHT_CLICK;
     protected List<ConditionBuilder> conditions = new ArrayList<>();
     protected List<DepartmentBuilder> departments = new ArrayList<>();
+    protected String bg = "default";
+    protected String ex = "default";
 
     public ShopBuilder(String id, String name) {
         this.id = id;
@@ -46,10 +49,20 @@ public class ShopBuilder {
         return this;
     }
 
+    public ShopBuilder background(ResourceLocation background) {
+        this.bg = background.toString();
+        return this;
+    }
+
+    public ShopBuilder extra(ResourceLocation extra) {
+        this.ex = extra.toString();
+        return this;
+    }
+
     public void save(ShopaholicDatabase data) {
         String prev = data.subfolder;
         data.subfolder = "shops";
-        data.addEntry("shops", "ID,Name,Vendor ID,Opening Method", CSVUtils.join(id, name, vendor.id, input.toString().toLowerCase(Locale.ROOT)));
+        data.addEntry("shops", "ID,Name,Background Texture,Extra Texture,Vendor ID,Opening Method", CSVUtils.join(id, name, bg, ex, vendor.id, input.toString().toLowerCase(Locale.ROOT)));
         data.addEntry("vendors", "ID,Type,Data", CSVUtils.join(vendor.id, vendor.type, vendor.data));
         conditions.forEach(condition -> {
             data.addEntry("shop_conditions", "Shop ID,Condition ID", CSVUtils.join(id, condition.id));

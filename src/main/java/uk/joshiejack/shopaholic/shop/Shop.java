@@ -2,6 +2,7 @@ package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -15,11 +16,15 @@ public class Shop {
     private final List<Department> departments = Lists.newArrayList();
     private final String id;
     private final ITextComponent name;
+    private final ResourceLocation background;
+    private final ResourceLocation extra;
     private Department last;
 
-    public Shop(String shop_id, String name) {
+    public Shop(String shop_id, String name, ResourceLocation background, ResourceLocation extra) {
         this.id = shop_id;
         this.name = new TranslationTextComponent(name);
+        this.background = background;
+        this.extra = extra;
         BY_ID.put(shop_id, this);
     }
 
@@ -55,5 +60,13 @@ public class Shop {
 
     public void setLast(Department last) {
         this.last = last;
+    }
+
+    public ResourceLocation getBackground() {
+        return background;
+    }
+
+    public ResourceLocation getExtra() {
+        return extra;
     }
 }

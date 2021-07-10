@@ -32,7 +32,7 @@ public class DepartmentTabButton extends AbstractButton<DepartmentScreen> {
 
     @Override
     protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
-        mc.getTextureManager().bind(DepartmentScreen.EXTRA);
+        mc.getTextureManager().bind(screen.getMenu().shop.getExtra());
         blit(matrix, x, y, 107, 59 + (hovered ? 22 : 0), 21, 22);
         department.getIcon().render(mc, matrix, x + 4, y + 3);
     }

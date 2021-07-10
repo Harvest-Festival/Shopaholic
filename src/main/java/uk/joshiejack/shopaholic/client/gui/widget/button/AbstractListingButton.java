@@ -51,7 +51,7 @@ public abstract class AbstractListingButton extends AbstractButton<DepartmentScr
 
     @Override
     protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
-        mc.getTextureManager().bind(DepartmentScreen.EXTRA);
+        mc.getTextureManager().bind(screen.getMenu().shop.getExtra());
         int state = hovered && !canPurchase(1) ? 1 : hovered ? 2 : 0;
         //Background
         blit(matrix, x, y, 0, state * 18, width / 2, height);

@@ -29,7 +29,7 @@ public abstract class NavigationButton extends AbstractButton<DepartmentScreen> 
     protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
         updateVisibility();
         if (visible) {
-            mc.getTextureManager().bind(DepartmentScreen.EXTRA);
+            mc.getTextureManager().bind(screen.getMenu().shop.getExtra());
             blit(matrix, x, y, textureX, (hovered ? 12 : 0), width, height);
         }
     }
