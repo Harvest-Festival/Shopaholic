@@ -16,6 +16,7 @@ public class ShopaholicCommands {
                         .then(GoldCommand.register().requires(cs -> cs.hasPermission(2)))
                         .then(ShipCommand.register())
                         .then(OpenShopCommand.register())
+                        .then(ManagerCommand.register())
         );
     }
 }
