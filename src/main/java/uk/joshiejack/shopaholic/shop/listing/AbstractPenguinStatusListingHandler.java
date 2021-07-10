@@ -11,8 +11,7 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
-
-import java.util.Map;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractPenguinStatusListingHandler implements ListingHandler<Pair<String, Comparator>> {
@@ -24,19 +23,15 @@ public abstract class AbstractPenguinStatusListingHandler implements ListingHand
         return CommandListingHandler.ICON.get();
     }
 
-    public Pair<String, Comparator> getObjectFromDatabase(DatabaseLoadedEvent event, String s, Map<String, Comparator> comparators) {
-        Row row = event.table(getTableName()).fetch_where("id=" + s);
-        String field = row.get("field");
-        Comparator comparator = comparators.get(row.get("comparator id").toString());
-        return Pair.of(field, comparator);
-    }
-
     protected abstract String getTableName();
 
     //Unused
     @Override
-    public Pair<String, Comparator> getObjectFromDatabase(DatabaseLoadedEvent event, String data) {
-        return Pair.of(null, null);
+    public Pair<String, Comparator> getObjectFromDatabase(ShopLoadingData data, DatabaseLoadedEvent event, String id) {
+        Row row = event.table(getTableName()).fetch_where("id=" + id);
+        String field = row.get("field");
+        Comparator comparator = data.comparators.get(row.get("comparator id").toString());
+        return Pair.of(field, comparator);
     }
 
     @Override

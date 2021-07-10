@@ -14,12 +14,13 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 import java.util.Objects;
 
 public class PotionEffectListingHandler implements ListingHandler<EffectInstance> {
     @Override
-    public EffectInstance getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public EffectInstance getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         Row row = database.table("potion_listings").fetch_where("id=" + data);
         Effect effect = row.effect();
         int duration = row.get("duration");

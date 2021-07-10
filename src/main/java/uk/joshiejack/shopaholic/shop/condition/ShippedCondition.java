@@ -12,6 +12,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.client.shipping.Shipped;
 import uk.joshiejack.shopaholic.shipping.Market;
@@ -28,7 +29,7 @@ public class ShippedCondition implements Condition {
     private int requiredAmount;
 
     @Override
-    public Condition create(Row data, String id) {
+    public Condition create(ShopLoadingData loadingData, Row data, String id) {
         ShippedCondition condition = new ShippedCondition();
         condition.requiredAmount = Integer.parseInt(CharMatcher.inRange('0', '9').retainFrom(id)); //Grab the required count from the id
         addEntry(condition, data);

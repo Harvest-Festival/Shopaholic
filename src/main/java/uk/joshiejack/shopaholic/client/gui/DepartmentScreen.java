@@ -60,15 +60,6 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     @Override
     public void init() {
         super.init();
-        this.purchased = Pair.of(ItemIcon.EMPTY, 0);
-        this.stock = menu.department.getStockLevels(minecraft.level);
-        this.contents = Lists.newArrayList();
-        for (Listing listing : menu.department.getListings()) {
-            if (listing.canList(menu.target, stock)) {
-                contents.add(listing);
-            }
-        }
-
         setStart(getStartPos()); //Reload
     }
 
@@ -121,7 +112,6 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
     private void drawPlayerInventory(@Nonnull MatrixStack matrix) {
         if (!ShopaholicClientConfig.enableInventoryView.get()) return;
-        PenguinClient.FANCY_FONT.get().draw(matrix, "BUYING", 250, 27, 0xFFF5CB5C);
         minecraft.getTextureManager().bind(EXTRA);
         blit(matrix, 240, 40, 0, 62, 100, 194);
 
@@ -161,6 +151,15 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
         buttons.clear();
         children.clear();
 
+        purchased = Pair.of(ItemIcon.EMPTY, 0);
+        stock = menu.department.getStockLevels(minecraft.level);
+        contents = Lists.newArrayList();
+        for (Listing listing : menu.department.getListings()) {
+            if (listing.canList(menu.target, stock)) {
+                contents.add(listing);
+            }
+        }
+
         //Up Arrow
         addButton(new NavigationButton(this, leftPos + 232, topPos + 60, -1, 225, new TranslationTextComponent("button.penguinlib.previous")) {
             @Override
@@ -190,7 +189,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
             Listing listing = it.next();
             if (pPosition >= start && listing.canList(menu.target, stock)) {
                 if (listing.getGoldCost(menu.target.getPlayer(), stock) < 0) {
-                    addButton(new GoldListingButton(this, leftPos + 28, 38 + topPos + position, listing));
+                    addButton(new ItemListingButton(this, leftPos + 28, 38 + topPos + position, listing));
                     listingCount++;
                     position += 20;
                 } else {

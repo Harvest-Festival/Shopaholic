@@ -1,7 +1,6 @@
 package uk.joshiejack.shopaholic.shop;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonParser;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,15 +17,12 @@ import uk.joshiejack.shopaholic.api.shop.*;
 import uk.joshiejack.shopaholic.shop.builder.ListingBuilder;
 import uk.joshiejack.shopaholic.shop.comparator.AbstractListComparator;
 import uk.joshiejack.shopaholic.shop.condition.AbstractListCondition;
-import uk.joshiejack.shopaholic.shop.condition.CompareCondition;
 import uk.joshiejack.shopaholic.shop.input.InputMethod;
 import uk.joshiejack.shopaholic.shop.input.InputToShop;
 import uk.joshiejack.shopaholic.shop.inventory.StockMechanic;
-import uk.joshiejack.shopaholic.shop.listing.AbstractPenguinStatusListingHandler;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 @SuppressWarnings("rawtypes")
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
@@ -61,66 +57,49 @@ public class ShopLoader {
         InputToShop.ENTITY_TO_SHOP.clear(); //Clear the entity - > shop mappings
         InputToShop.ITEM_TO_SHOP.clear(); //Clear the item - > shop mappings
 
+        ShopLoadingData data = new ShopLoadingData();
+
         //Temporary Registry, Create all the comparators
-        Map<String, Comparator> comparators = Maps.newHashMap(); //Temporary Registry
         //for all the type of comparators
         ShopRegistries.COMPARATORS.forEach((type, comparator) -> {
             if (comparator instanceof MutableComparator) {
                 event.table("comparator_" + type).rows().forEach(row -> {
                     String comparatorID = row.id();
-                    if (comparators.containsKey(comparatorID)) {
-                        ((MutableComparator)comparators.get(comparatorID)).merge(row);
+                    if (data.comparators.containsKey(comparatorID)) {
+                        ((MutableComparator) data.comparators.get(comparatorID)).merge(row);
                     } else {
                         Comparator theComparator = ShopRegistries.COMPARATORS.get(type);
                         if (theComparator != null) {
-                            comparators.put(comparatorID, ((MutableComparator)theComparator).create(row, comparatorID));
+                            data.comparators.put(comparatorID, ((MutableComparator) theComparator).create(row, comparatorID));
                         }
                     }
                 });
             } else
-                comparators.put(type, comparator);
+                data.comparators.put(type, comparator);
         });
 
         //Create all the conditions
-        Map<String, Condition> conditions = Maps.newHashMap(); //Temporary Registry
         for (String type : ShopRegistries.CONDITIONS.keySet()) {
             event.table("condition_" + type).rows().forEach(condition -> {
                 String conditionID = condition.id();
-                if (conditions.containsKey(conditionID)) {
-                    conditions.get(conditionID).merge(condition);
+                if (data.conditions.containsKey(conditionID)) {
+                    data.conditions.get(conditionID).merge(condition);
                 } else {
                     Condition theCondition = ShopRegistries.CONDITIONS.get(type);
-                    if (theCondition != null) {
-                        if (theCondition instanceof CompareCondition)
-                            conditions.put(conditionID, ((CompareCondition) theCondition).create(condition, comparators));
-                        else conditions.put(conditionID, theCondition.create(condition, conditionID));
-                    }
+                    if (theCondition != null)
+                        data.conditions.put(conditionID, theCondition.create(data, condition, conditionID));
                 }
             });
         }
 
-        comparators.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListComparator).forEach(entry ->
-                ((AbstractListComparator)entry).initList(event, entry.getKey(), comparators));
-        conditions.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListCondition).forEach(entry ->
-                ((AbstractListCondition) entry.getValue()).initList(event, entry.getKey(), conditions));
+        data.comparators.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListComparator).forEach(entry ->
+                ((AbstractListComparator) entry).initList(event, entry.getKey(), data.comparators));
+        data.conditions.entrySet().stream().filter(e -> e.getValue() instanceof AbstractListCondition).forEach(entry ->
+                ((AbstractListCondition) entry.getValue()).initList(event, entry.getKey(), data.conditions));
 
         //Create all the stock mechanics
-        Map<String, StockMechanic> stock_mechanics = Maps.newHashMap();
-        //WHERE DO WE NPE???
-        event.table("stock_mechanics");
-        event.table("stock_mechanics").rows();
-        event.table("stock_mechanics").rows().forEach(r -> {
-        });
-        event.table("stock_mechanics").rows().forEach(r -> {
-            stock_mechanics.put("OOOO", new StockMechanic(1, 2));
-        });
-
-
         event.table("stock_mechanics").rows().forEach(stock_mechanic ->
-                stock_mechanics.put(stock_mechanic.id(), new StockMechanic(stock_mechanic.get("max stock"), stock_mechanic.get("replenish rate"))));
-
-        event.table("stock_mechanics").rows().forEach(stock_mechanic ->
-                stock_mechanics.put(stock_mechanic.id(), new StockMechanic(stock_mechanic.get("max stock"), stock_mechanic.get("replenish rate"))));
+                data.stock_mechanics.put(stock_mechanic.id(), new StockMechanic(stock_mechanic.get("max stock"), stock_mechanic.get("replenish rate"))));
         //ap<String, CostScript> cost_scripts = Maps.newHashMap();
         //event.table("cost_formulae").rows().forEach(cost_formula ->
         //cost_scripts.put(cost_formula.id(), Scripting.get(cost_formula.getScript())));
@@ -141,15 +120,16 @@ public class ShopLoader {
                         theDepartment.setIcon(Icon.fromJson(parser.parse(icon).getAsJsonObject()));
                     } else theDepartment.setIcon(new ItemIcon(department.icon()));
                 }
+
                 if (!department.isEmpty("name")) theDepartment.setName(department.name());
                 Row vendor = event.table("vendors").fetch_where("id=" + vendorID); //Register the vendor
                 InputToShop.register(vendor.get("type"), vendor.get("data").toString(), theDepartment); //to the input
 
                 //Add the conditions for this shop
                 event.table("shop_conditions").where("shop id=" + shopID)
-                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition id").toString())));
+                        .forEach(condition -> theDepartment.addCondition(data.conditions.get(condition.get("condition id").toString())));
                 event.table("department_conditions").where("shop id=" + shopID + "&department id=" + departmentID)
-                        .forEach(condition -> theDepartment.addCondition(conditions.get(condition.get("condition id").toString())));
+                        .forEach(condition -> theDepartment.addCondition(data.conditions.get(condition.get("condition id").toString())));
 
                 event.table("department_listings").where("department id=" + departmentID).forEach(listing -> {
                     String listingID = listing.id();
@@ -167,10 +147,7 @@ public class ShopLoader {
                             if (handler == null)
                                 Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the listing handler type: " + sub_type + " for " + departmentID + ": " + listingID + " :" + subID);
                             else {
-                                Sublisting<?> theSublisting = new Sublisting(subID, handler,
-                                        handler instanceof AbstractPenguinStatusListingHandler ?
-                                                ((AbstractPenguinStatusListingHandler)handler).getObjectFromDatabase(event, data_entries.get(i), comparators)
-                                        : handler.getObjectFromDatabase(event, data_entries.get(i)));
+                                Sublisting<?> theSublisting = new Sublisting(subID, handler, handler.getObjectFromDatabase(data, event, data_entries.get(i)));
                                 theSublisting.setGold(sublisting.getAsLong("gold"));
                                 theSublisting.setWeight(sublisting.getAsDouble("weight"));
                                 String materialID = subID.contains("$") ? subID.split("\\$")[0] : subID;
@@ -196,7 +173,7 @@ public class ShopLoader {
                     });
 
                     if (sublistings.size() > 0 && sublistings.stream().allMatch(sublisting -> sublisting.getHandler().isValid(sublisting.getObject()))) {
-                        StockMechanic stockMechanic = stock_mechanics.get(listing.get("stock mechanic").toString());
+                        StockMechanic stockMechanic = data.stock_mechanics.get(listing.get("stock mechanic").toString());
                         CostFormula costScript = ShopRegistries.COST_FORMULAE.get(listing.get("cost formula").toString());
                         if (stockMechanic == null)
                             Shopaholic.LOGGER.log(Level.ERROR, "Failed to find the stock mechanic: " + listing.get("stock mechanic") + " for " + departmentID + ":" + listingID);
@@ -206,12 +183,12 @@ public class ShopLoader {
                             Listing theListing = new Listing(theDepartment, listingID, sublistings, costScript, stockMechanic);
                             event.table("listing_conditions").where("department id=" + departmentID + "&listing id=" + dataID)
                                     .forEach(condition -> {
-                                        Condition cd = conditions.get(condition.get("condition id").toString());
+                                        Condition cd = data.conditions.get(condition.get("condition id").toString());
                                         if (cd == null)
                                             Shopaholic.LOGGER.error("Incorrect condition added as a listing condition with the id: "
                                                     + condition.get("condition id") + " with the listing id " + listingID + " in the department " + theDepartment.id());
                                         else
-                                            theListing.addCondition(conditions.get(condition.get("condition id").toString()));
+                                            theListing.addCondition(data.conditions.get(condition.get("condition id").toString()));
                                     });
                             sublistings.forEach(s -> s.setListing(theListing));
                             Shopaholic.LOGGER.log(Level.INFO, "Successfully added the listing: " + listingID + " for " + departmentID);

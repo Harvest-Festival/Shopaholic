@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.Property;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
@@ -23,7 +24,7 @@ public class BlockStateCondition implements Condition {
     }
 
     @Override
-    public Condition create(Row data, String id) {
+    public Condition create(ShopLoadingData loadingData, Row data, String id) {
         BlockStateCondition validator = new BlockStateCondition();
         validator.key = data.get("state name");
         validator.value = data.get("state value");

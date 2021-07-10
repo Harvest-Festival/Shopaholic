@@ -41,12 +41,14 @@ public interface Condition {
 
     /**
      * Used to create new instance of this comparator using data from the Penguin-Lib database system
+     *
+     * @param data
      * @param row   the row data for this comparator
      * @param id    the id of this condition
      * @return  an instance of this comparator with the data applied
      *          some comparators are immutable so will just return themselves
      */
-    Condition create(Row row, String id);
+    Condition create(ShopLoadingData data, Row row, String id);
 
     /** Some conditions may want to let users add to them in separate rows
      *  And so a condition can appear twice, this is used to merge a new

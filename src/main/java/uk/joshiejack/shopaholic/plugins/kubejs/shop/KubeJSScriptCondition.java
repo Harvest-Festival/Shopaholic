@@ -8,6 +8,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.ShopTargetWrapper;
 
@@ -17,7 +18,7 @@ public class KubeJSScriptCondition implements Condition {
     private String id;
 
     @Override
-    public Condition create(Row row, String id) {
+    public Condition create(ShopLoadingData data, Row row, String id) {
         KubeJSScriptCondition script = new KubeJSScriptCondition();
         script.id = id;
         return script;

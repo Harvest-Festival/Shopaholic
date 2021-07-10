@@ -14,6 +14,6 @@ public class PerPlayerConditionBuilder extends ConditionBuilder {
 
     @Override
     public void save(ShopaholicDatabase data) {
-        data.addEntry("condition_per_player", "ID,max", CSVUtils.join(id, max));
+        data.addEntry("condition_per_player", "ID,Max", CSVUtils.join(id, max));
     }
 }

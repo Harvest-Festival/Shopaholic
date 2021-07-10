@@ -9,12 +9,13 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.TextureIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
 
 public class HealListingHandler implements ListingHandler<Float> {
     private static final ITextComponent NAME = new TranslationTextComponent("gui.shopaholic.shop.heal");
     @Override
-    public Float getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public Float getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         return Float.valueOf(data);
     }
 

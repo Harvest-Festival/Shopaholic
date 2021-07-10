@@ -13,6 +13,9 @@ public class ShopaholicLanguage extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
+        add("command.shopaholic.ship.success", "You successfully shipped %s");
+        add("command.shopaholic.ship.success_many", "You successfully shipped %s items and failed to ship %s items");
+        add("command.shopaholic.ship.no_value", "The item you tried to ship had no value");
         add("gui.shopaholic.shop.heal", "Health Restoration");
         add("gui.shopaholic.shop.free", "Free");
         add("gui.shopaholic.shop.error", "Error");

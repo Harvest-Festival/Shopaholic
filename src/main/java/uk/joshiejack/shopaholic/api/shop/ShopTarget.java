@@ -1,5 +1,7 @@
 package uk.joshiejack.shopaholic.api.shop;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.command.CommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,6 +29,12 @@ public class ShopTarget {
 
     public static ShopTarget fromPlayer(PlayerEntity player) {
         return new ShopTarget(player.level, player.blockPosition(), player, player, player.getMainHandItem(), new EntityShopInput(player));
+    }
+
+    public static ShopTarget fromSource(CommandSource source) {
+        try {
+            return fromPlayer(source.getPlayerOrException());
+        } catch (CommandSyntaxException ex) { return null; }
     }
 
     public ShopTarget asPlayer() {

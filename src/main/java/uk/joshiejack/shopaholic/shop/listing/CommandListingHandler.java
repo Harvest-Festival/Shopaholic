@@ -19,6 +19,7 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class CommandListingHandler implements ICommandSource, ListingHandler<Str
     public static final Lazy<Icon> ICON = Lazy.of(() -> new ItemIcon(Items.COMMAND_BLOCK));
 
     @Override
-    public String getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public String getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         return data;
     }
 

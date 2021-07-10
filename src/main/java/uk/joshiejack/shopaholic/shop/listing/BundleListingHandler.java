@@ -10,6 +10,7 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ListIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.shop.ShopRegistries;
 
 import java.util.List;
@@ -31,11 +32,11 @@ public class BundleListingHandler implements ListingHandler<List<Pair<ListingHan
     }
 
     @Override
-    public List<Pair<ListingHandler, Object>> getObjectFromDatabase(DatabaseLoadedEvent event, String data) {
+    public List<Pair<ListingHandler, Object>> getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent event, String data) {
         List<Pair<ListingHandler, Object>> list = Lists.newArrayList();
         event.table("bundles").where("id="+data).forEach(row -> {
             ListingHandler<?> handler = ShopRegistries.LISTING_HANDLERS.get(row.get("type").toString());
-            Object entry = handler.getObjectFromDatabase(event, row.get("data").toString());
+            Object entry = handler.getObjectFromDatabase(shopLoadingData, event, row.get("data").toString());
             list.add(Pair.of(handler, entry));
         });
 

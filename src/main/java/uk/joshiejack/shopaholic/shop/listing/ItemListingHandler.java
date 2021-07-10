@@ -13,12 +13,13 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 import java.util.List;
 
 public class ItemListingHandler implements ListingHandler<ItemStack> {
     @Override
-    public ItemStack getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public ItemStack getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data)));
     }
 

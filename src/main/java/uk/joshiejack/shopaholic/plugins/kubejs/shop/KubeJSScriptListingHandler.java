@@ -16,12 +16,13 @@ import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemIcon;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 public class KubeJSScriptListingHandler implements ListingHandler<String> {
     private static final Lazy<Icon> ICON = Lazy.of(() -> new ItemIcon(Items.COMMAND_BLOCK));
 
     @Override
-    public String getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public String getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         return data;
     }
 

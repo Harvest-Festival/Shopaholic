@@ -3,10 +3,10 @@ package uk.joshiejack.shopaholic.shop.condition;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.shopaholic.api.shop.Comparator;
 import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
 
 public class CompareCondition implements Condition {
     private Comparator compare_1;
@@ -17,21 +17,16 @@ public class CompareCondition implements Condition {
 
     public CompareCondition() {}
 
-    //Specialised create method, passing all the comparators that registered
-    public Condition create(Row data, Map<String, Comparator> comparators) {
+    @Deprecated
+    @Override
+    public Condition create(ShopLoadingData loadingData, Row data, String id) {
         CompareCondition validator = new CompareCondition();
         validator.lesser = data.isTrue("less than");
         validator.equal = data.isTrue("equal to");
         validator.greater = data.isTrue("greater than");
-        validator.compare_1 = comparators.get(data.get("comparator 1 id").toString());
-        validator.compare_2 = comparators.get(data.get("comparator 2 id").toString());
+        validator.compare_1 = loadingData.comparators.get(data.get("comparator 1 id").toString());
+        validator.compare_2 = loadingData.comparators.get(data.get("comparator 2 id").toString());
         return validator;
-    }
-
-    @Deprecated
-    @Override
-    public Condition create(Row database, String id) {
-        return this;
     }
 
     @Override

@@ -14,11 +14,13 @@ public interface ListingHandler<T> {
      * Create the object from the database, we pass the data field
      * which can either be data you process or you can use it to
      * grab another field from the database system
+     *
+     * @param shopLoadingData   the loading data, contains helpful stuffs???
      * @param database          the database event used to load other tables if neccessary for easier data access
      * @param data              the data field that was passed, may be an id or data itself, your choice
      * @return                  the object we created from the database fields
      */
-    T getObjectFromDatabase(DatabaseLoadedEvent database, String data);
+    T getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data);
 
     /**
      * Return the count of this object,

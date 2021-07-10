@@ -49,7 +49,6 @@ public class Vault implements INBTSerializable<CompoundNBT> {
     public void increaseBalance(World world, long amount) {
         if (amount < 0) amount = 0;
         income += amount;
-
         setBalance(world, balance + amount);
     }
 

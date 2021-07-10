@@ -34,13 +34,11 @@ public class ServerPurchaseItemPacket extends AbstractPurchaseItemPacket {
         long total = cost * amount;
         if (vault.getBalance() - total >= 0) {
             if (total >= 0) vault.decreaseBalance(player.level, total);
-            else vault.increaseBalance(player.level, total);
+            else vault.increaseBalance(player.level, -total);
             for (int i = 0; i < amount; i++) {
-                listing.purchase(player); //TODO: Call handler and stuff
-                //TownHelper.getClosestTownToEntity(player, false).getShops().onPurchasableHandled(player, shop, purchasable);
+                listing.purchase(player);
             }
 
-            //HFTrackers.markTownsDirty();
             return true;
         }
 

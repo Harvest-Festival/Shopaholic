@@ -13,10 +13,11 @@ import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.EntityIcon;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 
 public class EntityListingHandler implements ListingHandler<EntityListingHandler.EntitySpawnData> {
     @Override
-    public EntitySpawnData getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public EntitySpawnData getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         Row row = database.table("entity_listings").fetch_where("id=" + data);
         EntityType<?> type = row.entity();
         return new EntitySpawnData(type);

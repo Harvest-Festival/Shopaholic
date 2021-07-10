@@ -11,19 +11,16 @@ import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.api.shop.Condition;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
-import uk.joshiejack.shopaholic.shop.Shop;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Shopaholic.MODID)
 public class InputToShop {
     public static final Multimap<BlockShopInput, Department> BLOCK_TO_SHOP = HashMultimap.create();
     public static final Multimap<EntityShopInput, Department> ENTITY_TO_SHOP = HashMultimap.create();
     public static final Multimap<ItemShopInput, Department> ITEM_TO_SHOP = HashMultimap.create();
-    public static final Map<String, Shop> COMMAND_TO_SHOP = new HashMap<>();
+    public static final Multimap<String, Department> COMMAND_TO_SHOP = HashMultimap.create();
 
     public static void register(String type, String data, Department department) {
         switch (type) {
@@ -37,7 +34,7 @@ public class InputToShop {
                 ITEM_TO_SHOP.get(new ItemShopInput(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data)))).add(department);
                 break;
             case "command":
-                COMMAND_TO_SHOP.put(data, department.getShop());
+                COMMAND_TO_SHOP.get(data).add(department);
                 break;
         }
     }

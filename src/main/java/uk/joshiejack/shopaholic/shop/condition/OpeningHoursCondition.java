@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import uk.joshiejack.penguinlib.data.database.Row;
 import uk.joshiejack.penguinlib.util.helpers.TimeHelper;
 import uk.joshiejack.shopaholic.api.shop.Condition;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 import javax.annotation.Nonnull;
@@ -14,7 +15,7 @@ public class OpeningHoursCondition implements Condition {
     private final EnumMap<DayOfWeek, Pair<Integer, Integer>> hours = new EnumMap<>(DayOfWeek.class);
 
     @Override
-    public Condition create(Row data, String id) {
+    public Condition create(ShopLoadingData loadingData, Row data, String id) {
         OpeningHoursCondition validator = new OpeningHoursCondition();
         for (DayOfWeek weekday: TimeHelper.DAYS) {
             int open = data.getTime(TimeHelper.shortName(weekday) + " open");

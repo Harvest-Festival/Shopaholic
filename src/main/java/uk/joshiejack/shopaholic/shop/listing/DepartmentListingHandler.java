@@ -7,13 +7,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import uk.joshiejack.penguinlib.events.DatabaseLoadedEvent;
 import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.shopaholic.api.shop.ListingHandler;
+import uk.joshiejack.shopaholic.api.shop.ShopLoadingData;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.input.EntityShopInput;
 
 public class DepartmentListingHandler implements ListingHandler<String> {
     @Override
-    public String getObjectFromDatabase(DatabaseLoadedEvent database, String data) {
+    public String getObjectFromDatabase(ShopLoadingData shopLoadingData, DatabaseLoadedEvent database, String data) {
         return data;
     }
 

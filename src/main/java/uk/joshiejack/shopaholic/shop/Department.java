@@ -118,8 +118,8 @@ public class Department {
         return this.method == method && isValidFor(target, type);
     }
 
-    public boolean isValidFor(ShopTarget target, Condition.CheckType type) {
-        return conditions.stream().allMatch(condition -> condition.valid(target, type));
+    public boolean isValidFor(@Nullable ShopTarget target, Condition.CheckType type) {
+        return target != null && conditions.stream().allMatch(condition -> condition.valid(target, type));
     }
 
     public void open(ShopTarget target, boolean reloadLastDepartment) {
