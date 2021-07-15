@@ -31,6 +31,6 @@ public class ShippedConditionBuilder extends ConditionBuilder {
     @Override
     public void save(ShopaholicDatabase data) {
         items.forEach(item -> data.addEntry("condition_shipped", "ID,Item", CSVUtils.join(id, Objects.requireNonNull(item.getRegistryName()).toString())));
-        tags.forEach(tag -> data.addEntry("condition_shipped", "ID,Item", CSVUtils.join(id, ("tag:" + tag.getName()))));
+        tags.forEach(tag -> data.addEntry("condition_shipped", "ID,Item", CSVUtils.join(id, ("#" + tag.getName()))));
     }
 }

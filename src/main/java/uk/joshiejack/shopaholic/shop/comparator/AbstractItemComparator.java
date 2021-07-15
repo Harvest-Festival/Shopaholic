@@ -33,8 +33,8 @@ public abstract class AbstractItemComparator implements MutableComparator {
 
     private void addEntry(AbstractItemComparator comparator, Row data) {
         String item = data.get("item");
-        if (item.startsWith("tag:"))
-            comparator.tags.add(ItemTags.createOptional(new ResourceLocation(item.replace("tag:", ""))));
+        if (item.startsWith("tag:") || item.startsWith("#"))
+            comparator.tags.add(ItemTags.createOptional(new ResourceLocation(item.startsWith("#") ? item.substring(1) : item.substring(4))));
         else {
             Item theItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
             if (theItem != Items.AIR)

@@ -13,7 +13,8 @@ import uk.joshiejack.penguinlib.util.icon.Icon;
 import uk.joshiejack.penguinlib.util.icon.ItemListIcon;
 
 public class MaterialCost {
-    private final Lazy<Ingredient> ingredient = Lazy.of(() -> getItem().startsWith("tag:") ? Ingredient.of(ItemTags.createOptional(new ResourceLocation(getItem().replace("tag:", ""))))
+    private final Lazy<Ingredient> ingredient = Lazy.of(() -> getItem().startsWith("#") || getItem().startsWith("tag:") ?
+            Ingredient.of(ItemTags.createOptional(new ResourceLocation(getItem().startsWith("#") ? getItem().substring(1) : getItem().substring(4))))
             : Ingredient.of(new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(getItem())))));
     private final Lazy<Icon> icon = Lazy.of(() -> new ItemListIcon(Lists.newArrayList(ingredient.get().getItems())));
     private final String item;

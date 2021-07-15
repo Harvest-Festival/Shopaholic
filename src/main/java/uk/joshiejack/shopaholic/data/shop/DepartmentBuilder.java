@@ -89,7 +89,7 @@ public class DepartmentBuilder {
                 sublisting.materials.forEach(material -> data.addEntry("sublisting_materials", "Department ID,Listing ID,Sub ID,Item,Amount",
                         CSVUtils.join(id, listing.id, sublisting.id, Objects.requireNonNull(material.getItem().getRegistryName()).toString(), material.getCount())));
                 sublisting.tagMaterials.forEach(material -> data.addEntry("sublisting_materials", "Department ID,Listing ID,Sub ID,Item,Amount",
-                        CSVUtils.join(id, listing.id, sublisting.id, "tag:" + material.getKey().getName(), material.getRight())));
+                        CSVUtils.join(id, listing.id, sublisting.id, "#" + material.getKey().getName(), material.getRight())));
                 //Only if applicable
                 if (!sublisting.icon.equals("default") || !sublisting.name.equals(Strings.EMPTY) || !sublisting.tooltip.equals(Strings.EMPTY)) {
                     data.addEntry("sublisting_display_data", "Department ID,Listing ID,Sub ID,Icon,Name,Tooltip",

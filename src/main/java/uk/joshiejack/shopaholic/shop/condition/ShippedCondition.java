@@ -38,8 +38,8 @@ public class ShippedCondition implements Condition {
 
     private void addEntry(ShippedCondition condition, Row data) {
         String item = data.get("item");
-        if (item.startsWith("tag:"))
-            condition.tags.add(ItemTags.createOptional(new ResourceLocation(item.replace("tag:", ""))));
+        if (item.startsWith("tag:") || item.startsWith("#"))
+            condition.tags.add(ItemTags.createOptional(new ResourceLocation(item.startsWith("#") ? item.substring(1) : item.substring(4))));
         else {
             Item theItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(item));
             if (theItem != Items.AIR)
