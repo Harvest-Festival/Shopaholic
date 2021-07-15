@@ -6,7 +6,7 @@ license="MIT"
     version="${file.jarVersion}"
     displayName="Shopaholic"
     authors="joshiejack"
-    description='''Take care of your animals for more rewards.'''
+    description='''Shops, shipping and gold!'''
 [[dependencies.shopaholic]]
     modId="forge"
     mandatory=true
@@ -22,7 +22,7 @@ license="MIT"
 [[dependencies.shopaholic]]
     modId="penguinlib"
     mandatory=true
-    versionRange="[0.4.0,)"
+    versionRange="[0.4.1,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.shopaholic]]
