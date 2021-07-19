@@ -142,7 +142,10 @@ public class ShopLoader {
 
                 if (!department.isEmpty("name")) theDepartment.setName(department.name());
                 Row vendor = event.table("vendors").fetch_where("id=" + vendorID); //Register the vendor
-                InputToShop.register(vendor.get("type"), vendor.get("data").toString(), theDepartment); //to the input
+                if (vendor == null)
+                    Shopaholic.LOGGER.error(String.format("Could not find the vendor id: %s. The department %s may not function correctly.", vendorID, departmentID));
+                else
+                    InputToShop.register(vendor.get("type"), vendor.get("data").toString(), theDepartment); //to the input
 
                 //Add the conditions for this shop
                 event.table("shop_conditions").where("shop id=" + shopID)
