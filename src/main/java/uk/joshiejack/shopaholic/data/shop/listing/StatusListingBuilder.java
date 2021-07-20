@@ -4,6 +4,7 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 
+@SuppressWarnings("unused")
 public class StatusListingBuilder extends SublistingBuilder<StatusListingBuilder> {
     private final String field;
     private final ComparatorBuilder comparator;

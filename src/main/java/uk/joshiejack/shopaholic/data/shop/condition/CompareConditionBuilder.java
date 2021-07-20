@@ -5,12 +5,13 @@ import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 import uk.joshiejack.shopaholic.data.shop.comparator.ComparatorBuilder;
 
 public class CompareConditionBuilder extends ConditionBuilder {
-    protected ComparatorBuilder compare1;
-    protected ComparatorBuilder compare2;
-    protected boolean lessThan;
-    protected boolean equalTo;
-    protected boolean greaterThan;
+    protected final ComparatorBuilder compare1;
+    protected final ComparatorBuilder compare2;
+    protected final boolean lessThan;
+    protected final boolean equalTo;
+    protected final boolean greaterThan;
 
+    @SuppressWarnings("unused")
     public CompareConditionBuilder(String id, ComparatorBuilder compare1, boolean lessThan, boolean equalTo, boolean greaterThan, ComparatorBuilder compare2) {
         super(id);
         this.compare1 = compare1;

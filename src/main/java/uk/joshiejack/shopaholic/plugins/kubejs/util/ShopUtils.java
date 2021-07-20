@@ -17,6 +17,7 @@ import java.util.Objects;
 
 import static uk.joshiejack.shopaholic.shop.input.InputToShop.ENTITY_TO_SHOP;
 
+@SuppressWarnings("unused")
 public class ShopUtils {
     private static ShopTarget target(PlayerJS<?> playerW, EntityJS entityW) {
         Entity entity = entityW.minecraftEntity;

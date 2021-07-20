@@ -16,5 +16,5 @@ public interface MutableComparator extends Comparator {
      *  piece of data in to this existing comparator. Not used often but handy!
      * @param row   the row data
      */
-    default void merge(Row row) {};
+    default void merge(Row row) {}
 }

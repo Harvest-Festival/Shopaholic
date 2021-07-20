@@ -11,6 +11,7 @@ import java.util.List;
 public class AddComparatorBuilder extends ComparatorBuilder {
     protected final List<ComparatorBuilder> comparators = new ArrayList<>();
 
+    @SuppressWarnings("unused")
     public AddComparatorBuilder(String id, ComparatorBuilder... comparators) {
         super(id);
         this.comparators.addAll(Arrays.asList(comparators));

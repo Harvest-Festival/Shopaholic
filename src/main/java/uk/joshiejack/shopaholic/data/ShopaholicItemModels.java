@@ -2,12 +2,10 @@ package uk.joshiejack.shopaholic.data;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
 import uk.joshiejack.shopaholic.Shopaholic;
 
 import java.util.Objects;
@@ -17,8 +15,9 @@ public class ShopaholicItemModels extends ItemModelProvider {
         super(generator, Shopaholic.MODID, existingFileHelper);
     }
 
-    private void registerModels(DeferredRegister<Item> items) {
-        items.getEntries().stream()
+    @Override
+    protected void registerModels() {
+        Shopaholic.ShopaholicItems.ITEMS.getEntries().stream()
                 .map(RegistryObject::get)
                 .forEach(item -> {
                     String path = Objects.requireNonNull(item.getRegistryName()).getPath();
@@ -27,10 +26,5 @@ public class ShopaholicItemModels extends ItemModelProvider {
                     else
                         singleTexture(path, mcLoc("item/generated"), "layer0", modLoc("item/" + path));
                 });
-    }
-
-    @Override
-    protected void registerModels() {
-        registerModels(Shopaholic.ShopaholicItems.ITEMS);
     }
 }

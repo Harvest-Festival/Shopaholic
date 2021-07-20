@@ -28,4 +28,4 @@ public interface IBank {
      * @param amount        the amount to decrease it by
      */
     void decreaseBalance(PlayerEntity player, long amount);
-};
+}

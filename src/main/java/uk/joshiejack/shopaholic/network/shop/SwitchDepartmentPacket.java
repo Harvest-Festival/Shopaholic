@@ -9,6 +9,7 @@ import uk.joshiejack.shopaholic.shop.Department;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_SERVER)
 public class SwitchDepartmentPacket extends AbstractPacketSyncDepartment {
+    @SuppressWarnings("unused")
     public SwitchDepartmentPacket() { }
     public SwitchDepartmentPacket(Department department) {
         super(department);

@@ -15,8 +15,8 @@ public class ShopBuilder {
     protected final String name;
     protected Vendor vendor = Vendor.NONE;
     protected InputMethod input = InputMethod.RIGHT_CLICK;
-    protected List<ConditionBuilder> conditions = new ArrayList<>();
-    protected List<DepartmentBuilder> departments = new ArrayList<>();
+    protected final List<ConditionBuilder> conditions = new ArrayList<>();
+    protected final List<DepartmentBuilder> departments = new ArrayList<>();
     protected String bg = "default";
     protected String ex = "default";
 

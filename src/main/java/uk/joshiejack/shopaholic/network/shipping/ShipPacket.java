@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkDirection;
 import uk.joshiejack.penguinlib.network.packet.AbstractSyncCompoundNBTPacket;
 import uk.joshiejack.penguinlib.util.PenguinLoader;
-import uk.joshiejack.penguinlib.util.helpers.generic.StringHelper;
+import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.Shopaholic;
 import uk.joshiejack.shopaholic.client.ShopaholicClientConfig;
 import uk.joshiejack.shopaholic.client.gui.DepartmentScreen;
@@ -55,7 +55,7 @@ public class ShipPacket extends AbstractSyncCompoundNBTPacket {
     @SuppressWarnings("unused") //TODO: Add sound effect for shipping, "kerching"
     public static class TrackingRenderer {
         private boolean loading;
-        private int ticker = 0;
+        private final int ticker = 0;
         private int yOffset = 0;
         private long last;
         private final Set<Shipping.SoldItem> sold;

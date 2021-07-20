@@ -24,9 +24,7 @@ public class DepartmentTabButton extends AbstractButton<DepartmentScreen> {
                     //Shop.get(department).setLast(department);
                     PenguinNetwork.sendToServer(new SwitchDepartmentPacket(department));
                 },
-                (btn, mtx, mX, mY) -> {
-                    GuiUtils.drawHoveringText(mtx, Lists.newArrayList(department.getLocalizedName()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font);
-                });
+                (btn, mtx, mX, mY) -> GuiUtils.drawHoveringText(mtx, Lists.newArrayList(department.getLocalizedName()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font));
         this.department = department;
     }
 

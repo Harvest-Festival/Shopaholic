@@ -5,7 +5,6 @@ import dev.latvian.kubejs.world.WorldEventJS;
 import dev.latvian.kubejs.world.WorldJS;
 import net.minecraft.world.World;
 import uk.joshiejack.shopaholic.event.ItemShippedEvent;
-import uk.joshiejack.shopaholic.plugins.kubejs.wrapper.PenguinTeamJS;
 
 public class ItemShippedEventJS extends WorldEventJS {
     private final ItemShippedEvent event;
@@ -22,9 +21,9 @@ public class ItemShippedEventJS extends WorldEventJS {
         return ItemStackJS.of(event.getShipped());
     }
 
-    public PenguinTeamJS getTeam() {
-        return new PenguinTeamJS(event.getTeam());
-    }
+//    public PenguinTeamJS getTeam() {
+//        return new PenguinTeamJS(event.getTeam());
+//    }
 
     @Override
     public WorldJS getWorld() {

@@ -8,6 +8,7 @@ import dev.latvian.kubejs.world.WorldJS;
 import net.minecraft.util.math.BlockPos;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
+@SuppressWarnings("unused")
 public class ShopTargetWrapper {
     private final ShopTarget target;
 

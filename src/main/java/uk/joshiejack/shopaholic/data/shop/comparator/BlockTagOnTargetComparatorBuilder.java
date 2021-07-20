@@ -6,8 +6,9 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
 public class BlockTagOnTargetComparatorBuilder extends ComparatorBuilder {
-    private ITag.INamedTag<Block> tag;
+    private final ITag.INamedTag<Block> tag;
 
+    @SuppressWarnings("unused")
     protected BlockTagOnTargetComparatorBuilder(String id, ITag.INamedTag<Block> tag) {
         super(id);
         this.tag = tag;

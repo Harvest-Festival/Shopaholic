@@ -8,7 +8,7 @@ import uk.joshiejack.shopaholic.api.shop.ShopInput;
 import uk.joshiejack.shopaholic.api.shop.ShopTarget;
 
 public class ItemShopInput extends ShopInput<Item> {
-    private Lazy<ItemStack> asStack = Lazy.of(() -> new ItemStack(id));
+    private final Lazy<ItemStack> asStack = Lazy.of(() -> new ItemStack(id));
 
     public ItemShopInput(Item item) {
         super(item);

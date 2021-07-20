@@ -17,6 +17,7 @@ public class ShopTarget {
     private ItemStack stack; //The stack that is interacting, whether it's relevant or not
     private ShopInput<?> input; //The input handler, for special situations
 
+    @SuppressWarnings("unused")
     public ShopTarget() {}
     public ShopTarget(World world, BlockPos pos, Entity entity, PlayerEntity player, ItemStack stack, ShopInput<?> input) {
         this.world = world;

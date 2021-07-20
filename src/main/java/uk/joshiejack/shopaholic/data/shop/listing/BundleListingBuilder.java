@@ -9,10 +9,12 @@ import java.util.List;
 public class BundleListingBuilder extends SublistingBuilder<BundleListingBuilder> {
     private final List<SublistingBuilder<?>> builders = new ArrayList<>();
 
+    @SuppressWarnings("unused")
     public BundleListingBuilder(String bundleID) {
         super("bundle", bundleID);
     }
 
+    @SuppressWarnings("unused")
     public BundleListingBuilder addToBundle(SublistingBuilder<?> builder) {
         this.builders.add(builder);
         return this;

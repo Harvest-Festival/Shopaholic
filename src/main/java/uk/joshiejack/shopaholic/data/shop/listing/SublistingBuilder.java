@@ -15,6 +15,7 @@ import uk.joshiejack.shopaholic.shop.listing.EntityListingHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
     public final List<ItemStack> materials = new ArrayList<>();
     public final List<Pair<ITag.INamedTag<Item>, Integer>> tagMaterials = new ArrayList<>();
@@ -77,11 +78,12 @@ public abstract class SublistingBuilder<T extends SublistingBuilder<T>> {
         return new GoldListingBuilder();
     }
 
-    public T id(String id) {
+    @SuppressWarnings("unchecked")
+    public void id(String id) {
         this.id = id;
-        return (T) this;
     }
 
+    @SuppressWarnings("unchecked")
     public T cost(int cost) {
         gold = cost;
         return (T) this;

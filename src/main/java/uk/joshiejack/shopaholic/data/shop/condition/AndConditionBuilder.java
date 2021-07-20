@@ -11,6 +11,7 @@ import java.util.List;
 public class AndConditionBuilder extends ConditionBuilder {
     protected final List<ConditionBuilder> conditions = new ArrayList<>();
 
+    @SuppressWarnings("unused")
     public AndConditionBuilder(String id, ConditionBuilder[] conditions) {
         super(id);
         this.conditions.addAll(Arrays.asList(conditions));

@@ -8,6 +8,7 @@ public class BlockStateConditionBuilder extends ConditionBuilder {
     private final String tagName;
     private final String tagData;
 
+    @SuppressWarnings("unused")
     public BlockStateConditionBuilder(String id, String tagName, String tagData) {
         super(id);
         this.tagName = tagName;

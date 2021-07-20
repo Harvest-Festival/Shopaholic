@@ -6,7 +6,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import java.util.Objects;
 
 public abstract class ShopInput<T extends IForgeRegistryEntry<T>> {
-    protected T id;
+    protected final T id;
 
     protected ShopInput(T id) {
         this.id = id;

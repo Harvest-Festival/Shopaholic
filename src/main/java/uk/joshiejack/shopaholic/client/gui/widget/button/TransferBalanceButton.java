@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
-import uk.joshiejack.penguinlib.client.gui.book.widget.AbstractButton;
+import uk.joshiejack.penguinlib.client.gui.widget.AbstractButton;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.Shopaholic;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class TransferBalanceButton extends AbstractButton {
+public class TransferBalanceButton extends AbstractButton<Book> {
     private static final ITextComponent FROM_SHARED = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.shared").withStyle(TextFormatting.GOLD);
     private static final ITextComponent FROM_PERSONAL = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.from.personal").withStyle(TextFormatting.GOLD);
     private static final ITextComponent X10 = new TranslationTextComponent("gui." + Shopaholic.MODID + ".manager.x.10", new StringTextComponent("SHIFT").withStyle(TextFormatting.AQUA));
@@ -54,9 +54,10 @@ public class TransferBalanceButton extends AbstractButton {
         this.value = value;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
-        book.bindLeftTexture();
+        screen.bindLeftTexture();
         blit(matrix, x, y, hovered ? 23 : 0, 193, 23, 10);
         //Texture drawn, now to draw the text
         RenderSystem.pushMatrix();
@@ -66,9 +67,9 @@ public class TransferBalanceButton extends AbstractButton {
         if (Screen.hasShiftDown()) gold *= 10;
         if (Screen.hasControlDown()) gold *= 100;
         if (Screen.hasAltDown()) gold *= 1000;
-        book.minecraft().font.drawShadow(matrix, StringHelper.convertNumberToString(gold), (x + 9) / scale, (y + 3) / scale, 0xFFFFFF);
+        screen.minecraft().font.drawShadow(matrix, StringHelper.convertNumberToString(gold), (x + 9) / scale, (y + 3) / scale, 0xFFFFFF);
         RenderSystem.color3f(1.0F, 1.0F, 1.0F);
-        book.minecraft().getTextureManager().bind(DepartmentScreen.EXTRA);
+        screen.minecraft().getTextureManager().bind(DepartmentScreen.EXTRA);
         blit(matrix, (int)((x + 2) / scale), (int)((y + 2) / scale), 244, 244, 12, 12);
         RenderSystem.popMatrix();
     }

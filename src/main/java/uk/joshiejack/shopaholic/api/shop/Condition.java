@@ -28,7 +28,7 @@ public interface Condition {
      * @param type          the checking type, the result may vary
      * @return              if the condition is met
      */
-    default boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) { return true; };
+    default boolean valid(@Nonnull ShopTarget target, @Nonnull CheckType type) { return true; }
 
     /**
      * Called when a listing with this condition is purchased
@@ -42,7 +42,7 @@ public interface Condition {
     /**
      * Used to create new instance of this comparator using data from the Penguin-Lib database system
      *
-     * @param data
+     * @param data  the loading data
      * @param row   the row data for this comparator
      * @param id    the id of this condition
      * @return  an instance of this comparator with the data applied

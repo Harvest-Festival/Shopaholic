@@ -21,8 +21,8 @@ public class DepartmentBuilder {
     public final String id;
     public final String name;
     public final String icon;
-    public List<ConditionBuilder> conditions = new ArrayList<>();
-    public List<ListingBuilder> listings = new ArrayList<>();
+    public final List<ConditionBuilder> conditions = new ArrayList<>();
+    public final List<ListingBuilder> listings = new ArrayList<>();
 
     public DepartmentBuilder(String id, String name, Icon icon) {
         this.id = id;
@@ -34,9 +34,8 @@ public class DepartmentBuilder {
         return new DepartmentBuilder(id, name, icon);
     }
 
-    public DepartmentBuilder listing(ListingBuilder listing) {
+    public void listing(ListingBuilder listing) {
         this.listings.add(listing);
-        return this;
     }
 
     public DepartmentBuilder condition(ConditionBuilder condition) {

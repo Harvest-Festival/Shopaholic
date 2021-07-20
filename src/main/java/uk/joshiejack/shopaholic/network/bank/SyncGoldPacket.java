@@ -13,6 +13,7 @@ public class SyncGoldPacket extends PenguinPacket {
     private WalletType type;
     private long balance, income, expenses;
 
+    @SuppressWarnings("unused")
     public SyncGoldPacket() {}
     public SyncGoldPacket(WalletType type, long balance, long income, long expenses) {
         this.type = type;

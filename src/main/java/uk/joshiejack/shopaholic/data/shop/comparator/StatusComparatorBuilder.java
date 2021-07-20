@@ -3,6 +3,7 @@ package uk.joshiejack.shopaholic.data.shop.comparator;
 import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
+@SuppressWarnings("unused")
 public class StatusComparatorBuilder extends ComparatorBuilder {
     private final String type;
     private final String status;

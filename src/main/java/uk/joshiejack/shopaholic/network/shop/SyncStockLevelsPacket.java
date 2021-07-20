@@ -16,6 +16,7 @@ import uk.joshiejack.shopaholic.shop.inventory.Stock;
 public class SyncStockLevelsPacket extends AbstractPacketSyncDepartment {
     private CompoundNBT data;
 
+    @SuppressWarnings("unused")
     public SyncStockLevelsPacket() {}
     public SyncStockLevelsPacket(Department department, Stock stock) {
         super(department);

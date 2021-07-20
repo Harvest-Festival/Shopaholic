@@ -13,6 +13,7 @@ import uk.joshiejack.shopaholic.network.AbstractSetPlayerNBTPacket;
 public class SwitchWalletPacket extends AbstractSetPlayerNBTPacket {
     private boolean shared;
 
+    @SuppressWarnings("unused")
     public SwitchWalletPacket() { super("ShopaholicSettings");}
     public SwitchWalletPacket(boolean shared) {
         super("ShopaholicSettings");

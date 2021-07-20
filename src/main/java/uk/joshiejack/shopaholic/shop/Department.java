@@ -71,19 +71,17 @@ public class Department {
         return method;
     }
 
-    public Department setName(String name) {
+    public void setName(String name) {
         if (name.contains(":")) {
             String[] split = StringHelper.decompose(name, ':');
             this.name = new TranslationTextComponent("shop.department." + split[0] + "." + split[1] + ".name");
             this.outOfStockText = new TranslationTextComponent("shop.department." + split[0] + "." + split[1] + ".outofstock");
         } else this.name = new TranslationTextComponent(name);
 
-        return this;
     }
 
-    public Department setIcon(Icon icon) {
+    public void setIcon(Icon icon) {
         this.icon = icon;
-        return this;
     }
 
     public void addListing(Listing listing) {

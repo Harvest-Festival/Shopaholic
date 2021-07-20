@@ -56,7 +56,6 @@ public class EconomyStatsLabel extends Widget {
     @Override
     public void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
-        //GlStateManager.disableDepth();
         mc.font.drawShadow(matrix, NAME, x + 57 - (mc.font.width(NAME) / 2F), y - 10, 0xFFFFFF);
         StringHelper.enableUnicode();
         //Draw your personal balance
@@ -108,6 +107,7 @@ public class EconomyStatsLabel extends Widget {
             mc.font.drawShadow(matrix, formatGold(shared.getBalance()), xPos, (y + 137) / scale, 0xFFFFFFFF);
         }
 
+        //noinspection deprecation
         RenderSystem.color4f(1F, 1F, 1F, 1F);
         int goldX = (int) ((x + 35) / scale);
         mc.getTextureManager().bind(DepartmentScreen.EXTRA);

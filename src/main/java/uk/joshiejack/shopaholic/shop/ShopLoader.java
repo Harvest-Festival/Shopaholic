@@ -51,10 +51,8 @@ public class ShopLoader {
             event.createTable("vendors", "ID,Type,Data").insert(id, vss.get("type").toString(), vss.get("data"));
         });
 
-        event.table("simple_shops").rows().forEach(ss -> {
-            event.createTable("shops", "ID,Name,Background Texture,Extra Texture,Vendor ID,Opening Method")
-                    .insert(ss.id(), ss.name(), "default", "default", ss.get("vendor id"), "right_click");
-        });
+        event.table("simple_shops").rows().forEach(ss -> event.createTable("shops", "ID,Name,Background Texture,Extra Texture,Vendor ID,Opening Method")
+                .insert(ss.id(), ss.name(), "default", "default", ss.get("vendor id"), "right_click"));
     }
 
     private static void registerSimpleListing(DatabasePopulateEvent database, Row sdl, String id, String type, String data, String stock_mechanic) {
@@ -64,7 +62,7 @@ public class ShopLoader {
         database.createTable("sublistings", "Department ID", "Listing ID", "ID", "Type", "Data", "Gold", "Weight").insert(departmentID, id, "default", type, data, gold, 1);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked, deprecation")
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onDatabaseLoaded(DatabaseLoadedEvent event) { //LOW, So we appear after recipes have been added
         //Clear out all existing shop related data
@@ -117,9 +115,6 @@ public class ShopLoader {
         //Create all the stock mechanics
         event.table("stock_mechanics").rows().forEach(stock_mechanic ->
                 data.stock_mechanics.put(stock_mechanic.id(), new StockMechanic(stock_mechanic.get("max stock"), stock_mechanic.get("replenish rate"))));
-        //ap<String, CostScript> cost_scripts = Maps.newHashMap();
-        //event.table("cost_formulae").rows().forEach(cost_formula ->
-        //cost_scripts.put(cost_formula.id(), Scripting.get(cost_formula.getScript())));
 
         JsonParser parser = new JsonParser();
         event.table("shops").rows().forEach(shop -> {
@@ -173,9 +168,7 @@ public class ShopLoader {
                                 theSublisting.setGold(sublisting.getAsLong("gold"));
                                 theSublisting.setWeight(sublisting.getAsDouble("weight"));
                                 String materialID = subID.contains("$") ? subID.split("\\$")[0] : subID;
-                                event.table("sublisting_materials").where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID).forEach(material -> {
-                                    theSublisting.addMaterial(new MaterialCost(material.get("item"), material.get("amount")));
-                                });
+                                event.table("sublisting_materials").where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID).forEach(material -> theSublisting.addMaterial(new MaterialCost(material.get("item"), material.get("amount"))));
 
                                 //Load in display overrides
                                 Row display = event.table("sublisting_display_data").fetch_where("department id=" + departmentID + "&listing id=" + dataID + "&sub id=" + materialID);

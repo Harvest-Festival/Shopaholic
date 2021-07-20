@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractListCondition implements Condition {
-    protected List<Condition> conditions = Lists.newArrayList();
+    protected final List<Condition> conditions = Lists.newArrayList();
 
     protected abstract String getTableName();
     protected abstract String getFieldName();

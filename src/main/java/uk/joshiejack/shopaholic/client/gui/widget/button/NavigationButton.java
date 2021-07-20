@@ -19,9 +19,7 @@ public abstract class NavigationButton extends AbstractButton<DepartmentScreen> 
     public NavigationButton(DepartmentScreen screen, int x, int y, int scrollAmount, int textureX, ITextComponent name) {
         super(screen, x, y, 14, 12, name,
                 (btn) -> screen.scroll(Screen.hasShiftDown() ? scrollAmount * 10 : scrollAmount),
-                (btn, mtx, mX, mY) -> {
-                    GuiUtils.drawHoveringText(mtx, Lists.newArrayList(btn.getMessage()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font);
-                });
+                (btn, mtx, mX, mY) -> GuiUtils.drawHoveringText(mtx, Lists.newArrayList(btn.getMessage()), mX, mY, screen.width, screen.height, 200, screen.getMinecraft().font));
         this.textureX = textureX;
     }
 

@@ -4,7 +4,7 @@ import uk.joshiejack.penguinlib.data.database.CSVUtils;
 import uk.joshiejack.shopaholic.data.ShopaholicDatabase;
 
 public class NumberComparatorBuilder extends ComparatorBuilder {
-    private int number;
+    private final int number;
 
     protected NumberComparatorBuilder(String id, int number) {
         super(id);

@@ -11,6 +11,7 @@ public class ShopaholicLanguage extends LanguageProvider {
         super(gen, Shopaholic.MODID, "en_us");
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void addTranslations() {
         add("command.shopaholic.ship.success", "You successfully shipped %s");

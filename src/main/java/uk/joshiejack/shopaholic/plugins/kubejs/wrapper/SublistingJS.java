@@ -4,6 +4,7 @@ import dev.latvian.kubejs.item.ItemStackJS;
 import net.minecraft.item.ItemStack;
 import uk.joshiejack.shopaholic.shop.Sublisting;
 
+@SuppressWarnings("unused")
 public class SublistingJS<T> {
     private final Sublisting<T> sublisting;
 

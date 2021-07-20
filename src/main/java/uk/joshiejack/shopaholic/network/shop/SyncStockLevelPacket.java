@@ -14,6 +14,7 @@ public class SyncStockLevelPacket extends AbstractPacketSyncDepartment {
     private Listing listing;
     private int stock;
 
+    @SuppressWarnings("unused")
     public SyncStockLevelPacket() {}
     public SyncStockLevelPacket(Listing listing, int stock) {
         super(listing.getDepartment());

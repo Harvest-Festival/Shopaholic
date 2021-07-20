@@ -14,16 +14,19 @@ public class AbstractItemComparatorBuilder extends ComparatorBuilder {
     private final List<ITag.INamedTag<Item>> tags = new ArrayList<>();
     private final String file;
 
+    @SuppressWarnings("unused")
     public AbstractItemComparatorBuilder(String id, String file) {
         super(id);
         this.file = file;
     }
 
+    @SuppressWarnings("unused")
     public AbstractItemComparatorBuilder countItem(Item item) {
         items.add(item);
         return this;
     }
 
+    @SuppressWarnings("unused")
     public AbstractItemComparatorBuilder countTag(ITag.INamedTag<Item> tag) {
         tags.add(tag);
         return this;

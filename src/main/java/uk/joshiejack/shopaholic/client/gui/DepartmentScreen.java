@@ -46,7 +46,6 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
     private static final TranslationTextComponent ERROR = new TranslationTextComponent("gui.shopaholic.shop.error");
     private static final Cache<Long, ITextComponent> COST_CACHE = CacheBuilder.newBuilder().build();
     private static final Object2IntMap<Department> SCROLL_POS = new Object2IntOpenHashMap<>();
-    private Collection<Listing> contents;
     public Stock stock;
     private Pair<Icon, Integer> purchased;
     private int listingCount;
@@ -152,7 +151,7 @@ public class DepartmentScreen extends AbstractContainerScreen<DepartmentContaine
 
         purchased = Pair.of(ItemIcon.EMPTY, 0);
         stock = menu.department.getStockLevels(minecraft.level);
-        contents = Lists.newArrayList();
+        Collection<Listing> contents = Lists.newArrayList();
         for (Listing listing : menu.department.getListings()) {
             if (listing.canList(menu.target, stock)) {
                 contents.add(listing);

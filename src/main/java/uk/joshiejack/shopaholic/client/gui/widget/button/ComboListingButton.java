@@ -22,6 +22,7 @@ public class ComboListingButton extends GoldListingButton {
         this.icons = sublisting.getMaterials();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void drawForeground(@Nonnull MatrixStack matrix, int mouseX, int mouseY, boolean hovered, int color) {
         super.drawForeground(matrix, mouseX, mouseY, hovered, color);

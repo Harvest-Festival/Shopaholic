@@ -20,8 +20,7 @@ public class Sublisting<P> {
     private final ListingHandler<P> handler;
     private final P object;
     private Listing listing = null;
-    private int int_id;
-    private List<MaterialCost> materials = Lists.newArrayList();
+    private final List<MaterialCost> materials = Lists.newArrayList();
     private List<ITextComponent> tooltip = Lists.newArrayList();
     private Icon icon;
     private ITextComponent displayName = new StringTextComponent("");
@@ -34,17 +33,8 @@ public class Sublisting<P> {
         this.object = object;
     }
 
-    public Sublisting<?> setIntID(int id) {
-        this.int_id = id;
-        return this;
-    }
-
     public void setListing(Listing listing) {
         this.listing = listing;
-    }
-
-    public int int_id() {
-        return int_id;
     }
 
     public void addMaterial(MaterialCost cost) {

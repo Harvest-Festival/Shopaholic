@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class AbstractListComparator implements MutableComparator {
-    protected List<Comparator> comparators = Lists.newArrayList();
+    protected final List<Comparator> comparators = Lists.newArrayList();
 
     protected abstract String getTableName();
     protected abstract String getFieldName();

@@ -10,8 +10,8 @@ public class ListingBuilder {
     public final String id;
     public String stockMechanic = "unlimited";
     public String costFormula = "default";
-    public List<ConditionBuilder> conditions = new ArrayList<>();
-    public List<SublistingBuilder<?>> sublistings = new ArrayList<>();
+    public final List<ConditionBuilder> conditions = new ArrayList<>();
+    public final List<SublistingBuilder<?>> sublistings = new ArrayList<>();
     public ShopaholicDatabase.StockMechanicBuilder stockMechanicBuilder;
 
     public ListingBuilder(String id) {

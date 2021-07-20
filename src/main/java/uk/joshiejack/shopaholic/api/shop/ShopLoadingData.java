@@ -7,7 +7,7 @@ import java.util.Map;
 
 //Temporary Registries
 public class ShopLoadingData {
-    public Map<String, Comparator> comparators = Maps.newHashMap();
-    public Map<String, Condition> conditions = Maps.newHashMap();
-    public Map<String, StockMechanic> stock_mechanics = Maps.newHashMap();
+    public final Map<String, Comparator> comparators = Maps.newHashMap();
+    public final Map<String, Condition> conditions = Maps.newHashMap();
+    public final Map<String, StockMechanic> stock_mechanics = Maps.newHashMap();
 }

@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import uk.joshiejack.penguinlib.client.gui.book.Book;
-import uk.joshiejack.penguinlib.client.gui.book.widget.AbstractButton;
+import uk.joshiejack.penguinlib.client.gui.widget.AbstractButton;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
 import uk.joshiejack.penguinlib.util.helpers.StringHelper;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
-public class SwitchAccountButton extends AbstractButton {
+public class SwitchAccountButton extends AbstractButton<Book> {
     private static final List<ITextComponent> active = Lists.newArrayList(new TranslationTextComponent("gui.shopaholic.manager.wallet.currently",
             new TranslationTextComponent("gui.shopaholic.manager.wallet.active").withStyle(TextFormatting.GREEN)));
     private static final List<ITextComponent> inactive = Lists.newArrayList(new TranslationTextComponent("gui.shopaholic.manager.wallet.currently",
@@ -46,7 +46,7 @@ public class SwitchAccountButton extends AbstractButton {
     protected void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks, boolean hovered) {
         if (visible) {
             StringHelper.enableUnicode();
-            book.bindLeftTexture();
+            screen.bindLeftTexture();
             boolean isWalletActive = Wallet.getActive() == Wallet.getWallet(type);
             blit(matrix, x, y, 31 + (!isWalletActive ? 10 : 0) + (hovered ? 17 : 0), 248, 7 + (isWalletActive ? 3 :0), 8);
             StringHelper.disableUnicode();

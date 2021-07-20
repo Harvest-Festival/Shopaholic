@@ -10,6 +10,7 @@ import uk.joshiejack.shopaholic.network.AbstractPurchaseItemPacket;
 import uk.joshiejack.shopaholic.shop.Department;
 import uk.joshiejack.shopaholic.shop.Listing;
 
+@SuppressWarnings("unused")
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
 public class ClientPurchaseItemPacket extends AbstractPurchaseItemPacket {
     public ClientPurchaseItemPacket() {}
@@ -20,7 +21,7 @@ public class ClientPurchaseItemPacket extends AbstractPurchaseItemPacket {
     @OnlyIn(Dist.CLIENT)
     @Override
     public void handleClientPacket() {
-        ClientPlayerEntity player = Minecraft.getInstance().player;;
+        ClientPlayerEntity player = Minecraft.getInstance().player;
         for (int i = 0; i < amount; i++) {
             listing.purchase(player);
         }

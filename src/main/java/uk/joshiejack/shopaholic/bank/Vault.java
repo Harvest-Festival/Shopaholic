@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.INBTSerializable;
 import uk.joshiejack.penguinlib.network.PenguinNetwork;
-import uk.joshiejack.penguinlib.util.helpers.generic.MathsHelper;
+import uk.joshiejack.penguinlib.util.helpers.MathsHelper;
 import uk.joshiejack.shopaholic.ShopaholicServerConfig;
 import uk.joshiejack.shopaholic.api.bank.WalletType;
 import uk.joshiejack.shopaholic.network.bank.SyncGoldPacket;

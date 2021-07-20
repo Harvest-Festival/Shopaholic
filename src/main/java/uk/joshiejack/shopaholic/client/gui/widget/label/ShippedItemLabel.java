@@ -35,6 +35,7 @@ public class ShippedItemLabel extends Widget {
         this.value = value;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void renderButton(@Nonnull MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();

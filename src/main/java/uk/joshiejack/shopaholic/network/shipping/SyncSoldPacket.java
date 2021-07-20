@@ -11,6 +11,7 @@ import java.util.Set;
 
 @PenguinLoader.Packet(NetworkDirection.PLAY_TO_CLIENT)
 public class SyncSoldPacket extends AbstractSyncSoldItemList {
+    @SuppressWarnings("unused")
     public SyncSoldPacket() {}
     public SyncSoldPacket(Set<Shipping.SoldItem> set) {
         super(set);

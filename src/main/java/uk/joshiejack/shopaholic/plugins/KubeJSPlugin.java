@@ -12,11 +12,11 @@ import uk.joshiejack.shopaholic.api.ShopaholicAPI;
 import uk.joshiejack.shopaholic.event.ItemGetValueEvent;
 import uk.joshiejack.shopaholic.event.ItemPurchasedEvent;
 import uk.joshiejack.shopaholic.event.ItemShippedEvent;
-import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptComparator;
-import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptCondition;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemGetValueEventJS;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemPurchasedEventJS;
 import uk.joshiejack.shopaholic.plugins.kubejs.event.ItemShippedEventJS;
+import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptComparator;
+import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptCondition;
 import uk.joshiejack.shopaholic.plugins.kubejs.shop.KubeJSScriptListingHandler;
 
 @PenguinLoader("kubejs")
